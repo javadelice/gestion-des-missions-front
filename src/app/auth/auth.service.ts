@@ -105,4 +105,7 @@ export class AuthService {
         tap(col => this.collegueConnecteSub.next(COLLEGUE_ANONYME))
       );
   }
+
+
+
 }

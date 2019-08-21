@@ -10,10 +10,11 @@
       "prefix": "app",
       "schematics": {
         "@schematics/angular:component": {
-          "inlineTemplate": true,
-          "inlineStyle": true,
           "spec": false,
-          "styleext": "scss"
+          "inlineStyle": false,
+          "inlineTemplate": false,
+          "prefix": "app",
+          "styleext": "css"
         },
         "@schematics/angular:class": {
           "spec": false
@@ -154,5 +155,8 @@
       }
     }
   },
-  "defaultProject": "front"
+  "defaultProject": "front",
+  "cli": {
+    "defaultCollection": "@ngrx/schematics"
+  }
 }

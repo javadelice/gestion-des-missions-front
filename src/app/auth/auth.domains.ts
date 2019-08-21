@@ -1,3 +1,5 @@
+import { Observable } from 'rxjs';
+
 /**
  * Collègue utilisateur de l'application.
  */
@@ -14,6 +16,15 @@ export class Collegue {
 
   estAnonyme():boolean {
     return this.email == undefined;
+  }
+
+  isAdmin(role:string): Observable<boolean> {
+    return;
+  }
+
+
+  isManager(role:string): Observable<boolean> {
+  return;
   }
 
 }

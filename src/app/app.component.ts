@@ -18,6 +18,9 @@ import {Collegue} from "./auth/auth.domains";
         <a  class="btn btn-danger" (click)="seDeconnecter()">Se déconnecter</a>
       </div>
     </div>
+    <div *ngIf="!(collegueConnecte | async).estAnonyme()">
+    <app-menu></app-menu>
+    </div>
     <router-outlet></router-outlet>
   `,
   styles: []
