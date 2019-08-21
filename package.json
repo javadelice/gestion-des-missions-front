@@ -18,7 +18,6 @@
     "@angular/compiler": "^6.1.0",
     "@angular/core": "^6.1.0",
     "@angular/forms": "^6.1.0",
-    "@angular/http": "^6.1.0",
     "@angular/platform-browser": "^6.1.0",
     "@angular/platform-browser-dynamic": "^6.1.0",
     "@angular/router": "^6.1.0",
@@ -30,11 +29,12 @@
     "font-awesome": "^4.7.0",
     "hammerjs": "^2.0.8",
     "rxjs": "^6.0.0",
-    "zone.js": "~0.8.26"
+    "tslib": "^1.10.0",
+    "zone.js": "~0.9.1"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~0.7.0",
-    "@angular/cli": "~6.1.1",
+    "@angular-devkit/build-angular": "~0.802.2",
+    "@angular/cli": "~8.2.2",
     "@angular/compiler-cli": "^6.1.0",
     "@angular/language-service": "^6.1.0",
     "@types/jasmine": "~2.8.6",
@@ -43,7 +43,7 @@
     "angular-cli-ghpages": "^0.5.2",
     "cross-var": "^1.1.0",
     "replace": "^0.3.0",
-    "codelyzer": "~4.2.1",
+    "codelyzer": "^5.0.1",
     "jasmine-core": "~2.99.1",
     "jasmine-spec-reporter": "~4.2.1",
     "karma": "~1.7.1",
