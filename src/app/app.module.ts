@@ -11,9 +11,12 @@ import { AuthComponent } from './auth/auth.component';
 import {FormsModule} from "@angular/forms";
 import {StatutConnecteService} from "./auth/statut-connecte.service";
 import {AuthInterceptorService} from "./auth/auth-interceptor.service";
+import { NoteDeFraisComponent } from './note-de-frais/note-de-frais.component';
+import { CommonModule } from '@angular/common';
 
 const routes: Routes = [
   { path:'tech', component: TechComponent, canActivate:[StatutConnecteService]}, // /tech accessible uniquement si connecté
+  { path:'notesdefrais', component: NoteDeFraisComponent, canActivate:[StatutConnecteService]},
   { path:'connexion', component: AuthComponent},
   { path: '', redirectTo: '/tech', pathMatch: 'full'}
 ];
@@ -23,7 +26,8 @@ const routes: Routes = [
   declarations: [
     AppComponent,
     TechComponent,
-    AuthComponent
+    AuthComponent,
+    NoteDeFraisComponent
   ],
   imports: [
     BrowserModule,
@@ -31,7 +35,8 @@ const routes: Routes = [
     HttpClientModule,
     MDBBootstrapModule.forRoot(),
     FormsModule,
-    NgbModule
+    NgbModule,
+    CommonModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

@@ -1,0 +1,53 @@
+<mdb-card class="animated zoomIn">
+  <mdb-card-header class="primary-color white-text text-center">
+    <h4>Notes de frais - Visualisation</h4>
+  </mdb-card-header>
+  <mdb-card-body>
+    <table class="table table-hover table-bordered">
+      <thead>
+      <tr>
+        <th>Date de Début</th>
+        <th>Date de fin</th>
+        <th>Nature</th>
+        <th>Ville de départ</th>
+        <th>Ville d'arrivée</th>
+        <th>Transport</th>
+        <th>Frais</th>
+        <th>Action</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let mission of Missions" class="">
+        <td>{{mission.dateDebut | date : "dd/MM/yy"}}</td>
+        <td>{{mission.dateFin | date : "dd/MM/yy"}}</td>
+        <td>{{mission.nature}}</td>
+        <td>{{mission.depart}}</td>
+        <td>{{mission.arrivee}}</td>
+        <td>{{mission.transport}}</td>
+
+
+        <td>
+          <div *ngIf="mission.frais ; else pasDeFrais">
+          {{mission.frais}}</div>
+          <ng-template #pasDeFrais> 0</ng-template>
+
+        </td>
+
+        <td>
+        <div *ngIf="mission.dateFin < currentDate ; else missionEnCours">
+
+          <a [href]="mission"><img class="img-thumbnail" src="assets/img/ndf-ajout.png"
+          class="rounded float-left" alt="+"  width='19px'></a>
+            <a [href]="mission"><img class="img-thumbnail" src="assets/img/ndf-download.png"
+              class="rounded float-right" alt="DL"  width='23px'></a>
+
+      </div>
+      <ng-template #missionEnCours>
+      <a> </a>
+      </ng-template>
+    </td>
+      </tr>
+      </tbody>
+    </table>
+  </mdb-card-body>
+</mdb-card>

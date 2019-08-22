@@ -158,4 +158,5 @@
   "cli": {
     "defaultCollection": "@ngrx/schematics"
   }
+
 }
