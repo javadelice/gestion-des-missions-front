@@ -18,8 +18,8 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 const routes: Routes = [
   { path:'tech', component: TechComponent, canActivate:[StatutConnecteService]}, // /tech accessible uniquement si connecté
   { path:'missions', component: MissionsComponent, canActivate:[StatutConnecteService]}, // /missions accessible ssi connecté
-  { path:'auth', component: AuthComponent},
   { path:'missions/creer', component:CreerMissionComponent, canActivate:[StatutConnecteService]},
+  { path:'connexion', component: AuthComponent},
   { path: '', redirectTo: '/tech', pathMatch: 'full'}
 ];
 

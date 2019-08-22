@@ -25,7 +25,7 @@ export class AppComponent implements OnInit {
    */
   seDeconnecter() {
     this._authSrv.seDeconnecter().subscribe(
-      value => this._router.navigate(['/auth'])
+      value => this._router.navigate(['/connexion'])
     );
   }
 
