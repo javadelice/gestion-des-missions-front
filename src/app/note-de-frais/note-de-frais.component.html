@@ -17,7 +17,7 @@
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let mission of Missions" class="">
+      <tr *ngFor="let mission of Missions" >
         <td>{{mission.dateDebut | date : "dd/MM/yy"}}</td>
         <td>{{mission.dateFin | date : "dd/MM/yy"}}</td>
         <td>{{mission.nature}}</td>
@@ -29,16 +29,16 @@
         <td>
           <div *ngIf="mission.frais ; else pasDeFrais">
           {{mission.frais}}</div>
-          <ng-template #pasDeFrais> 0</ng-template>
+          <ng-template #pasDeFrais>0</ng-template>
 
         </td>
 
         <td>
         <div *ngIf="mission.dateFin < currentDate ; else missionEnCours">
 
-          <a [href]="mission"><img class="img-thumbnail" src="assets/img/ndf-ajout.png"
+          <a (click)="openDialog()"><img class="img-thumbnail" src="assets/img/ndf-ajout.png"
           class="rounded float-left" alt="+"  width='19px'></a>
-            <a [href]="mission"><img class="img-thumbnail" src="assets/img/ndf-download.png"
+            <a (click)="exportToPDF()"><img class="img-thumbnail" src="assets/img/ndf-download.png"
               class="rounded float-right" alt="DL"  width='23px'></a>
 
       </div>

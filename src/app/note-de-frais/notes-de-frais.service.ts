@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Observable, combineLatest, merge, from, of} from "rxjs";
+import {Observable, combineLatest, merge, from, of, Subject} from "rxjs";
 import {environment} from "../../environments/environment";
-import {flatMap, concatMap, delay} from "rxjs/operators";
-import { Mission } from './notes-de-frais.domains';
+import {flatMap, concatMap, delay, map, tap} from "rxjs/operators";
+import { Mission, NoteDeFrais } from './notes-de-frais.domains';
 import { MissionsMock } from '../mock/MissionMock';
 
 
@@ -15,6 +15,17 @@ import { MissionsMock } from '../mock/MissionMock';
 })
 export class NoteDeFraisService {
 
+private mission: Subject<Mission[]>
+private noteDeFrais: Subject<NoteDeFrais>
+
+  get missionsObs(): Observable <Mission[]>{
+    return this.mission.asObservable();
+  }
+
+  get noteDeFraisObs() : Observable<NoteDeFrais>{
+    return this.noteDeFrais.asObservable();
+  }
+
   constructor(private _http:HttpClient) { }
 
   /**
@@ -22,8 +33,23 @@ export class NoteDeFraisService {
    *
    * @returns {Observable<Mission>}
    */
+
+   /* Using MockList
   listMission():Observable<Mission[]> {
     return of(new MissionsMock().getList());
   }
+*/
+listMission():Observable<Mission[]> {
+  return this._http
+      .get<Mission[]>(`${environment.baseUrl}${environment.apiMissions}`, {withCredentials: true})
+      .pipe( 
+      );
+}
 
+getNoteDeFraisFromMissionId (id:number):Observable<NoteDeFrais> {
+  return this._http
+      .get<NoteDeFrais>(`${environment.baseUrl}${environment.apiNoteDeFrais}`+'/'+id, {withCredentials: true})
+      .pipe(    );
+       
+    }
 }

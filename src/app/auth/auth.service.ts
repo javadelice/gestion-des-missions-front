@@ -82,7 +82,9 @@ export class AuthService {
       .pipe(
         map(colServeur => new Collegue(colServeur)),
         tap(col => this.collegueConnecteSub.next(col) )
-      );
+      )
+      
+      ;
   }
 
   /**

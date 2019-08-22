@@ -31,6 +31,9 @@ import {BackendLink} from "./tech.domains";
         </table>
       </mdb-card-body>
     </mdb-card>
+    <mdb-card class="animated zoomIn">
+    <input type="button" mdbBtn color="warning" sclass="waves-light" mdbWavesEffect value="Note de Frais" [routerLink]="['../notesdefrais/']">
+    </mdb-card>
   `,
   styles: []
 })
