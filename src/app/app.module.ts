@@ -14,7 +14,7 @@ import {AuthInterceptorService} from "./auth/auth-interceptor.service";
 
 const routes: Routes = [
   { path:'tech', component: TechComponent, canActivate:[StatutConnecteService]}, // /tech accessible uniquement si connecté
-  { path:'auth', component: AuthComponent},
+  { path:'connexion', component: AuthComponent},
   { path: '', redirectTo: '/tech', pathMatch: 'full'}
 ];
 
