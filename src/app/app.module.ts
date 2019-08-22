@@ -11,9 +11,14 @@ import { AuthComponent } from './auth/auth.component';
 import {FormsModule} from "@angular/forms";
 import {StatutConnecteService} from "./auth/statut-connecte.service";
 import {AuthInterceptorService} from "./auth/auth-interceptor.service";
+import { MissionsComponent } from './missions/missions.component';
+import { CreerMissionComponent } from './creer-mission/creer-mission.component';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 const routes: Routes = [
   { path:'tech', component: TechComponent, canActivate:[StatutConnecteService]}, // /tech accessible uniquement si connecté
+  { path:'missions', component: MissionsComponent, canActivate:[StatutConnecteService]}, // /missions accessible ssi connecté
+  { path:'missions/creer', component:CreerMissionComponent, canActivate:[StatutConnecteService]},
   { path:'connexion', component: AuthComponent},
   { path: '', redirectTo: '/tech', pathMatch: 'full'}
 ];
@@ -23,7 +28,9 @@ const routes: Routes = [
   declarations: [
     AppComponent,
     TechComponent,
-    AuthComponent
+    AuthComponent,
+    MissionsComponent,
+    CreerMissionComponent
   ],
   imports: [
     BrowserModule,
@@ -31,7 +38,8 @@ const routes: Routes = [
     HttpClientModule,
     MDBBootstrapModule.forRoot(),
     FormsModule,
-    NgbModule
+    NgbModule,
+    ModalModule.forRoot()
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,
