@@ -18,13 +18,6 @@ export class Collegue {
     return this.email == undefined;
   }
 
-  isAdmin(role:string): Observable<boolean> {
-    return;
   }
 
 
-  isManager(role:string): Observable<boolean> {
-  return;
-  }
-
-}

@@ -3,9 +3,9 @@ import {Collegue} from "./auth.domains";
 import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {environment} from "../../environments/environment";
 import {Observable} from "rxjs/internal/Observable";
-import {BehaviorSubject} from "rxjs/internal/BehaviorSubject";
-import {Subject, of} from "rxjs";
-import {catchError, map, tap} from "rxjs/operators";
+import {BehaviorSubject} from 'rxjs/internal/BehaviorSubject';
+import {Subject, of} from 'rxjs';
+import {catchError, map, tap} from 'rxjs/operators';
 
 /**
  * Collègue anonyme.
@@ -105,7 +105,6 @@ export class AuthService {
         tap(col => this.collegueConnecteSub.next(COLLEGUE_ANONYME))
       );
   }
-
 
 
 }
