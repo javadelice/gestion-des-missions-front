@@ -20,8 +20,8 @@ export class NatureMissionComponent implements OnInit {
 
   ngOnInit() {
     this._authSrv.collegueConnecteObs.subscribe(collegueConnecte => {
-      this.natureService.recupNature(collegueConnecte.id).subscribe((nature: NatureDto[]) => {
-        this.natureMissions = nature;
+      this.natureService.recupNature(collegueConnecte.id).subscribe((natureMissions: NatureDto[]) => {
+        this.natureMissions = natureMissions;
       }, (error: HttpErrorResponse) => {
         this.error = true;
       })
