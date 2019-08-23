@@ -19,7 +19,7 @@ export class CreerMissionComponent implements OnInit {
   creerOk: boolean;
   erreur: string;
 
-  mission = new MissionDto(0, '', '', new NatureDto(0, '', '', '', 0, '', '', '', 0), '', '', '', 'INITIALE', null);
+  mission = new MissionDto(0, '', '', new NatureDto("0", '', '', 1, "", '', '', 0), '', '', '', 'INITIALE', null);
   // estimationPrime = 0;
   // difference = (this.mission.endDate.valueOf() - this.mission.startDate.valueOf())/86400000;
   // startD = 10;
