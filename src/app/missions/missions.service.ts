@@ -11,7 +11,7 @@ export class MissionsService {
 
   constructor(private httpClient:HttpClient) { }
 
-  recupMissions(idCollegueConnecte:number):Observable<MissionDto[]> {
+  getMissions(idCollegueConnecte:number):Observable<MissionDto[]> {
     return this.httpClient.get<MissionDto[]>(environment.baseUrl + 'missions?id=' + idCollegueConnecte, {withCredentials:true});
   }
 

@@ -15,22 +15,22 @@ export class MissionsComponent implements OnInit {
   missions: MissionDto[];
   idMissionASupprimer:number;
   phaseModifier: boolean;
-  error: boolean;
+  isError: boolean;
   modalRef: BsModalRef;
 
   constructor(private missionService: MissionsService, private _authSrv: AuthService, private modalService: BsModalService) { }
 
   ngOnInit() {
     this._authSrv.collegueConnecteObs.subscribe(collegueConnecte => {
-      this.missionService.recupMissions(collegueConnecte.id).subscribe((missions: MissionDto[]) => {
+      this.missionService.getMissions(collegueConnecte.id).subscribe((missions: MissionDto[]) => {
         this.missions = missions;
         this.phaseModifier = false;
       }, (error: HttpErrorResponse) => {
-        this.error = true;
+        this.isError = true;
       })
     }
       , (error: HttpErrorResponse) => {
-        this.error = true;
+        this.isError = true;
       })
   }
 
@@ -58,7 +58,7 @@ export class MissionsComponent implements OnInit {
       this.ngOnInit();
       this.idMissionASupprimer = undefined;
     }, (error: HttpErrorResponse) => {
-      this.error = true;
+      this.isError = true;
     })
   }
 
