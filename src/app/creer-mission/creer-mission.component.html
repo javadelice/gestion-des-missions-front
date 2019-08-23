@@ -1,116 +1,119 @@
 <div class="row justify-content-center">
-  <h1>Demande de mission</h1>
-</div>
+    <h1>Demande de mission</h1>
+  </div>
 
-<div class="row justify-content-center mt-3">
-  <div class="card shadow bg-white rounded" style="width: 400px; max-width: 800px;">
-    <div class="card-body ">
-      <form class="was-validated">
-        <div class="row align-items-center">
-          <div class="col-6">
-            <div class="row justify-content-end">
-              <strong>Date de début</strong>
+  <div class="row justify-content-center mt-3">
+    <div class="card shadow bg-white rounded" style="width: 400px; max-width: 800px;">
+      <div class="card-body ">
+        <form class="was-validated" #missionCreer="ngForm">
+          <div class="row align-items-center">
+            <div class="col-6">
+              <div class="row justify-content-end">
+                <strong>Date de début</strong>
+              </div>
+            </div>
+            <div class="col-6">
+              <input class="form-control mb-1" type="date" name="dateDebut" [(ngModel)]="mission.startDate" required
+                #dateDebut="ngModel" />
+              <div class="invalid-feedback mb-1" *ngIf="(dateDebut.dirty || dateDebut.touched) && dateDebut.invalid">
+              </div>
             </div>
           </div>
-          <div class="col-6">
-            <input class="form-control mb-1" type="date" name="dateDebut" [(ngModel)]="mission.startDate" required
-              #dateDebut="ngModel" />
-            <div class="invalid-feedback mb-1" *ngIf="(dateDebut.dirty || dateDebut.touched) && dateDebut.invalid">
-            </div>
-          </div>
-        </div>
 
-        <div class="row align-items-center">
-          <div class="col-6">
-            <div class="row justify-content-end">
-              <strong>Date de fin</strong>
+          <div class="row align-items-center">
+            <div class="col-6">
+              <div class="row justify-content-end">
+                <strong>Date de fin</strong>
+              </div>
+            </div>
+            <div class="col-6">
+              <input class="form-control mb-1" type="date" name="dateFin" [(ngModel)]="mission.endDate" required
+                #dateFin="ngModel" />
+              <div class="invalid-feedback mb-1" *ngIf="(dateFin.dirty || dateFin.touched) && dateFin.invalid"></div>
             </div>
           </div>
-          <div class="col-6">
-            <input class="form-control mb-1" type="date" name="dateFin" [(ngModel)]="mission.endDate" required
-              #dateFin="ngModel" />
-            <div class="invalid-feedback mb-1" *ngIf="(dateFin.dirty || dateFin.touched) && dateFin.invalid"></div>
-          </div>
-        </div>
 
-        <div class="row align-items-center">
-          <div class="col-6">
-            <div class="row justify-content-end">
-              <strong>Nature</strong>
+          <div class="row align-items-center">
+            <div class="col-6">
+              <div class="row justify-content-end">
+                <strong>Nature</strong>
+              </div>
+            </div>
+            <div class="col-6">
+              <select class="custom-select mb-1" name="nature" id="nature" [(ngModel)]="mission.nature" required
+                #nature="ngModel">
+                <option *ngFor="let nature of listeNatures" [ngValue]="nature">{{nature.code}}</option>
+              </select>
+              <div class="invalid-feedback mb-1" *ngIf="(nature.dirty || nature.touched) && nature.invalid">
+              </div>
             </div>
           </div>
-          <div class="col-6">
-            <select class="custom-select mb-1" name="nature" id="nature" [(ngModel)]="mission.nature" required #nature="ngModel" >
-              <option *ngFor="let nature of listeNatures" value="nature">{{nature.code}}</option>
-            </select>
-            <div class="invalid-feedback mb-1"
-              *ngIf="(nature.dirty || nature.touched) && nature.invalid">
-            </div>
-          </div>
-        </div>
 
-        <div class="row align-items-center">
-          <div class="col-6">
-            <div class="row justify-content-end">
-              <strong>Ville de départ</strong>
+          <div class="row align-items-center">
+            <div class="col-6">
+              <div class="row justify-content-end">
+                <strong>Ville de départ</strong>
+              </div>
+            </div>
+            <div class="col-6">
+              <input class="form-control mb-1" type="text" name="villeDepart" [(ngModel)]="mission.villeDepart" required
+                pattern="[A-Za-z]+" minlength="2" #villeDepart="ngModel">
+              <div class="invalid-feedback mb-1"
+                *ngIf="(villeDepart.dirty || villeDepart.touched) && villeDepart.invalid">Ville invalide (au moins 2
+                caractères)
+              </div>
             </div>
           </div>
-          <div class="col-6">
-            <input class="form-control mb-1" type="text" name="email" [(ngModel)]="col.email" required
-              pattern="[0-9a-z._%+-]+@[0-9a-z.-]+\.[a-z]{2,4}$" minlength="3" #email="ngModel">
-            <div class="invalid-feedback mb-1" *ngIf="(email.dirty || email.touched) && email.invalid">L'email
-              est invalide (format requis x@x.xx)
-            </div>
-          </div>
-        </div>
 
-        <div class="row align-items-center">
-          <div class="col-6">
-            <div class="row justify-content-end">
-              <strong>Ville d'arrivée</strong>
+          <div class="row align-items-center">
+            <div class="col-6">
+              <div class="row justify-content-end">
+                <strong>Ville d'arrivée</strong>
+              </div>
+            </div>
+            <div class="col-6">
+              <input class="form-control mb-1" type="text" name="villeArrivee" [(ngModel)]="mission.villeArrivee" required
+                pattern="[A-Za-z]+" minlength="2" #villeArrivee="ngModel" />
+              <div class="invalid-feedback mb-1"
+                *ngIf="(villeArrivee.dirty || villeArrivee.touched) && villeArrivee.invalid">
+                Ville invalide (au moins 2 caractères)</div>
             </div>
           </div>
-          <div class="col-6">
-            <input class="form-control mb-1" type="text" name="photoUrl" [(ngModel)]="col.photoUrl" required
-              pattern="https?://.+" minlength="7" #photoUrl="ngModel" />
-            <div class="invalid-feedback mb-1" *ngIf="(photoUrl.dirty || photoUrl.touched) && photoUrl.invalid">
-              La photoUrl est invalide (au moins 7 caractères commençant par 'http(s)://')</div>
-          </div>
-        </div>
 
-        <div class="row align-items-center">
-          <div class="col-6">
-            <div class="row justify-content-end">
-              <strong>Transport</strong>
+          <div class="row align-items-center">
+            <div class="col-6">
+              <div class="row justify-content-end">
+                <strong>Transport</strong>
+              </div>
+            </div>
+            <div class="col-6">
+              <select class="custom-select mb-1" name="transport" id="transport" [(ngModel)]="mission.transport" required #transport="ngModel">
+                <option value="COVOITURAGE">Covoiturage</option>
+                <option value="AVION">Avion</option>
+                <option value="TRAIN">Train</option>
+                <option value="VOITURE_DE_SERVICE">Voiture de service</option>
+              </select>
+              <div class="invalid-feedback mb-1" *ngIf="(transport.dirty || transport.touched) && transport.invalid"></div>
             </div>
           </div>
-          <div class="col-6">
-            <input class="form-control mb-1" type="text" name="photoUrl" [(ngModel)]="col.photoUrl" required
-              pattern="https?://.+" minlength="7" #photoUrl="ngModel" />
-            <div class="invalid-feedback mb-1" *ngIf="(photoUrl.dirty || photoUrl.touched) && photoUrl.invalid">
-              La photoUrl est invalide (au moins 7 caractères commençant par 'http(s)://')</div>
-          </div>
-        </div>
 
-        <div class="row align-items-center">
-          <div class="col-6">
-            <div class="row justify-content-end">
-              <strong>Estimation prime</strong>
+          <!-- <div class="row align-items-center">
+            <div class="col-6">
+              <div class="row justify-content-end">
+                <strong>Estimation prime</strong>
+              </div>
             </div>
-          </div>
-          <div class="col-6">
-            <input class="form-control mb-1" type="text" name="photoUrl" [(ngModel)]="col.photoUrl" required
-              pattern="https?://.+" minlength="7" #photoUrl="ngModel" />
-            <div class="invalid-feedback mb-1" *ngIf="(photoUrl.dirty || photoUrl.touched) && photoUrl.invalid">
-              La photoUrl est invalide (au moins 7 caractères commençant par 'http(s)://')</div>
-          </div>
-        </div>
+            <div class="col-6">
+              {{(mission.endDate | date)}} -->
+              <!-- {{((mission.endDate | date:"dd/MM/yyyy") - (mission.startDate | date:"dd/MM/yyyy").valueOf())}} € -->
+            <!-- </div>
+          </div> -->
 
-        <div class="d-flex justify-content-around m-1">
-          <button [disabled]="collegueCreer.invalid" class="btn btn-info" (click)="creer()">Créer</button>
-          <button class="btn btn-info" (click)="annuler()">Annuler</button>
-        </div>
-      </form>
+          <div class="d-flex justify-content-around m-1">
+            <button [disabled]="missionCreer.invalid" class="btn btn-info">Créer</button>
+            <button class="btn btn-info" (click)="test()">Annuler</button>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
-</div>

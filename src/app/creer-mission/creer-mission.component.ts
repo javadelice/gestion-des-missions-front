@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { MissionDto } from '../models/mission-dto';
 import { NatureDto } from '../models/nature-dto';
-import { CollegueDto } from '../models/collegue-dto';
 import { CreerMissionService } from './creer-mission.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AuthService } from '../auth/auth.service';
@@ -13,19 +12,18 @@ import { AuthService } from '../auth/auth.service';
   styleUrls: ['./creer-mission.component.css'],
   providers: [DatePipe]
 })
-export class CreerMissionComponent implements OnInit {
-
-  dateCourante = new Date();
-  // today = new Date().toJSON().split('T')[0];
-  today = '2019-08-22';
+export class CreerMissionComponent implements OnInit, OnChanges {
 
   listeNatures: NatureDto[];
-
   isError: boolean;
 
-  mission = new MissionDto(0, new Date(), new Date(), null, '', '', '', '', null);
+  mission = new MissionDto(0, "", "", new NatureDto(0, '', '', '', 0, '', '', '', 0), '', '', '', '', null);
+  // estimationPrime = 0;
+  // difference = (this.mission.endDate.valueOf() - this.mission.startDate.valueOf())/86400000;
+  // startD = 10;
+  // endD = 0;
 
-  constructor(private datePipe: DatePipe, private creerMissionService: CreerMissionService, private _authSrv: AuthService) {
+  constructor(private creerMissionService: CreerMissionService, private _authSrv: AuthService) {
   }
 
   ngOnInit() {
@@ -37,6 +35,15 @@ export class CreerMissionComponent implements OnInit {
     }, (error: HttpErrorResponse) => {
       this.isError = true;
     });
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
+    //Add '${implements OnChanges}' to the class.
+  }
+
+  test() {
+    console.log(this.mission.endDate);
   }
 
 }
