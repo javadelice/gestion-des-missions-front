@@ -1,3 +1,5 @@
+import { Observable } from 'rxjs';
+
 /**
  * Collègue utilisateur de l'application.
  */
@@ -17,4 +19,6 @@ export class Collegue {
     return this.email == undefined;
   }
 
-}
+  }
+
+

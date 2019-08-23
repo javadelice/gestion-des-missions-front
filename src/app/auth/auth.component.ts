@@ -21,10 +21,11 @@ import {Router} from "@angular/router";
               <h4>Utilisateurs</h4>
             </mdb-card-title>
             <mdb-card-text>
-              Deux utilisateurs sont créés par défaut :
+              Trois utilisateurs sont créés par défaut :
               <ul>
                 <li>admin@dev.fr / superpass / ROLE_ADMINISTRATEUR, ROLE_UTILISATEUR</li>
                 <li>user@dev.fr / superpass / ROLE_UTILISATEUR</li>
+                <li>manager@dev.fr / superpass / ROLE_MANAGER, ROLE_UTILISATEUR</li>
               </ul>
 
             </mdb-card-text>
