@@ -61,16 +61,4 @@ export class MenuComponent implements OnInit {
     });
   }
 
-
-
-  // isAdmin() {
-  //   this.collegueConnecteRole = this._authSrv.collegueConnecteObs;
-
-  // }
-
-  // isManager() {
-  //   this.collegueConnecteRole = this._authSrv.collegueConnecteObs;
-
-  // }
-
 }

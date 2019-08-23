@@ -16,8 +16,7 @@ import { MenuComponent } from './menu/menu.component';
 const routes: Routes = [
   { path:'tech', component: TechComponent, canActivate:[StatutConnecteService]}, // /tech accessible uniquement si connecté
   { path:'auth', component: AuthComponent},
-  { path: '', redirectTo: '/tech', pathMatch: 'full'},
-  { path: 'menu', component: MenuComponent, canActivate:[StatutConnecteService]}
+  { path: '', redirectTo: '/tech', pathMatch: 'full'}
 ];
 
 
