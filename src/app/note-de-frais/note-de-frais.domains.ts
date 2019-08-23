@@ -19,8 +19,6 @@ export class Mission {
 export class NoteDeFrais {
   [x: string]: any;
 
-
-
     public dateDebut:Date;
     public dateFin:Date;
     public nature:string;

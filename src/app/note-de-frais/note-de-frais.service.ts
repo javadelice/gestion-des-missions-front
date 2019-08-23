@@ -3,8 +3,9 @@ import {HttpClient} from '@angular/common/http';
 import {Observable, combineLatest, merge, from, of, Subject} from "rxjs";
 import {environment} from "../../environments/environment";
 import {flatMap, concatMap, delay, map, tap} from "rxjs/operators";
-import { Mission, NoteDeFrais } from './notes-de-frais.domains';
+import { Mission, NoteDeFrais } from './note-de-frais.domains';
 import { MissionsMock } from '../mock/MissionMock';
+import { NdfDto } from '../note-de-frais-visualisation/note-de-frais-visualisation.domain';
 
 
 /**
@@ -42,14 +43,15 @@ private noteDeFrais: Subject<NoteDeFrais>
 listMission():Observable<Mission[]> {
   return this._http
       .get<Mission[]>(`${environment.baseUrl}${environment.apiMissions}`, {withCredentials: true})
-      .pipe( 
+      .pipe(
       );
 }
 
-getNoteDeFraisFromMissionId (id:number):Observable<NoteDeFrais> {
+getNoteDeFraisFromMissionId (id:number):Observable<NdfDto[]> {
   return this._http
-      .get<NoteDeFrais>(`${environment.baseUrl}${environment.apiNoteDeFrais}`+'/'+id, {withCredentials: true})
-      .pipe(    );
-       
+      .get<NdfDto[]>(`${environment.baseUrl}${environment.apiNoteDeFrais}`+'/'+id, {withCredentials: true})
     }
+
+
+
 }

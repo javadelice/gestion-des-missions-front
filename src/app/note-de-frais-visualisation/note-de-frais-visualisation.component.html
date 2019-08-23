@@ -17,24 +17,24 @@
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let mission of missions" >
+      <tr *ngFor="let ndf of noteDeFraisTab" >
 
-        <td>{{mission.startDate| date : "dd/MM/yy"}}</td>
-        <td>{{mission.endDate| date : "dd/MM/yy"}}</td>
-        <td>{{mission.nature.code}}</td>
-        <td>{{mission.villeDepart}}</td>
-        <td>{{mission.villeArrivee}}</td>
-        <td>{{mission.transport}}</td>
+        <td>{{ndf.startDate| date : "dd/MM/yy"}}</td>
+        <td>{{ndf.endDate| date : "dd/MM/yy"}}</td>
+        <td>{{ndf.nature.code}}</td>
+        <td>{{ndf.villeDepart}}</td>
+        <td>{{ndf.villeArrivee}}</td>
+        <td>{{ndf.transport}}</td>
 
         <td>
-          <div *ngIf="mission.frais ; else pasDeFrais">
-          {{mission.frais}}</div>
+          <div *ngIf="ndf.frais ; else pasDeFrais">
+          {{ndf.frais}}</div>
           <ng-template #pasDeFrais>0</ng-template>
 
         </td>
 
         <td>
-        <div *ngIf="mission.endDate < currentDate ; else missionEnCours">
+        <div *ngIf="ndf.endDate < currentDate ; else ndfEnCours">
 
           <a (click)="openDialog()"><img class="img-thumbnail" src="assets/img/ndf-ajout.png"
           class="rounded float-left" alt="+"  width='19px'></a>
@@ -42,7 +42,7 @@
               class="rounded float-right" alt="DL"  width='23px'></a>
 
       </div>
-      <ng-template #missionEnCours>
+      <ng-template #ndfEnCours>
       <a> </a>
       </ng-template>
     </td>

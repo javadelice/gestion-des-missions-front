@@ -3,8 +3,11 @@ import { NoteDeFraisService } from './notes-de-frais.service';
 import { Mission } from './notes-de-frais.domains';
 import { MissionsMock } from '../mock/MissionMock';
 //import {MatDialog} from '@angular/material/dialog';
-import { MissionsService } from '../missions/missions.service';
 import { MissionDto } from '../models/mission-dto';
+import { AuthService } from '../auth/auth.service';
+import { Router } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
+import { MissionsService } from '../missions/missions.service';
 
 @Component({
   selector: 'app-note-de-frais',
@@ -12,17 +15,24 @@ import { MissionDto } from '../models/mission-dto';
   styleUrls: ['./note-de-frais.component.css']
 })
 export class NoteDeFraisComponent implements OnInit {
-  missions:Mission[]=[];
+  missions:MissionDto[]=[];
   currentDate=new Date();
+  phaseModifier:Boolean;
+  error:boolean;
 
-  constructor(private _NDFsrv: NoteDeFraisService, ){} //public dialog: MatDialog) { }
+  constructor(private _authSrv:AuthService, private missionService:MissionsService, private _router:Router){} //public dialog: MatDialog) { }
 
   ngOnInit() {
-    this._NDFsrv.listMission().subscribe(
-      mission => this.missions=mission);
-     // this.Missions=new MissionsMock().getList();
+      this._authSrv.collegueConnecteObs.subscribe(collegueConnecte => {
+        this.missionService.recupMissions(collegueConnecte.id).subscribe((missions: MissionDto[]) => {
+          this.missions = missions;
+          this.phaseModifier = false;
+        }, (error: HttpErrorResponse) => {
+          this.error = true;
+        })
 
-  }
+  })
+}
 
   openDialog():void{
     /*

@@ -15,10 +15,12 @@ import { CommonModule } from '@angular/common';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { MissionsComponent } from './missions/missions.component';
 import { CreerMissionComponent } from './creer-mission/creer-mission.component';
+import { NoteDeFraisVisualisationComponent } from './note-de-frais-visualisation/note-de-frais-visualisation.component';
 
 const routes: Routes = [
   { path:'tech', component: TechComponent, canActivate:[StatutConnecteService]}, // /tech accessible uniquement si connecté
   { path:'notesdefrais', component: NoteDeFraisComponent, canActivate:[StatutConnecteService]},
+  { path:'ndf-visu', component: NoteDeFraisVisualisationComponent, canActivate:[StatutConnecteService]},
   { path:'missions', component: MissionsComponent, canActivate:[StatutConnecteService]}, // /missions accessible ssi connecté
   { path:'missions/creer', component:CreerMissionComponent, canActivate:[StatutConnecteService]},
   { path:'connexion', component: AuthComponent},
@@ -33,8 +35,8 @@ const routes: Routes = [
     AuthComponent,
     NoteDeFraisComponent,
     MissionsComponent,
-    CreerMissionComponent
-
+    CreerMissionComponent,
+    NoteDeFraisVisualisationComponent
   ],
   imports: [
     BrowserModule,

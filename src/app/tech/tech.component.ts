@@ -35,6 +35,7 @@ import {BackendLink} from "./tech.domains";
     <div>
     <input type="button" mdbBtn color="warning" sclass="waves-light" mdbWavesEffect value="Note de Frais" [routerLink]="['../notesdefrais/']">
     <input type="button" mdbBtn color="info" sclass="waves-light" mdbWavesEffect value="Missions" [routerLink]="['../missions/']">
+    <input type="button" mdbBtn color="success" sclass="waves-light" mdbWavesEffect value="NDF-Visu" [routerLink]="['../ndf-visu/']">
     </div>
     </mdb-card>
   `,
