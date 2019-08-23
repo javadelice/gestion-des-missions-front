@@ -12,12 +12,14 @@ import { AuthService } from '../auth/auth.service';
   styleUrls: ['./creer-mission.component.css'],
   providers: [DatePipe]
 })
-export class CreerMissionComponent implements OnInit, OnChanges {
+export class CreerMissionComponent implements OnInit {
 
   listeNatures: NatureDto[];
   isError: boolean;
+  creerOk: boolean;
+  erreur: string;
 
-  mission = new MissionDto(0, "", "", new NatureDto(0, '', '', '', 0, '', '', '', 0), '', '', '', '', null);
+  mission = new MissionDto(0, '', '', new NatureDto(0, '', '', '', 0, '', '', '', 0), '', '', '', 'INITIALE', null);
   // estimationPrime = 0;
   // difference = (this.mission.endDate.valueOf() - this.mission.startDate.valueOf())/86400000;
   // startD = 10;
@@ -28,22 +30,34 @@ export class CreerMissionComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     this.creerMissionService.getNatures().subscribe(natures => {
+      this.creerOk = false;
+      this.isError = false;
       this.listeNatures = natures;
       this._authSrv.collegueConnecteObs.subscribe(collegueConnecte => {
         this.mission.collegue = collegueConnecte;
-      }, (error: HttpErrorResponse) => {});
+      }, (error: HttpErrorResponse) => {
+        this.isError = true;
+        this.erreur = error.status + ' - ' + error.error;
+      });
     }, (error: HttpErrorResponse) => {
       this.isError = true;
+      this.erreur = error.status + ' - ' + error.error;
     });
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
-    //Add '${implements OnChanges}' to the class.
+  creer() {
+    this.creerMissionService.createMission(this.mission).subscribe(mission => {
+      this.creerOk = true;
+      this.isError = false;
+    }, (error: HttpErrorResponse) => {
+      this.creerOk = false;
+      this.isError = true;
+      this.erreur = error.error;
+    });
   }
 
-  test() {
-    console.log(this.mission.endDate);
+  recommencer() {
+    this.ngOnInit();
   }
 
 }
