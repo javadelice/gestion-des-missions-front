@@ -9,6 +9,8 @@
         <th class="th-sm">Prime</th>
         <th class="th-sm">TJM (€)</th>
         <th class="th-sm">%Prime</th>
+        <th class="th-sm">Plafond frais</th>
+        <th class="th-sm">Dépt. frais</th>
         <th class="th-sm">Actions</th>
       </tr>
     </thead>
@@ -20,6 +22,8 @@
         <td>{{NatureMission.hasPrime}}</td>
         <td>{{NatureMission.tjm}}</td>
         <td>{{NatureMission.pourcentagePrime}}</td>
+        <td>{{NatureMission.plafondFrais}}</td>
+        <td>{{NatureMission.depassPlafond}}</td>
         <td><a href=""><img class="mr-3" src="../../assets/img/edition.png" width="20"  alt="edit"></a>
           <a><img src="../../assets/img/delete.png" width="20" alt="delete" (click)="openModal(template, NatureMission.id)"></a></td>
       </tr>
