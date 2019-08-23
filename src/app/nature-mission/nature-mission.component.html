@@ -20,7 +20,8 @@
         <td>{{NatureMission.hasPrime}}</td>
         <td>{{NatureMission.tjm}}</td>
         <td>{{NatureMission.pourcentagePrime}}</td>
-        <td></td>
+        <td><a href=""><img class="mr-3" src="../../assets/img/edition.png" width="20"  alt="edit"></a>
+          <a><img src="../../assets/img/delete.png" width="20" alt="delete" (click)="openModal(template, NatureMission.id)"></a></td>
       </tr>
     </tbody>
   </table>
