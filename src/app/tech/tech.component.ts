@@ -32,7 +32,10 @@ import {BackendLink} from "./tech.domains";
       </mdb-card-body>
     </mdb-card>
     <mdb-card class="animated zoomIn">
+    <div>
     <input type="button" mdbBtn color="warning" sclass="waves-light" mdbWavesEffect value="Note de Frais" [routerLink]="['../notesdefrais/']">
+    <input type="button" mdbBtn color="info" sclass="waves-light" mdbWavesEffect value="Missions" [routerLink]="['../missions/']">
+    </div>
     </mdb-card>
   `,
   styles: []

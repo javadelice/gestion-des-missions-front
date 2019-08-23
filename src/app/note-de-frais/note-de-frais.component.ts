@@ -3,6 +3,8 @@ import { NoteDeFraisService } from './notes-de-frais.service';
 import { Mission } from './notes-de-frais.domains';
 import { MissionsMock } from '../mock/MissionMock';
 //import {MatDialog} from '@angular/material/dialog';
+import { MissionsService } from '../missions/missions.service';
+import { MissionDto } from '../models/mission-dto';
 
 @Component({
   selector: 'app-note-de-frais',
@@ -33,7 +35,7 @@ export class NoteDeFraisComponent implements OnInit {
       console.log('The dialog was closed');
       this.animal = result;
     });
-    
+
   }*/
   }
 
