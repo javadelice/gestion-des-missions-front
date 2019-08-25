@@ -1,8 +1,8 @@
 <div class="row justify-content-center mt-4">
-  <h1>Demande de mission</h1>
+  <h1>Modification d'une mission</h1>
 </div>
 
-<div class="row justify-content-center mt-3" *ngIf="creerOk==false; else creerOkBlock">
+<div class="row justify-content-center mt-3" *ngIf="modifierOk==false; else modifierOkBlock">
   <div *ngIf="isError==false; else errorBlock">
     <div class="card shadow bg-white rounded" style="width: 400px; max-width: 800px;">
       <div class="card-body ">
@@ -101,20 +101,20 @@
           </div>
 
           <!-- <div class="row align-items-center">
-            <div class="col-6">
-              <div class="row justify-content-end">
-                <strong>Estimation prime</strong>
+              <div class="col-6">
+                <div class="row justify-content-end">
+                  <strong>Estimation prime</strong>
+                </div>
               </div>
-            </div>
-            <div class="col-6">
-              {{(mission.endDate | date)}} -->
+              <div class="col-6">
+                {{(mission.endDate | date)}} -->
           <!-- {{((mission.endDate | date:"dd/MM/yyyy") - (mission.startDate | date:"dd/MM/yyyy").valueOf())}} € -->
           <!-- </div>
-          </div> -->
+            </div> -->
 
           <div class="d-flex justify-content-around m-1">
-            <button [disabled]="missionCreer.invalid" class="btn btn-info" (click)=creer()>Créer</button>
-            <button class="btn btn-info" [routerLink]="['/missions']" routerLinkActive="router-link-active" >Annuler</button>
+            <button [disabled]="missionCreer.invalid" class="btn btn-info" (click)="modifier()">Modifier</button>
+            <button class="btn btn-info" (click)="annuler()">Annuler</button>
           </div>
         </form>
       </div>
@@ -133,15 +133,15 @@
   </div>
 </ng-template>
 
-<ng-template #creerOkBlock>
+<ng-template #modifierOkBlock>
   <div class="row justify-content-center">
     <div class="alert alert-success" role="alert">
-      Une nouvelle mission a été créée avec succès !
+      La mission a été modifiée avec succès !
     </div>
   </div>
   <div>
     <div class="d-flex justify-content-center m-1">
-      <button class="btn btn-info" [routerLink]="['/missions']" routerLinkActive="router-link-active" >Ok</button>
+      <button class="btn btn-info" (click)="valider()">Ok</button>
     </div>
   </div>
 </ng-template>

@@ -13,7 +13,8 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 export class MissionsComponent implements OnInit {
 
   missions: MissionDto[];
-  idMissionASupprimer:number;
+  idMissionASupprimer: number;
+  idMissionAModifier: number;
   phaseModifier: boolean;
   isError: boolean;
   modalRef: BsModalRef;
@@ -21,24 +22,25 @@ export class MissionsComponent implements OnInit {
   constructor(private missionService: MissionsService, private _authSrv: AuthService, private modalService: BsModalService) { }
 
   ngOnInit() {
+    this.phaseModifier = false;
     this._authSrv.collegueConnecteObs.subscribe(collegueConnecte => {
       this.missionService.getMissions(collegueConnecte.id).subscribe((missions: MissionDto[]) => {
         this.missions = missions;
-        this.phaseModifier = false;
       }, (error: HttpErrorResponse) => {
         this.isError = true;
-      })
+      });
     }
       , (error: HttpErrorResponse) => {
         this.isError = true;
-      })
+      });
   }
 
-  modifierMission() {
+  modifierMission(idMission: number) {
+    this.idMissionAModifier = idMission;
     this.phaseModifier = true;
   }
 
-  openModal(template: TemplateRef<any>, idMission:number) {
+  openModal(template: TemplateRef<any>, idMission: number) {
     this.modalRef = this.modalService.show(template, {class: 'modal-sm'});
     this.idMissionASupprimer = idMission;
   }
@@ -59,7 +61,13 @@ export class MissionsComponent implements OnInit {
       this.idMissionASupprimer = undefined;
     }, (error: HttpErrorResponse) => {
       this.isError = true;
-    })
+    });
+  }
+
+  finModifier($event) {
+    if($event) {
+      this.ngOnInit();
+    }
   }
 
 }

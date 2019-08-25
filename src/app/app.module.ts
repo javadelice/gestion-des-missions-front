@@ -1,27 +1,27 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-
 import { Routes, RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
-import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { TechComponent } from './tech/tech.component';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { AuthComponent } from './auth/auth.component';
-import {FormsModule} from "@angular/forms";
-import {StatutConnecteService} from "./auth/statut-connecte.service";
-import {AuthInterceptorService} from "./auth/auth-interceptor.service";
+import {FormsModule} from '@angular/forms';
+import {StatutConnecteService} from './auth/statut-connecte.service';
+import {AuthInterceptorService} from './auth/auth-interceptor.service';
 import { MenuComponent } from './menu/menu.component';
 import { MissionsComponent } from './missions/missions.component';
 import { CreerMissionComponent } from './creer-mission/creer-mission.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { ModifierMissionComponent } from './modifier-mission/modifier-mission.component';
 
 const routes: Routes = [
-  { path:'tech', component: TechComponent, canActivate:[StatutConnecteService]}, // /tech accessible uniquement si connecté
-  { path: 'menu', component: MenuComponent, canActivate:[StatutConnecteService]},
-  { path:'missions', component: MissionsComponent, canActivate:[StatutConnecteService]}, // /missions accessible ssi connecté
-  { path:'missions/creer', component:CreerMissionComponent, canActivate:[StatutConnecteService]},
-  { path:'connexion', component: AuthComponent},
+  { path: 'tech', component: TechComponent, canActivate: [StatutConnecteService]},
+  { path: 'menu', component: MenuComponent, canActivate: [StatutConnecteService]},
+  { path: 'missions', component: MissionsComponent, canActivate: [StatutConnecteService]},
+  { path: 'missions/creer', component: CreerMissionComponent, canActivate: [StatutConnecteService]},
+  { path: 'connexion', component: AuthComponent},
   { path: '', redirectTo: '/tech', pathMatch: 'full'}
 ];
 
@@ -33,7 +33,8 @@ const routes: Routes = [
     AuthComponent,
     MenuComponent,
     MissionsComponent,
-    CreerMissionComponent
+    CreerMissionComponent,
+    ModifierMissionComponent
   ],
   imports: [
     BrowserModule,
