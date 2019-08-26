@@ -40,6 +40,10 @@ export class NatureMissionComponent implements OnInit {
     this.modalRef = this.modalService.show(template, {class: 'modal-sm'});
   }
 
+  openCreateModal(create: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(create, {class: 'modal-sm'});
+  }
+
   confirm() {
     this.deleteNature();
     this.modalRef.hide();
