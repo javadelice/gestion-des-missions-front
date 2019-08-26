@@ -11,17 +11,22 @@ import {FormsModule} from '@angular/forms';
 import {StatutConnecteService} from './auth/statut-connecte.service';
 import {AuthInterceptorService} from './auth/auth-interceptor.service';
 import { MenuComponent } from './menu/menu.component';
+import { CommonModule } from '@angular/common';
+import { ModalModule } from 'ngx-bootstrap/modal';
 import { MissionsComponent } from './missions/missions.component';
 import { CreerMissionComponent } from './creer-mission/creer-mission.component';
-import { ModalModule } from 'ngx-bootstrap/modal';
 import { ModifierMissionComponent } from './modifier-mission/modifier-mission.component';
+import { NoteDeFraisVisualisationComponent } from './note-de-frais-visualisation/note-de-frais-visualisation.component';
+import { NoteDeFraisComponent } from './note-de-frais/note-de-frais.component';
 
 const routes: Routes = [
-  { path: 'tech', component: TechComponent, canActivate: [StatutConnecteService]},
-  { path: 'menu', component: MenuComponent, canActivate: [StatutConnecteService]},
-  { path: 'missions', component: MissionsComponent, canActivate: [StatutConnecteService]},
-  { path: 'missions/creer', component: CreerMissionComponent, canActivate: [StatutConnecteService]},
-  { path: 'connexion', component: AuthComponent},
+  { path:'tech', component: TechComponent, canActivate:[StatutConnecteService]}, // /tech accessible uniquement si connecté
+  { path: 'menu', component: MenuComponent, canActivate:[StatutConnecteService]},
+  { path:'notesdefrais', component: NoteDeFraisComponent, canActivate:[StatutConnecteService]},
+  { path:'ndf-visu', component: NoteDeFraisVisualisationComponent, canActivate:[StatutConnecteService]},
+  { path:'missions', component: MissionsComponent, canActivate:[StatutConnecteService]}, // /missions accessible ssi connecté
+  { path:'missions/creer', component:CreerMissionComponent, canActivate:[StatutConnecteService]},
+  { path:'connexion', component: AuthComponent},
   { path: '', redirectTo: '/tech', pathMatch: 'full'}
 ];
 
@@ -32,9 +37,11 @@ const routes: Routes = [
     TechComponent,
     AuthComponent,
     MenuComponent,
+    NoteDeFraisComponent,
     MissionsComponent,
     CreerMissionComponent,
-    ModifierMissionComponent
+    ModifierMissionComponent,
+    NoteDeFraisVisualisationComponent
   ],
   imports: [
     BrowserModule,
@@ -43,6 +50,7 @@ const routes: Routes = [
     MDBBootstrapModule.forRoot(),
     FormsModule,
     NgbModule,
+    CommonModule,
     ModalModule.forRoot()
   ],
   providers: [{

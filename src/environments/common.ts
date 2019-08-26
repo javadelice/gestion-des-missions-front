@@ -7,5 +7,9 @@ export const config = {
   apiActuator: 'actuator',
   apiLogin: 'login',
   apiLogout: 'logout',
-  apiAuthMe: 'me'
+  apiAuthMe: 'me',
+  apiNoteDeFrais: 'notedefrais',
+  apiNoteDeFraisFromMissionId: 'notedefrais/mission=',
+  apiNoteDeFraisFromId: 'notedefrais/',
+  apiMissions : 'missions'
 };

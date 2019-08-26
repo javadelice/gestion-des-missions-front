@@ -12,25 +12,26 @@ import { HttpErrorResponse } from '@angular/common/http';
   <div class="row">
     <ul class="nav justify-content-center">
       <li class="nav-item">
-        <a class="nav-link active" href="#">Accueil</a>
+        <a class="nav-link active" type="modify" [routerLink]="['../connexion/']">Accueil</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#" routerLink="missions">Gestion des missions</a>
+        <a class="nav-link" type="success" [routerLink]="['../missions/']">Gestion des missions</a>
+
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Planning des missions</a>
+        <a class="nav-link" type="warning" [routerLink]="['../missions/']">Planning des missions</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Primes</a>
+        <a class="nav-link" [routerLink]="['../primes/']">Primes</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Saisie note de frais</a>
+        <a class="nav-link" [routerLink]="['../notedefrais/']">Saisie note de frais</a>
       </li>
       <li class="nav-item" *ngIf="isAdmin == true">
-        <a class="nav-link" href="#">Nature de missions</a>
+        <a class="nav-link" [routerLink]="['../primes/']">Nature de missions</a>
       </li>
       <li class="nav-item" *ngIf="isManager == true">
-        <a class="nav-link" href="#">Validation des missions</a>
+        <a class="nav-link" [routerLink]="['../primes/']">Validation des missions</a>
       </li>
 
     </ul>
