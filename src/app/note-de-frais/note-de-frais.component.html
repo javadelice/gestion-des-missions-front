@@ -34,7 +34,7 @@
         </td>
 
         <td>
-        <div *ngIf="mission.endDate < currentDate ; else missionEnCours">
+        <div *ngIf="true || (mission.endDate < currentDate ) ; else missionEnCours">
 
           <a (click)="openDialog()"><img class="img-thumbnail" src="assets/img/ndf-ajout.png"
           class="rounded float-left" alt="+"  width='19px'></a>

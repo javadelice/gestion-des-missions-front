@@ -13,7 +13,7 @@ import { NdfService } from '../note-de-frais/note-de-frais.service';
 })
 export class NoteDeFraisVisualisationComponent implements OnInit {
   noteDeFraisTab:NdfEntryDto[]=[];
-  missionId:number;
+  missionId:number=3;
   currentDate=new Date();
   phaseModifier:Boolean;
   error:boolean;

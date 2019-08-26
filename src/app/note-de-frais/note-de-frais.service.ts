@@ -46,7 +46,12 @@ listMission():Observable<Mission[]> {
       );
 }
 
-getNdfFromMissionId (id:number):Observable<NdfDto[]> {
+getNdfFromMissionId (missionId:number):Observable<NdfDto[]> {
+  return this._http
+    .get<NdfDto[]>(`${environment.baseUrl}${environment.apiNoteDeFraisFromMissionId}`+missionId, {withCredentials: true})
+    }
+
+getNdfFromId (id:number):Observable<NdfDto[]> {
   return this._http
       .get<NdfDto[]>(`${environment.baseUrl}${environment.apiNoteDeFraisFromId}`+'/'+id, {withCredentials: true})
     }

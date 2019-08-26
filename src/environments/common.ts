@@ -9,7 +9,7 @@ export const config = {
   apiLogout: 'logout',
   apiAuthMe: 'me',
   apiNoteDeFrais: 'notedefrais',
-  apiNoteDeFraisFromMissionId: 'notedefrais/mission=',
+  apiNoteDeFraisFromMissionId: 'notedefrais?mission=',
   apiNoteDeFraisFromId: 'notedefrais/',
   apiMissions : 'missions'
 };
