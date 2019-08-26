@@ -65,7 +65,7 @@ export class MissionsComponent implements OnInit {
   }
 
   finModifier($event) {
-    if($event) {
+    if ($event) {
       this.ngOnInit();
     }
   }

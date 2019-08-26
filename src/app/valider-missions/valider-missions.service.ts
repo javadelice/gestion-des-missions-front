@@ -11,8 +11,8 @@ export class ValiderMissionsService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getMissionsAValider(): Observable<MissionDto[]> {
-    return this.httpClient.get<MissionDto[]>(environment.baseUrl + 'valider', {withCredentials: true});
+  getMissionsAValider(idManager: number): Observable<MissionDto[]> {
+    return this.httpClient.get<MissionDto[]>(environment.baseUrl + 'valider?idManager=' + idManager, {withCredentials: true});
   }
 
   validerMission(isValidated: boolean, mission: MissionDto): Observable<MissionDto> {
