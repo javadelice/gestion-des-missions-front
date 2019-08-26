@@ -1,4 +1,4 @@
-<div class="row justify-content-center align-items-center">
+<div class="row justify-content-center align-items-center" *ngIf="isAdmin == true; else errorBlock">
   <h1>Nature des Missions</h1>
 
   <table id="missions" class="table table-striped table-bordered mt-3" cellspacing="0" width="100%">
@@ -40,6 +40,8 @@
   </div>
 </ng-template>
 
-<ng-template #modifierBlock>
-
+<ng-template #errorBlock>
+    <div class="row justify-content-center align-items-center">
+      <p>Vous ne disposez pas des autorisations nécessaires pour accéder à cette page!</p>
+    </div>
 </ng-template>

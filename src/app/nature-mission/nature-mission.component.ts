@@ -16,16 +16,20 @@ export class NatureMissionComponent implements OnInit {
   error: boolean;
   modalRef: BsModalRef;
   idNatureASupprimer:number;
+  isAdmin: boolean;
 
   constructor(private natureService: NatureMissionService, private _authSrv: AuthService, private modalService: BsModalService) { }
 
   ngOnInit() {
     this._authSrv.collegueConnecteObs.subscribe(collegueConnecte => {
+      if (collegueConnecte.roles.includes('ROLE_ADMINISTRATEUR')) {
+        this.isAdmin = true;
+      }
       this.natureService.recupNature(collegueConnecte.id).subscribe((natureMissions: NatureDto[]) => {
         this.natureMissions = natureMissions;
       }, (error: HttpErrorResponse) => {
         this.error = true;
-      })
+      });
     }
       , (error: HttpErrorResponse) => {
         this.error = true;
