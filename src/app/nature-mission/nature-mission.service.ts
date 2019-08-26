@@ -14,4 +14,8 @@ export class NatureMissionService {
   recupNature(idCollegueConnecte:number):Observable<NatureDto[]> {
     return this.httpClient.get<NatureDto[]>(environment.baseUrl + 'nature?id=' + idCollegueConnecte, {withCredentials:true});
   }
+
+  deleteNature(idNature:number) {
+    return this.httpClient.delete(environment.baseUrl + 'nature?id=' + idNature, {withCredentials:true});
+  }
 }

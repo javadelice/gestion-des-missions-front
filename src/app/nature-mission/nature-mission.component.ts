@@ -15,6 +15,7 @@ export class NatureMissionComponent implements OnInit {
   natureMissions: NatureDto[];
   error: boolean;
   modalRef: BsModalRef;
+  idNatureASupprimer:number;
 
   constructor(private natureService: NatureMissionService, private _authSrv: AuthService, private modalService: BsModalService) { }
 
@@ -33,6 +34,25 @@ export class NatureMissionComponent implements OnInit {
 
   openModal(template: TemplateRef<any>, idNature:number) {
     this.modalRef = this.modalService.show(template, {class: 'modal-sm'});
+  }
+
+  confirm() {
+    this.deleteNature();
+    this.modalRef.hide();
+  }
+
+  decline() {
+    this.idNatureASupprimer = undefined;
+    this.modalRef.hide();
+  }
+
+  deleteNature() {
+    this.natureService.deleteNature(this.idNatureASupprimer).subscribe(() => {
+      this.ngOnInit();
+      this.idNatureASupprimer = undefined;
+    }, (error: HttpErrorResponse) => {
+      this.error = true;
+    })
   }
 
 }
