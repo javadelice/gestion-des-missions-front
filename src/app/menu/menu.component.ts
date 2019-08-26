@@ -30,7 +30,7 @@ import { HttpErrorResponse } from '@angular/common/http';
         <a class="nav-link" href="#">Nature de missions</a>
       </li>
       <li class="nav-item" *ngIf="isManager == true">
-        <a class="nav-link" href="#">Validation des missions</a>
+        <a class="nav-link" href="#" routerLink="valider">Validation des missions</a>
       </li>
 
     </ul>
