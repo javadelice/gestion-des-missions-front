@@ -17,7 +17,7 @@ export class NatureMissionComponent implements OnInit {
   modalRef: BsModalRef;
   idNatureASupprimer:number;
   isAdmin: boolean;
-  natMission = new NatureDto(0, '', '', '', 0, 0, 0, '', '', '');
+  natMission = new NatureDto(0, '', '', '', 0, 0, 0, '', new Date(), '');
 
   constructor(private natureService: NatureMissionService, private _authSrv: AuthService, private modalService: BsModalService) { }
 

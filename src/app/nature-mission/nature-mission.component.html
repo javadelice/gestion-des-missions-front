@@ -43,31 +43,125 @@
             </button>
           </div>
           <div class="modal-body">
-              <p>Nature <input type="text" [validateSuccess]="false" data-error="Un code nature est requis" class="form-control" name="natureCode" mdbInputDirective [(ngModel)]="natMission.code" required></p>
-              <p>Facturée
-                <select class="custom-select" data-error="Champ obligatoire" name="natureFacturee" id="isFacturee" [(ngModel)]="natMission.isFacturee"
+            <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="natCode">Nature</label>
+            </div>
+            <div class="form-group col-md-6">
+                <input type="text" id="natCode" class="form-control" [(ngModel)]="natMission.code" required #natCode="ngModel">
+            <div *ngIf="(natCode.dirty || natCode.touched) && natCode.invalid">
+                Code invalide!
+            </div>
+          </div>
+            
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="isFacturee">Facturée</label>
+            </div>
+                <div class="form-group col-md-6">
+                <select class="custom-select" name="natureFacturee" id="isFacturee" [(ngModel)]="natMission.isFacturee"
                 required #isFacturee="ngModel">
                 <option value="OUI">Oui</option>
                 <option value="NON">Non</option>
-              </select></p>
-              <p>Versement prime <input type="text" [validateSuccess]="false" data-error="Veuillez saisir un montant" class="form-control" name="naturePrime" mdbInputDirective [(ngModel)]="natMission.hasPrime" required></p>
-              <p>TJM (€) <input type="text" [validateSuccess]="false" data-error="Veuillez saisir un montant" class="form-control" name="natureTJM" mdbInputDirective [(ngModel)]="natMission.tjm" required></p>
-              <p>%Prime <input type="text" [validateSuccess]="false" data-error="Veuillez saisir un pourcentage" class="form-control" name="nature%Prime" mdbInputDirective [(ngModel)]="natMission.pourcentagePrime" required></p>
-              <p>Plafond frais <input type="text" [validateSuccess]="false" data-error="Veuillez saisir un montant" class="form-control" name="naturePlafond" mdbInputDirective [(ngModel)]="natMission.plafondFrais" required></p>
-              <p>Dépt. frais <select class="custom-select" data-error="Champ obligatoire" name="natureDept" id="depassPlafond" [(ngModel)]="natMission.depassPlafond"
+              </select>
+              <div *ngIf="(isFacturee.dirty || isFacturee.touched) && isFacturee.invalid">
+                Champ obligatoire!
+            </div>
+            </div>
+            
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="natPrime">Versement prime</label>
+            </div>
+            <div class="form-group col-md-6">
+                 <input type="number" id="natPrime" class="form-control" name="naturePrime" [(ngModel)]="natMission.hasPrime" required #natPrime="ngModel">
+            <div *ngIf="(natPrime.dirty || natPrime.touched) && natPrime.invalid">
+                Veuillez saisir un montant!
+            </div>
+          </div>
+            
+          </div>
+          <div class="form-row">  
+            <div class="form-group col-md-6">
+                <label for="natTJM">TJM (€)</label>
+            </div>
+            <div class="form-group col-md-6">
+                <input type="number" id="natTJM" class="form-control" name="natureTJM" [(ngModel)]="natMission.tjm" required #natTJM="ngModel">
+            <div *ngIf="(natTJM.dirty || natTJM.touched) && natTJM.invalid">
+                Veuillez saisir un montant!
+            </div>
+          </div>
+            
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="nat%Prime">%Prime</label>
+            </div>
+            <div class="form-group col-md-6">
+                <input type="number" max='10' id="%Prime" class="form-control" name="nature%Prime" [(ngModel)]="natMission.pourcentagePrime" required #natPrcPrime="ngModel">
+            <div *ngIf="(natPrcPrime.dirty || natPrcPrime.touched) && natPrcPrime.invalid">
+                Veuillez saisir une valeur!
+            </div>
+          </div>
+            
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="natPlafond">Plafond frais</label>
+            </div>
+            <div class="form-group col-md-6">
+                <input type="text" id="natPlafond" class="form-control" name="naturePlafond" [(ngModel)]="natMission.plafondFrais" required #natPfd="ngModel">
+            <div *ngIf="(natPfd.dirty || natPfd.touched) && natPfd.invalid">
+                Veuillez saisir un montant!
+            </div>
+          </div>
+            
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="depassPlafond">Dépt. frais</label>
+            </div>
+            <div class="form-group col-md-6">
+                <select class="custom-select" name="natureDept" id="depassPlafond" [(ngModel)]="natMission.depassPlafond"
                 required #depassPlafond="ngModel">
                 <option value="OUI">Oui</option>
                 <option value="NON">Non</option>
-              </select></p>
-              <p>Début de validité <input type="text" [validateSuccess]="false" class="form-control" name="natureDebutValidite" mdbInputDirective [(ngModel)]="natMission.debutValidite" required></p>
-              <p>Fin de validité <input type="text" [validateSuccess]="false" data-error="Veuillez saisir une date" class="form-control" name="natureFinValidite" mdbInputDirective [(ngModel)]="natMission.finValidite" required></p>
+              </select>
+            <div *ngIf="(depassPlafond.dirty || depassPlafond.touched) && depassPlafond.invalid">
+                Champ obligatoire!
+            </div>
+          </div>
+            
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="natDV">Début de validité</label>
+            </div>
+            <div class="form-group col-md-6">
+                <input type="text" id="natDV" class="form-control" name="natureDebutValidite" [(ngModel)]="natMission.debutValidite">
+            </div>    
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="natFV">Fin de validité</label>
+            </div>
+            <div class="form-group col-md-6">
+              <input type="text" id="natFV" class="form-control" name="natureFinValidite" [(ngModel)]="natMission.finValidite" required #natFV="ngModel">
+            <div *ngIf="(natFV.dirty || natFV.touched) && natFV.invalid">
+                Veuillez saisir une date!
+            </div>
+          </div>
+            
+          </div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
             <button type="button" class="btn btn-primary">Valider</button>
           </div>
         </div>
-      </ng-template>
+    </ng-template>
 
 <ng-template #template>
   <div class="modal-body text-center">
