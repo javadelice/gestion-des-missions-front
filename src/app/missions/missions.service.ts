@@ -9,13 +9,13 @@ import { HttpClient } from '@angular/common/http';
 })
 export class MissionsService {
 
-  constructor(private httpClient:HttpClient) { }
+  constructor(private httpClient: HttpClient) { }
 
-  getMissions(idCollegueConnecte:number):Observable<MissionDto[]> {
-    return this.httpClient.get<MissionDto[]>(environment.baseUrl + 'missions?id=' + idCollegueConnecte, {withCredentials:true});
+  getMissions(idCollegueConnecte: number):Observable<MissionDto[]> {
+    return this.httpClient.get<MissionDto[]>(environment.baseUrl + 'missions?id=' + idCollegueConnecte, {withCredentials: true});
   }
 
-  deleteMission(idMission:number) {
-    return this.httpClient.delete(environment.baseUrl + 'missions?id=' + idMission, {withCredentials:true});
+  deleteMission(idMission: number) {
+    return this.httpClient.delete(environment.baseUrl + 'missions?id=' + idMission, {withCredentials: true});
   }
 }
