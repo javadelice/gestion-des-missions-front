@@ -17,6 +17,7 @@ export class NatureMissionComponent implements OnInit {
   modalRef: BsModalRef;
   idNatureASupprimer:number;
   isAdmin: boolean;
+  natMission = new NatureDto(0, '', '', '', 0, 0, 0, '', '', '');
 
   constructor(private natureService: NatureMissionService, private _authSrv: AuthService, private modalService: BsModalService) { }
 
@@ -41,7 +42,7 @@ export class NatureMissionComponent implements OnInit {
   }
 
   openCreateModal(create: TemplateRef<any>) {
-    this.modalRef = this.modalService.show(create, {class: 'modal-sm'});
+    this.modalRef = this.modalService.show(create, {class: 'modal-md'});
   }
 
   confirm() {

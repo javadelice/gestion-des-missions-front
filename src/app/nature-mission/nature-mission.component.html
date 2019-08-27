@@ -43,13 +43,28 @@
             </button>
           </div>
           <div class="modal-body">
-            <p>Nature</p>
-            <p>Facturée</p>
-            <p>Versement prime</p>
+              <p>Nature <input type="text" [validateSuccess]="false" data-error="Un code nature est requis" class="form-control" name="natureCode" mdbInputDirective [(ngModel)]="natMission.code" required></p>
+              <p>Facturée
+                <select class="custom-select" data-error="Champ obligatoire" name="natureFacturee" id="isFacturee" [(ngModel)]="natMission.isFacturee"
+                required #isFacturee="ngModel">
+                <option value="OUI">Oui</option>
+                <option value="NON">Non</option>
+              </select></p>
+              <p>Versement prime <input type="text" [validateSuccess]="false" data-error="Veuillez saisir un montant" class="form-control" name="naturePrime" mdbInputDirective [(ngModel)]="natMission.hasPrime" required></p>
+              <p>TJM (€) <input type="text" [validateSuccess]="false" data-error="Veuillez saisir un montant" class="form-control" name="natureTJM" mdbInputDirective [(ngModel)]="natMission.tjm" required></p>
+              <p>%Prime <input type="text" [validateSuccess]="false" data-error="Veuillez saisir un pourcentage" class="form-control" name="nature%Prime" mdbInputDirective [(ngModel)]="natMission.pourcentagePrime" required></p>
+              <p>Plafond frais <input type="text" [validateSuccess]="false" data-error="Veuillez saisir un montant" class="form-control" name="naturePlafond" mdbInputDirective [(ngModel)]="natMission.plafondFrais" required></p>
+              <p>Dépt. frais <select class="custom-select" data-error="Champ obligatoire" name="natureDept" id="depassPlafond" [(ngModel)]="natMission.depassPlafond"
+                required #depassPlafond="ngModel">
+                <option value="OUI">Oui</option>
+                <option value="NON">Non</option>
+              </select></p>
+              <p>Début de validité <input type="text" [validateSuccess]="false" class="form-control" name="natureDebutValidite" mdbInputDirective [(ngModel)]="natMission.debutValidite" required></p>
+              <p>Fin de validité <input type="text" [validateSuccess]="false" data-error="Veuillez saisir une date" class="form-control" name="natureFinValidite" mdbInputDirective [(ngModel)]="natMission.finValidite" required></p>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-secondary">Save changes</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+            <button type="button" class="btn btn-primary">Valider</button>
           </div>
         </div>
       </ng-template>
