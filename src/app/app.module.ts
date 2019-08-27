@@ -10,11 +10,13 @@ import { AuthComponent } from './auth/auth.component';
 import {FormsModule} from '@angular/forms';
 import {StatutConnecteService} from './auth/statut-connecte.service';
 import {AuthInterceptorService} from './auth/auth-interceptor.service';
+
 import { MenuComponent } from './menu/menu.component';
 import { MissionsComponent } from './missions/missions.component';
 import { CreerMissionComponent } from './creer-mission/creer-mission.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { ModifierMissionComponent } from './modifier-mission/modifier-mission.component';
+import { NatureMissionComponent } from './nature-mission/nature-mission.component';
 import { ValiderMissionsComponent } from './valider-missions/valider-missions.component';
 
 const routes: Routes = [
@@ -24,7 +26,8 @@ const routes: Routes = [
   { path: 'missions/creer', component: CreerMissionComponent, canActivate: [StatutConnecteService]},
   { path: 'valider', component: ValiderMissionsComponent, canActivate: [StatutConnecteService]},
   { path: 'connexion', component: AuthComponent},
-  { path: '', redirectTo: '/tech', pathMatch: 'full'}
+  { path: '', redirectTo: '/tech', pathMatch: 'full'},
+  { path:'nature', component:NatureMissionComponent, canActivate:[StatutConnecteService]}
 ];
 
 
@@ -36,6 +39,7 @@ const routes: Routes = [
     MenuComponent,
     MissionsComponent,
     CreerMissionComponent,
+    NatureMissionComponent,
     ModifierMissionComponent,
     ValiderMissionsComponent
   ],
