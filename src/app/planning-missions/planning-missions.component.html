@@ -4,13 +4,17 @@
 
 <div class="row justify-content-center align-items-center">
   <button type="button" class="btn btn-info ml-3 mr-3" (click)="prevMonth()">&lt;</button>
-  <div class="month-nav col-1"><div class="row justify-content-center">{{ currentDate.format('MMMM') | uppercase}}</div></div>
+  <div class="month-nav col-1">
+    <div class="row justify-content-center">{{ currentDate.format('MMMM') | uppercase}}</div>
+  </div>
   <button type="button" class="btn btn-info ml-3 mr-3" (click)="nextMonth()">&gt;</button>
 </div>
 
 <div class="row justify-content-center align-items-center">
   <button type="button" class="btn btn-info ml-3 mr-3" (click)="prevYear()">&lt;</button>
-  <div class="year-nav col-1"><div class="row justify-content-center">{{ currentDate.format('YYYY') }}</div></div>
+  <div class="year-nav col-1">
+    <div class="row justify-content-center">{{ currentDate.format('YYYY') }}</div>
+  </div>
   <button type="button" class="btn btn-info ml-3 mr-3" (click)="nextYear()">&gt;</button>
 </div>
 
@@ -32,11 +36,102 @@
       <tr *ngFor="let week of weeksInMonth">
         <td *ngFor="let day of week">
           <div class="row justify-content-start ml-2">{{day}}</div>
-          <div class="row justify-content-center" *ngFor="let obj of missionDates"><span *ngIf="obj.date == day">
-              <button type="button" class="btn btn-primary" style="width: 140px; height: 60px">{{obj.type}}</button>
+          <div class="row justify-content-center" *ngFor="let uneMission of missionDates"><span
+              *ngIf="uneMission.date == day">
+              <button type="button" class="btn btn-primary" style="width: 140px; height: 60px"
+                (click)="openModalMission(templateMission, uneMission.missionId)">{{uneMission.type}}</button>
             </span></div>
         </td>
       </tr>
     </tbody>
   </table>
 </div>
+
+<ng-template #templateMission>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Détails de la mission</h4>
+  </div>
+
+  <div class="modal-body text-center">
+    <div class="row align-items-center">
+      <div class="col-6">
+        <div class="row justify-content-end">
+          <strong>Date de début : </strong>
+        </div>
+      </div>
+      <div class="col ml-4">
+        <div class="row justify-content-start">
+          <strong>{{mission.startDate | date: "dd/MM/yyyy"}}</strong>
+        </div>
+      </div>
+    </div>
+
+    <div class="row align-items-center">
+      <div class="col-6">
+        <div class="row justify-content-end">
+          <strong>Date de fin : </strong>
+        </div>
+      </div>
+      <div class="col ml-4">
+        <div class="row justify-content-start">
+          <strong>{{mission.endDate | date: "dd/MM/yyyy"}}</strong>
+        </div>
+      </div>
+    </div>
+
+    <div class="row align-items-center">
+      <div class="col-6">
+        <div class="row justify-content-end">
+          <strong>Nature : </strong>
+        </div>
+      </div>
+      <div class="col ml-4">
+        <div class="row justify-content-start">
+          <strong>{{mission.nature.code}}</strong>
+        </div>
+      </div>
+    </div>
+
+    <div class="row align-items-center">
+      <div class="col-6">
+        <div class="row justify-content-end">
+          <strong>Ville de départ : </strong>
+        </div>
+      </div>
+      <div class="col ml-4">
+        <div class="row justify-content-start">
+          <strong>{{mission.villeDepart}}</strong>
+        </div>
+      </div>
+    </div>
+
+    <div class="row align-items-center">
+      <div class="col-6">
+        <div class="row justify-content-end">
+          <strong>Ville d'arrivée : </strong>
+        </div>
+      </div>
+      <div class="col ml-4">
+        <div class="row justify-content-start">
+          <strong>{{mission.villeArrivee}}</strong>
+        </div>
+      </div>
+    </div>
+
+    <div class="row align-items-center">
+      <div class="col-6">
+        <div class="row justify-content-end">
+          <strong>Transport : </strong>
+        </div>
+      </div>
+      <div class="col ml-4">
+        <div class="row justify-content-start">
+          <strong>{{mission.transport}}</strong>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-default" (click)="modalRef.hide()">Fermer</button>
+    </div>
+  </div>
+</ng-template>
