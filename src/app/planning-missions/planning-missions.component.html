@@ -3,15 +3,15 @@
 </div>
 
 <div class="row justify-content-center align-items-center">
-  <button type="button" class="btn btn-light ml-3 mr-3" (click)="prevMonth()">&lt;</button>
-  <strong class="col-1">{{ currentDate.format('MMMM') }}</strong>
-  <button type="button" class="btn btn-light ml-3 mr-3" (click)="nextMonth()">&gt;</button>
+  <button type="button" class="btn btn-info ml-3 mr-3" (click)="prevMonth()">&lt;</button>
+  <div class="month-nav col-1"><div class="row justify-content-center">{{ currentDate.format('MMMM') | uppercase}}</div></div>
+  <button type="button" class="btn btn-info ml-3 mr-3" (click)="nextMonth()">&gt;</button>
 </div>
 
 <div class="row justify-content-center align-items-center">
-  <button type="button" class="btn btn-light ml-3 mr-3" (click)="prevYear()">&lt;</button>
-  <strong class="col-1">{{ currentDate.format('YYYY') }}</strong>
-  <button type="button" class="btn btn-light ml-3 mr-3" (click)="nextYear()">&gt;</button>
+  <button type="button" class="btn btn-info ml-3 mr-3" (click)="prevYear()">&lt;</button>
+  <div class="year-nav col-1"><div class="row justify-content-center">{{ currentDate.format('YYYY') }}</div></div>
+  <button type="button" class="btn btn-info ml-3 mr-3" (click)="nextYear()">&gt;</button>
 </div>
 
 <div class="row justify-content-center align-items-center">
@@ -30,7 +30,12 @@
     </thead>
     <tbody>
       <tr *ngFor="let week of weeksInMonth">
-        <td *ngFor="let day of week">{{day}}</td>
+        <td *ngFor="let day of week">
+          <div class="row justify-content-start ml-2">{{day}}</div>
+          <div class="row justify-content-center" *ngFor="let obj of missionDates"><span *ngIf="obj.date == day">
+              <button type="button" class="btn btn-primary" style="width: 140px; height: 60px">{{obj.type}}</button>
+            </span></div>
+        </td>
       </tr>
     </tbody>
   </table>

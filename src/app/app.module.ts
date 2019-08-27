@@ -29,7 +29,7 @@ const routes: Routes = [
   { path: 'valider', component: ValiderMissionsComponent, canActivate: [StatutConnecteService]},
   { path: 'connexion', component: AuthComponent},
   { path: '', redirectTo: '/tech', pathMatch: 'full'},
-  { path:'nature', component:NatureMissionComponent, canActivate:[StatutConnecteService]}
+  { path: 'nature', component: NatureMissionComponent, canActivate: [StatutConnecteService]}
 ];
 
 

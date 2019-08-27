@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import * as moment from 'moment';
+import { generate } from 'rxjs';
+import { MissionDto } from '../models/mission-dto';
+import { MissionsService } from '../missions/missions.service';
+import { AuthService } from '../auth/auth.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-planning-missions',
@@ -8,26 +13,65 @@ import * as moment from 'moment';
 })
 export class PlanningMissionsComponent implements OnInit {
 
-  currentDate = moment();
+  currentDate = moment().locale('fr');
   numberDaysInMonth: number;
   firstDayOfMonth: number;
   datesInMonth = [];
   weeksInMonth: number[][];
 
-  constructor() { }
+  missions: MissionDto[];
+  missionDates: {
+    date: number;
+    type: string;
+  }[];
+  dateTemp;
+  isError: boolean;
+
+  constructor(private missionService: MissionsService, private _authService: AuthService) { }
 
   ngOnInit() {
+    this._authService.collegueConnecteObs.subscribe(collegueConnecte => {
+      this.missionService.getMissions(collegueConnecte.id).subscribe((missions: MissionDto[]) => {
+        this.missionDates = [];
+        this.missions = missions;
+        this.generateMissionCalendar();
+        this.generateCalendar();
+      }, (error: HttpErrorResponse) => {
+        this.isError = true;
+      });
+    }, (error: HttpErrorResponse) => {
+      this.isError = true;
+    });
+  }
+
+  generateCalendar(): void {
     this.numberDaysInMonth = this.currentDate.daysInMonth();
     this.firstDayOfMonth = this.currentDate.startOf('month').isoWeekday();
     this.weeksInMonth = [];
+    let counter = 0;
     for (let i = 1; i < this.firstDayOfMonth; i++) {
       this.datesInMonth.push(undefined);
     }
     for (let i = 1; i <= this.numberDaysInMonth; i++) {
-      this.datesInMonth.push(i);
+      this.datesInMonth.push(moment(this.currentDate).add(counter, 'day').date());
+      counter++;
     }
     while (this.datesInMonth.length > 0) {
       this.weeksInMonth.push(this.datesInMonth.splice(0, 7));
+    }
+  }
+
+  generateMissionCalendar(): void {
+    for (const mission of this.missions) {
+      if (moment(mission.startDate).month() === this.currentDate.month() && moment(mission.startDate).year() === this.currentDate.year()) {
+        this.dateTemp = moment(mission.startDate);
+        while (moment(this.dateTemp).isBefore(this.currentDate.endOf('month')) && moment(this.dateTemp).isBefore(moment(mission.endDate).add(1, 'day'))) {
+          if (moment(this.dateTemp).isoWeekday() !== 6 && moment(this.dateTemp).isoWeekday() !== 7) {
+            this.missionDates.push({date: moment(this.dateTemp).date(), type: mission.nature.code});
+          }
+          this.dateTemp = this.dateTemp.add(1, 'day');
+        }
+      }
     }
   }
 
