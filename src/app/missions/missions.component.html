@@ -16,8 +16,8 @@
     </thead>
     <tbody *ngFor="let uneMission of missions">
       <tr>
-        <td>{{uneMission.startDate}}</td>
-        <td>{{uneMission.endDate}}</td>
+        <td>{{uneMission.startDate | date: "dd/MM/yyyy"}}</td>
+        <td>{{uneMission.endDate | date: "dd/MM/yyyy"}}</td>
         <td>{{uneMission.nature.code}}</td>
         <td>{{uneMission.villeDepart}}</td>
         <td>{{uneMission.villeArrivee}}</td>

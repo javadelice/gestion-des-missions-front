@@ -15,12 +15,14 @@ import { MissionsComponent } from './missions/missions.component';
 import { CreerMissionComponent } from './creer-mission/creer-mission.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { ModifierMissionComponent } from './modifier-mission/modifier-mission.component';
+import { ValiderMissionsComponent } from './valider-missions/valider-missions.component';
 
 const routes: Routes = [
   { path: 'tech', component: TechComponent, canActivate: [StatutConnecteService]},
   { path: 'menu', component: MenuComponent, canActivate: [StatutConnecteService]},
   { path: 'missions', component: MissionsComponent, canActivate: [StatutConnecteService]},
   { path: 'missions/creer', component: CreerMissionComponent, canActivate: [StatutConnecteService]},
+  { path: 'valider', component: ValiderMissionsComponent, canActivate: [StatutConnecteService]},
   { path: 'connexion', component: AuthComponent},
   { path: '', redirectTo: '/tech', pathMatch: 'full'}
 ];
@@ -34,7 +36,8 @@ const routes: Routes = [
     MenuComponent,
     MissionsComponent,
     CreerMissionComponent,
-    ModifierMissionComponent
+    ModifierMissionComponent,
+    ValiderMissionsComponent
   ],
   imports: [
     BrowserModule,
