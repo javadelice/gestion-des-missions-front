@@ -7,9 +7,9 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { TechComponent } from './tech/tech.component';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { AuthComponent } from './auth/auth.component';
-import {FormsModule} from '@angular/forms';
-import {StatutConnecteService} from './auth/statut-connecte.service';
-import {AuthInterceptorService} from './auth/auth-interceptor.service';
+import { FormsModule} from '@angular/forms';
+import { StatutConnecteService } from './auth/statut-connecte.service';
+import { AuthInterceptorService } from './auth/auth-interceptor.service';
 
 import { MenuComponent } from './menu/menu.component';
 import { MissionsComponent } from './missions/missions.component';
@@ -53,7 +53,7 @@ const routes: Routes = [
     MDBBootstrapModule.forRoot(),
     FormsModule,
     NgbModule,
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,
