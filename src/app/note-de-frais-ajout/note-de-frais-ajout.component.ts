@@ -14,21 +14,17 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class NoteDeFraisAjoutComponent implements OnInit {
 
-  ndfEntry: NdfEntryDto;
+  newNdfEntry: NdfEntryDto =new NdfEntryDto(0, new Date(), "", 0, 0);;
   ndfEntries: NdfEntryDto[];
   modifierOk: boolean;
   isError: boolean;
   erreur: string;
-  @Input() currentNdfEntryId:number;
-  listeNatures:string[];
+  @Input() mission:MissionDto;
+
+  ndfNature:string[]= [ "ACTIVITE",  "HOTEL",  "PETIT_DEJEUNER",  "DEJEUNER",  "DINER",  "CARBURANT",  "TAXI",  "TRAIN",  "AVION"];
 
   creerOk: boolean;
 
-  mission = new MissionDto(0, '', '', new NatureDto(0, '', '', '', 1, "", '', '', 0), '', '', '', 'INITIALE', null);
-  // estimationPrime = 0;
-  // difference = (this.mission.endDate.valueOf() - this.mission.startDate.valueOf())/86400000;
-  // startD = 10;
-  // endD = 0;
 
   constructor(private _ndfService: NdfService, private _authSrv: AuthService) {
   }
@@ -36,11 +32,10 @@ export class NoteDeFraisAjoutComponent implements OnInit {
   ngOnInit() {
     this.creerOk = false;
       this.isError = false;
-    this.listeNatures=["Conseil", "Expertise Technique","Formation"];
   }
 
   creer() {
-    this._ndfService.createNdfEntry(this.ndfEntry).subscribe(ndfEntry => {
+    this._ndfService.createNdfEntry(this.newNdfEntry).subscribe(() => {
       this.creerOk = true;
       this.isError = false;
     }, (error: HttpErrorResponse) => {

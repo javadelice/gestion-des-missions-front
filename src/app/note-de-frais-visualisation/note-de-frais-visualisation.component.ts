@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, TemplateRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth/auth.service';
-import { NdfEntryDto, NdfNatureDto } from './note-de-frais-visualisation.domains';
+import { NdfEntryDto, NdfNature } from './note-de-frais-visualisation.domains';
 import { HttpErrorResponse } from '@angular/common/http';
 import { NdfService } from '../note-de-frais/note-de-frais.service';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
@@ -27,7 +27,9 @@ export class NoteDeFraisVisualisationComponent implements OnInit {
   currentNdfEntry: NdfEntryDto;
   ndfEntryIdToDelete: number;
   modalRef: BsModalRef;
-  listeNatures: string[] = ["Conseil", "Expertise Technique", "Formation"];
+  keys = Object.keys;
+  //ndfNature: NdfNature;
+  ndfNature:string[]= [ "ACTIVITE",  "HOTEL",  "PETIT_DEJEUNER",  "DEJEUNER",  "DINER",  "CARBURANT",  "TAXI",  "TRAIN",  "AVION"];
   errModif: string;
   //validerButton:BsButton;
 
@@ -51,29 +53,19 @@ export class NoteDeFraisVisualisationComponent implements OnInit {
 
   }
 
-  validerButtonAction(template: TemplateRef<any>, currentNdfId: number) {
-    this.currentNdfEntryId = this.noteDeFraisTab.findIndex((ndfEntry) => {
-      ndfEntry.id === this.currentNdfEntryId;
-    });
-
-
-    this._ndfSrv.modifyNdfEntry(this.currentNdfEntry).subscribe(() => {
-
-      this.openModal(template, currentNdfId);
-
-    }, (error: HttpErrorResponse) => {
-      this.errModif = error.message;
-    }
-
-    );
-
-
-
-
-    this.modification = false;
+  validerModif(template: TemplateRef<any>, currentNdfId: number) {
+    // this.currentNdfEntryId = this.noteDeFraisTab.findIndex((ndfEntry) => {
+    //   ndfEntry.id === this.currentNdfEntryId;
+      this._ndfSrv.modifyNdfEntry(this.currentNdfEntry).subscribe(() => {
+        this.openModal(template, currentNdfId);
+        this.modification = false;
+      }, (error: HttpErrorResponse) => {
+        this.errModif = error.message;
+      });
+    // });
   }
 
-  cancelButtonAction() {
+  cancelModif() {
     this.modification = false
   }
 
@@ -93,23 +85,29 @@ export class NoteDeFraisVisualisationComponent implements OnInit {
 
   openModalDelete(template: TemplateRef<any>, ndfEntryId: number) {
 
-    if (ndfEntryId) {
+    if (true) {
       this.noteDeFraisTab.find((ndfEntry) => {
-        if(ndfEntry.id == ndfEntryId){
+        if (ndfEntry.id == ndfEntryId) {
           this.currentNdfEntry = ndfEntry;
-        };});
-      this.ndfEntryIdToDelete = ndfEntryId;
+          this.ndfEntryIdToDelete = ndfEntryId;
+
       this.modalRef = this.modalService.show(template, {
-            backdrop: true,
-            ignoreBackdropClick: true,
-            class: 'modal-sm'
-       });
+        backdrop: true,
+        ignoreBackdropClick: true,
+        class: 'modal-sm'
+      });
+        };
+      });
+
     }
   }
 
-  confirm() {
-    this.deleteNdf();
-    this.modalRef.hide();
+  confirmDelete() {
+    this._ndfSrv.deleteNdfEntry(this.ndfEntryIdToDelete).subscribe(()=>{
+      this.modalRef.hide();
+      this.ngOnInit();
+    });
+
   }
 
   openModal(template: TemplateRef<any>, ndfId: number) {

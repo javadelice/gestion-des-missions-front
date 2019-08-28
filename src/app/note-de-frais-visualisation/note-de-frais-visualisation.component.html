@@ -59,22 +59,28 @@
         </tr>
       </tbody>
       <tbody *ngIf="modification">
-        <td><input type="text" value={{currentNdfEntry.date}}></td>
+        <td><input class="form-control mb-1" type="date" name="date" [(ngModel)]="currentNdfEntry.date" required
+            #date="ngModel" placeholder="dd/MM/yyyy">
+          <div class="invalid-feedback mb-1" *ngIf="(date.dirty || date.touched) && date.invalid">
+          </div>
+        </td>
         <td>
-          <select class="custom-select mb-1" name="nature" id="nature" value="currentNdfEntry.nature" height="3">
-            <option *ngFor="let nature of listeNatures" [ngValue]="nature">{{nature}}</option>
+          <select class="custom-select mb-1" name="nature" id="nature" [(ngModel)]="currentNdfEntry.nature" >
+            <option *ngFor="let nature of ndfNature" [ngValue]="nature">{{nature}}</option>
+
           </select>
         </td>
-        <td><input type="text" value={{currentNdfEntry.montant}}></td>
+        <td><input type="text" [(ngModel)]="currentNdfEntry.montant" ></td>
 
 
 
-        <td><a class="btn btn-success" (click)="validerButtonAction(templateModif, currentNdfEntryId)" width="4"> Valider </a>
-          <a class="btn btn-warning ml-2" (click)="cancelButtonAction()" width="4"> Annuler </a></td>
+        <td><a class="btn btn-success" (click)="validerModif(templateModif, currentNdfEntryId)" width="4">
+            Valider </a>
+          <a class="btn btn-warning ml-2" (click)="cancelModif()" width="4"> Annuler </a></td>
       </tbody>
     </table>
     <div *ngIf="!modification" class="text-right">
-      <button class="btn btn-success" routerLink="/notedefrais/creer">+</button>
+      <button class="btn btn-success" routerLink="/lignedefrais/creer">+</button>
     </div>
   </mdb-card-body>
 </mdb-card>
@@ -101,7 +107,7 @@
   </div>
   <div class="modal-footer">
     <p></p>
-    <button type="button" class="btn btn-warning" (click)="confirmModif()">Oui</button>
+    <button type="button" class="btn btn-warning" (click)="confirmDelete()">Oui</button>
     <button type="button" class="btn btn-success" (click)="decline()">Non</button>
 
   </div>
@@ -109,29 +115,28 @@
 </ng-template>
 
 <ng-template #templateModif>
-    <div class="modal-header">
-        <h4 class="modal-title pull-left">Ligne modifiée :</h4>
-      </div>
-      <div class="modal-body">
-        <table class="ml-2">
-          <tr>
-            <td>Date : </td>
-            <td>{{currentNdfEntry.date | date : "dd/MM/yyyy"}}</td>
-          </tr>
-          <tr>
-            <td>Nature :</td>
-            <td>{{currentNdfEntry.nature}}</td>
-          </tr>
-          <tr>
-            <td>Montant :</td>
-            <td>{{currentNdfEntry.montant}}</td>
-          </tr>
-        </table>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-success" (click)="confirmModif()">OK</button>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Ligne modifiée :</h4>
+  </div>
+  <div class="modal-body">
+    <table class="ml-2">
+      <tr>
+        <td>Date : </td>
+        <td>{{currentNdfEntry.date | date : "dd/MM/yyyy"}}</td>
+      </tr>
+      <tr>
+        <td>Nature :</td>
+        <td>{{currentNdfEntry.nature}}</td>
+      </tr>
+      <tr>
+        <td>Montant :</td>
+        <td>{{currentNdfEntry.montant}}</td>
+      </tr>
+    </table>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-success" (click)="confirmModif()">OK</button>
 
 
-      </div>
+  </div>
 </ng-template>
-

@@ -6,16 +6,19 @@ export class NdfEntryDto {
     public date:Date,
     public nature:string,
     public montant:number=0,
-    public collegue:Collegue,
     public NdfId:number
     ) {}
 }
 
-export class NdfNatureDto{
-  constructor(
-    public conseil:string="Conseil",
-    public expertiseTechnique:string="Expertise Technique",
-    public formation:string="Formation"
-  ) {}
+export enum NdfNature{
+    ACTIVITE,
+    HOTEL,
+    PETIT_DEJEUNER,
+    DEJEUNER,
+    DINER,
+    CARBURANT,
+    TAXI,
+    TRAIN,
+    AVION
 }
 
