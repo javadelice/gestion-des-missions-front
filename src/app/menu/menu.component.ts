@@ -25,7 +25,10 @@ import { HttpErrorResponse } from '@angular/common/http';
         <a class="nav-link" [routerLink]="['../primes/']">Primes</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" [routerLink]="['../notedefrais/']">Saisie note de frais</a>
+        <a class="nav-link" [routerLink]="['../notesdefrais/']">Saisie note de frais</a>
+      </li>
+      <li class="nav-item" >
+        <a class="nav-link" [routerLink]="['../ndf-visu/']">Ndf-visu</a>
       </li>
       <li class="nav-item" *ngIf="isAdmin == true">
         <a class="nav-link" [routerLink]="['../primes/']">Nature de missions</a>
@@ -33,6 +36,7 @@ import { HttpErrorResponse } from '@angular/common/http';
       <li class="nav-item" *ngIf="isManager == true">
         <a class="nav-link" [routerLink]="['../primes/']">Validation des missions</a>
       </li>
+
 
     </ul>
   </div>
@@ -51,12 +55,14 @@ export class MenuComponent implements OnInit {
 
   ngOnInit() {
     this._authSrv.collegueConnecteObs.subscribe(collegueConnecte => {
+      if (collegueConnecte){
       if (collegueConnecte.roles.includes('ROLE_ADMINISTRATEUR')) {
         this.isAdmin = true;
       }
       if (collegueConnecte.roles.includes('ROLE_MANAGER')) {
         this.isManager = true;
       }
+    }
     }, (error: HttpErrorResponse) => {
 
     });

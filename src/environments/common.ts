@@ -9,7 +9,11 @@ export const config = {
   apiLogout: 'logout',
   apiAuthMe: 'me',
   apiNoteDeFrais: 'notedefrais',
-  apiNoteDeFraisFromMissionId: 'notedefrais?mission=',
-  apiNoteDeFraisFromId: 'notedefrais/',
+  apiLignesDeFraisFromNdfId: 'notedefrais/',
+  apiLignedefrais: 'lignedefrais',
+  apiLignesDeFraisFromMissionId: 'notedefrais?mission=',
+  apiModifyLigneDeFrais: 'lignedefrais',
+  apiAjouterLigneDeFrais: 'lignedefrais',
+  apiDeleteLigneDeFrais: 'lignedefrais?id=',
   apiMissions : 'missions'
 };

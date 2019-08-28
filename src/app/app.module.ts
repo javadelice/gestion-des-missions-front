@@ -18,11 +18,13 @@ import { CreerMissionComponent } from './creer-mission/creer-mission.component';
 import { ModifierMissionComponent } from './modifier-mission/modifier-mission.component';
 import { NoteDeFraisVisualisationComponent } from './note-de-frais-visualisation/note-de-frais-visualisation.component';
 import { NoteDeFraisComponent } from './note-de-frais/note-de-frais.component';
+import { NoteDeFraisAjoutComponent } from './note-de-frais-ajout/note-de-frais-ajout.component';
 
 const routes: Routes = [
   { path:'tech', component: TechComponent, canActivate:[StatutConnecteService]}, // /tech accessible uniquement si connecté
-  { path: 'menu', component: MenuComponent, canActivate:[StatutConnecteService]},
+  { path:'menu', component: MenuComponent, canActivate:[StatutConnecteService]},
   { path:'notesdefrais', component: NoteDeFraisComponent, canActivate:[StatutConnecteService]},
+  { path:'lignedefrais/creer', component:NoteDeFraisAjoutComponent, canActivate:[StatutConnecteService]},
   { path:'ndf-visu', component: NoteDeFraisVisualisationComponent, canActivate:[StatutConnecteService]},
   { path:'missions', component: MissionsComponent, canActivate:[StatutConnecteService]}, // /missions accessible ssi connecté
   { path:'missions/creer', component:CreerMissionComponent, canActivate:[StatutConnecteService]},
@@ -41,7 +43,8 @@ const routes: Routes = [
     MissionsComponent,
     CreerMissionComponent,
     ModifierMissionComponent,
-    NoteDeFraisVisualisationComponent
+    NoteDeFraisVisualisationComponent,
+    NoteDeFraisAjoutComponent
   ],
   imports: [
     BrowserModule,
