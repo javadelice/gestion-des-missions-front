@@ -6,7 +6,8 @@
   <div *ngIf="isError==false; else errorBlock">
     <div class="card shadow bg-white rounded" style="width: 400px; max-width: 800px;">
       <div class="card-body ">
-        <form class="was-validated" #missionCreer="ngForm">
+        <form (ngSubmit)="creer()" class="was-validated" #missionCreer="ngForm">
+
           <div class="row align-items-center">
             <div class="col-5">
               <div class="row justify-content-end">
@@ -16,7 +17,7 @@
             <div class="col">
               <input class="form-control mb-1" type="date" name="dateDebut" [(ngModel)]="mission.startDate" required
                 min="{{currentDate | date: 'yyyy-MM-dd'}}" #dateDebut="ngModel" />
-              <div class="invalid-feedback mb-1" *ngIf="(dateDebut.dirty || dateDebut.touched) && dateDebut.invalid">
+              <div class="invalid-feedback mb-1" *ngIf="(dateDebut.dirty || dateDebut.touched) && dateDebut.invalid">Date de début de mission requise
               </div>
             </div>
           </div>
@@ -30,7 +31,7 @@
             <div class="col">
               <input class="form-control mb-1" type="date" name="dateFin" [(ngModel)]="mission.endDate" required
                 min="{{currentDate | date: 'yyyy-MM-dd'}}" #dateFin="ngModel" />
-              <div class="invalid-feedback mb-1" *ngIf="(dateFin.dirty || dateFin.touched) && dateFin.invalid"></div>
+              <div class="invalid-feedback mb-1" *ngIf="(dateFin.dirty || dateFin.touched) && dateFin.invalid">Date de fin de mission requise</div>
             </div>
           </div>
 
@@ -41,14 +42,12 @@
               </div>
             </div>
             <div class="col">
-              <mat-form-field>
-                <mat-select class="custom-select mb-1" name="nature" id="nature" [(ngModel)]="mission.nature" required
-                  #nature="ngModel">
-                  <mat-option *ngFor="let uneNature of listeNatures" [value]="uneNature">{{uneNature.code}}</mat-option>
-                </mat-select>
-              </mat-form-field>
+              <select class="custom-select mb-1 form-control" id="nature" name="nature" [(ngModel)]="mission.nature"
+                #nature="ngModel" required>
+                <option *ngFor="let uneNature of listeNatures" [ngValue]="uneNature">{{uneNature.code}}</option>
+              </select>
               <div class="invalid-feedback mb-1" *ngIf="(nature.dirty || nature.touched) && nature.invalid">Nature
-                required
+                requis
               </div>
             </div>
           </div>
@@ -98,7 +97,7 @@
                 <option value="TRAIN">Train</option>
                 <option value="VOITURE_DE_SERVICE">Voiture de service</option>
               </select>
-              <div class="invalid-feedback mb-1" *ngIf="(transport.dirty || transport.touched) && transport.invalid">
+              <div class="invalid-feedback mb-1" *ngIf="(transport.dirty || transport.touched) && transport.invalid">Transport requis
               </div>
             </div>
           </div>
@@ -116,7 +115,7 @@
           </div> -->
 
           <div class="d-flex justify-content-around m-1">
-            <button [disabled]="missionCreer.invalid" class="btn btn-info" (click)=creer()>Créer</button>
+            <button [disabled]="missionCreer.invalid" class="btn btn-info">Créer</button>
             <button class="btn btn-info" [routerLink]="['/missions']"
               routerLinkActive="router-link-active">Annuler</button>
           </div>

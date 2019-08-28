@@ -8,12 +8,8 @@ import { TechComponent } from './tech/tech.component';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { AuthComponent } from './auth/auth.component';
 import { FormsModule} from '@angular/forms';
-import { MatSelectModule } from '@angular/material/select';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import {MatInputModule} from '@angular/material/input';
 import { StatutConnecteService } from './auth/statut-connecte.service';
 import { AuthInterceptorService } from './auth/auth-interceptor.service';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { MenuComponent } from './menu/menu.component';
 import { MissionsComponent } from './missions/missions.component';
@@ -55,10 +51,6 @@ const routes: Routes = [
     FormsModule,
     NgbModule,
     ModalModule.forRoot(),
-    MatSelectModule,
-    MatFormFieldModule,
-    BrowserAnimationsModule,
-    MatInputModule,
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,
