@@ -15,7 +15,7 @@
             </div>
             <div class="col">
               <input class="form-control mb-1" type="date" name="dateDebut" [(ngModel)]="mission.startDate" required
-                #dateDebut="ngModel" />
+                min="{{currentDate | date: 'yyyy-MM-dd'}}" #dateDebut="ngModel" />
               <div class="invalid-feedback mb-1" *ngIf="(dateDebut.dirty || dateDebut.touched) && dateDebut.invalid">
               </div>
             </div>
@@ -29,7 +29,7 @@
             </div>
             <div class="col">
               <input class="form-control mb-1" type="date" name="dateFin" [(ngModel)]="mission.endDate" required
-                #dateFin="ngModel" />
+                min="{{currentDate | date: 'yyyy-MM-dd'}}" #dateFin="ngModel" />
               <div class="invalid-feedback mb-1" *ngIf="(dateFin.dirty || dateFin.touched) && dateFin.invalid"></div>
             </div>
           </div>
@@ -41,11 +41,14 @@
               </div>
             </div>
             <div class="col">
-              <select class="custom-select mb-1" name="nature" id="nature" [(ngModel)]="mission.nature" required
-                #nature="ngModel">
-                <option *ngFor="let nature of listeNatures" [ngValue]="nature">{{nature.code}}</option>
-              </select>
-              <div class="invalid-feedback mb-1" *ngIf="(nature.dirty || nature.touched) && nature.invalid">
+              <mat-form-field>
+                <mat-select class="custom-select mb-1" name="nature" id="nature" [(ngModel)]="mission.nature" required
+                  #nature="ngModel">
+                  <mat-option *ngFor="let uneNature of listeNatures" [value]="uneNature">{{uneNature.code}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+              <div class="invalid-feedback mb-1" *ngIf="(nature.dirty || nature.touched) && nature.invalid">Nature
+                required
               </div>
             </div>
           </div>
@@ -114,7 +117,8 @@
 
           <div class="d-flex justify-content-around m-1">
             <button [disabled]="missionCreer.invalid" class="btn btn-info" (click)=creer()>Créer</button>
-            <button class="btn btn-info" [routerLink]="['/missions']" routerLinkActive="router-link-active" >Annuler</button>
+            <button class="btn btn-info" [routerLink]="['/missions']"
+              routerLinkActive="router-link-active">Annuler</button>
           </div>
         </form>
       </div>
@@ -141,7 +145,7 @@
   </div>
   <div>
     <div class="d-flex justify-content-center m-1">
-      <button class="btn btn-info" [routerLink]="['/missions']" routerLinkActive="router-link-active" >Ok</button>
+      <button class="btn btn-info" [routerLink]="['/missions']" routerLinkActive="router-link-active">Ok</button>
     </div>
   </div>
 </ng-template>

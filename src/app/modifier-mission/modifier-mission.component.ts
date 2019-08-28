@@ -20,6 +20,7 @@ export class ModifierMissionComponent implements OnInit {
   modifierOk: boolean;
   isError: boolean;
   erreur: string;
+  currentDate = new Date();
 
   constructor(private creerMissionService: CreerMissionService, private modifierMissionService: ModifierMissionService) { }
 

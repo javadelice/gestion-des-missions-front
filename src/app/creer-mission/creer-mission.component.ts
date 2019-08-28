@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { MissionDto } from '../models/mission-dto';
 import { NatureDto } from '../models/nature-dto';
@@ -18,6 +18,8 @@ export class CreerMissionComponent implements OnInit {
   isError: boolean;
   creerOk: boolean;
   erreur: string;
+  currentDate = new Date();
+  test = '2019-08-28';
 
   mission = new MissionDto(0, '', '', new NatureDto(0, '', '', '', 0, 0, 0, '', '', ''), '', '', '', 'INITIALE', null);
   // estimationPrime = 0;

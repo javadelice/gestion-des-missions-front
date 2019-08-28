@@ -14,7 +14,7 @@
               </div>
             </div>
             <div class="col">
-              <input class="form-control mb-1" type="date" name="dateDebut" [(ngModel)]="mission.startDate" required
+              <input class="form-control mb-1" type="date" name="dateDebut" [(ngModel)]="mission.startDate" required min="{{currentDate | date: 'yyyy-MM-dd'}}"
                 #dateDebut="ngModel" />
               <div class="invalid-feedback mb-1" *ngIf="(dateDebut.dirty || dateDebut.touched) && dateDebut.invalid">
               </div>
@@ -28,7 +28,7 @@
               </div>
             </div>
             <div class="col">
-              <input class="form-control mb-1" type="date" name="dateFin" [(ngModel)]="mission.endDate" required
+              <input class="form-control mb-1" type="date" name="dateFin" [(ngModel)]="mission.endDate" required min="{{currentDate | date: 'yyyy-MM-dd'}}"
                 #dateFin="ngModel" />
               <div class="invalid-feedback mb-1" *ngIf="(dateFin.dirty || dateFin.touched) && dateFin.invalid"></div>
             </div>
