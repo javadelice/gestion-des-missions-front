@@ -60,11 +60,19 @@ export class NatureMissionComponent implements OnInit {
   }
 
   creerNature() {
+    if (this.natMission.isFacturee !== 'OUI') {
+      this.natMission.tjm = null;
+      this.natMission.hasPrime = null;
+    }
+    if (this.natMission.hasPrime !== 'OUI') {
+      this.natMission.pourcentagePrime = null;
+    }
     this.natureService.createNature(this.natMission).subscribe(nature => {
       this.creerNatOk = true;
       this.isError = false;
       this.modalRef.hide();
       this.natureMissions.push(nature);
+      this.natMission = new NatureDto(0, '', '', '', 0, 0, 0, '');
     }, (error: HttpErrorResponse) => {
       this.creerNatOk = false;
       this.isError = true;

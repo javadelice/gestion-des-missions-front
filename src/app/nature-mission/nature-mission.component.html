@@ -60,7 +60,7 @@
             <div class="form-group col-md-6">
                 <label for="isFacturee">Facturée</label>
             </div>
-                <div class="form-group col-md-6">
+              <div class="form-group col-md-6">
                 <select class="custom-select" name="isFacturee" id="isFacturee" [(ngModel)]="natMission.isFacturee"
                 required #isFacturee="ngModel">
                 <option value="OUI">Oui</option>
@@ -68,11 +68,24 @@
               </select>
               <div class="invalid-feedback mb-1" *ngIf="(isFacturee.dirty || isFacturee.touched) && isFacturee.invalid">
                 Champ obligatoire!
-            </div>
+              </div>
             </div>
 
           </div>
-          <div class="form-row">
+
+          <div class="form-row" *ngIf="natMission.isFacturee === 'OUI'">
+            <div class="form-group col-md-6">
+                <label for="natTJM">TJM (€)</label>
+            </div>
+            <div class="form-group col-md-6">
+                <input type="number" id="natTJM" class="form-control" name="natureTJM" [(ngModel)]="natMission.tjm" required #natTJM="ngModel">
+            <div class="invalid-feedback mb-1" *ngIf="(natTJM.dirty || natTJM.touched) && natTJM.invalid">
+                Veuillez saisir un montant!
+            </div>
+          </div>
+          </div>
+
+          <div class="form-row"*ngIf="natMission.isFacturee === 'OUI'">
             <div class="form-group col-md-6">
                 <label for="natPrime">Versement prime</label>
             </div>
@@ -88,30 +101,20 @@
             </div>
 
           </div>
-          <div class="form-row">
-            <div class="form-group col-md-6">
-                <label for="natTJM">TJM (€)</label>
-            </div>
-            <div class="form-group col-md-6">
-                <input type="number" id="natTJM" class="form-control" name="natureTJM" [(ngModel)]="natMission.tjm" required #natTJM="ngModel">
-            <div class="invalid-feedback mb-1" *ngIf="(natTJM.dirty || natTJM.touched) && natTJM.invalid">
-                Veuillez saisir un montant!
-            </div>
-          </div>
 
-          </div>
-          <div class="form-row">
+
+          <div class="form-row" *ngIf="natMission.isFacturee === 'OUI' && natMission.hasPrime === 'OUI'">
             <div class="form-group col-md-6">
                 <label for="nat%Prime">%Prime</label>
             </div>
             <div class="form-group col-md-6">
                 <input type="number" step="0.1" id="%Prime" class="form-control" name="nature%Prime" [(ngModel)]="natMission.pourcentagePrime" required #natPrcPrime="ngModel">
+              </div>
             <div class="invalid-feedback mb-1" *ngIf="(natPrcPrime.dirty || natPrcPrime.touched) && natPrcPrime.invalid">
                 Veuillez saisir une valeur!
             </div>
           </div>
 
-          </div>
           <div class="form-row">
             <div class="form-group col-md-6">
                 <label for="natPlafond">Plafond frais</label>
