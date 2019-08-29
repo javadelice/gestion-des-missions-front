@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { Routes, RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
-import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { TechComponent } from './tech/tech.component';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { AuthComponent } from './auth/auth.component';
@@ -19,6 +19,9 @@ import { ModifierMissionComponent } from './modifier-mission/modifier-mission.co
 import { NatureMissionComponent } from './nature-mission/nature-mission.component';
 import { ValiderMissionsComponent } from './valider-missions/valider-missions.component';
 import { PlanningMissionsComponent } from './planning-missions/planning-missions.component';
+import { PrimesComponent } from './primes/primes.component';
+import { PrimesGraphiqueComponent } from './primes-graphique/primes-graphique.component';
+import { ChartsModule } from 'ng2-charts';
 
 const routes: Routes = [
   { path: 'tech', component: TechComponent, canActivate: [StatutConnecteService]},
@@ -27,6 +30,7 @@ const routes: Routes = [
   { path: 'missions/creer', component: CreerMissionComponent, canActivate: [StatutConnecteService]},
   { path: 'planning', component: PlanningMissionsComponent, canActivate: [StatutConnecteService]},
   { path: 'valider', component: ValiderMissionsComponent, canActivate: [StatutConnecteService]},
+  { path: 'primes', component: PrimesComponent, canActivate: [StatutConnecteService]},
   { path: 'connexion', component: AuthComponent},
   { path: '', redirectTo: '/tech', pathMatch: 'full'},
   { path: 'nature', component: NatureMissionComponent, canActivate: [StatutConnecteService]}
@@ -44,7 +48,9 @@ const routes: Routes = [
     NatureMissionComponent,
     ModifierMissionComponent,
     ValiderMissionsComponent,
-    PlanningMissionsComponent
+    PlanningMissionsComponent,
+    PrimesComponent,
+    PrimesGraphiqueComponent,
   ],
   imports: [
     BrowserModule,
@@ -54,6 +60,7 @@ const routes: Routes = [
     FormsModule,
     NgbModule,
     ModalModule.forRoot(),
+    ChartsModule,
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,
