@@ -14,7 +14,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
   styleUrls: ['./note-de-frais.component.css']
 })
 export class NoteDeFraisComponent implements OnInit {
-  missions:MissionDto[]=[];
+  missions:MissionDto[];
   frais:number[];
   currentDate=new Date();
   phaseModifier:Boolean;

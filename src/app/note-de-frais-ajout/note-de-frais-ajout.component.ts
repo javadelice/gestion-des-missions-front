@@ -13,8 +13,8 @@ import { HttpErrorResponse } from '@angular/common/http';
   styleUrls: ['./note-de-frais-ajout.component.css']
 })
 export class NoteDeFraisAjoutComponent implements OnInit {
-
-  newNdfEntry: NdfEntryDto =new NdfEntryDto(0, new Date(), "", 0, 0);;
+  currentDate = new Date();
+  newNdfEntry: NdfEntryDto =new NdfEntryDto(0, this.currentDate, "", 0, 1);
   ndfEntries: NdfEntryDto[];
   modifierOk: boolean;
   isError: boolean;
@@ -30,6 +30,10 @@ export class NoteDeFraisAjoutComponent implements OnInit {
   }
 
   ngOnInit() {
+if(this.mission){
+ this.newNdfEntry.NdfId=this.mission.ndfId;
+}
+
     this.creerOk = false;
       this.isError = false;
   }

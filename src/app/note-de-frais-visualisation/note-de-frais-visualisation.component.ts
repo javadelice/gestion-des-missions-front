@@ -15,7 +15,7 @@ import { NatureDto } from '../models/nature-dto';
 })
 export class NoteDeFraisVisualisationComponent implements OnInit {
   noteDeFraisTab: NdfEntryDto[] = [];
-  currentMission: MissionDto = new MissionDto(3, "", "", null, "", "", "", "", null);
+  currentMission: MissionDto = new MissionDto(3, "", "", null, "", "", "", "", null, 0);
   @Input() mission: MissionDto;
   currentDate = new Date();
   phaseModifier: Boolean;
@@ -31,13 +31,19 @@ export class NoteDeFraisVisualisationComponent implements OnInit {
   //ndfNature: NdfNature;
   ndfNature:string[]= [ "ACTIVITE",  "HOTEL",  "PETIT_DEJEUNER",  "DEJEUNER",  "DINER",  "CARBURANT",  "TAXI",  "TRAIN",  "AVION"];
   errModif: string;
+  newNdfEntry: NdfEntryDto =new NdfEntryDto(0, this.currentDate, "", 0, 1);
   //validerButton:BsButton;
+  creation:boolean;
+  creerOk:boolean;
+  err:string;
 
 
   constructor(private _authSrv: AuthService, private _ndfSrv: NdfService, private _router: Router, private modalService: BsModalService) { } //public dialog: MatDialog) { }
 
   ngOnInit() {
-
+    this.creerOk = false;
+    this.error = false;
+  this.creation=false;
     this.modification = false;
 
     if (this.mission.id) {
@@ -143,7 +149,24 @@ export class NoteDeFraisVisualisationComponent implements OnInit {
   }
 
 
+  creationActivate(){
+    this.creation=true;
+    this.newNdfEntry.NdfId=this.currentMission.ndfId;
+  }
+  recommencer() {
+    this.ngOnInit();
+  }
 
+      creer() {
+        this._ndfSrv.createNdfEntry(this.newNdfEntry).subscribe(() => {
+          this.creerOk = true;
+          this.error = false;
+        }, (error: HttpErrorResponse) => {
+          this.creerOk = false;
+          this.error = true;
+          this.err = error.error;
+        });
+      }
 }
 
 
