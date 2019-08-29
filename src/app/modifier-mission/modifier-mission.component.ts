@@ -20,12 +20,14 @@ export class ModifierMissionComponent implements OnInit {
   modifierOk: boolean;
   isError: boolean;
   erreur: string;
+  currentDate = new Date();
 
   constructor(private creerMissionService: CreerMissionService, private modifierMissionService: ModifierMissionService) { }
 
   ngOnInit() {
     this.modifierMissionService.getMission(this.missionId).subscribe(mission => {
       this.mission = mission;
+      this.mission.nature = null;
       this.isError = false;
       this.modifierOk = false;
       this.creerMissionService.getNatures().subscribe(natures => {
