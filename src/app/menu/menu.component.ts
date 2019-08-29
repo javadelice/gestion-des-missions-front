@@ -50,10 +50,10 @@ export class MenuComponent implements OnInit {
 
   ngOnInit() {
     this._authSrv.collegueConnecteObs.subscribe(collegueConnecte => {
-      if (collegueConnecte.roles.includes('ROLE_ADMINISTRATEUR')) {
+      if (collegueConnecte.roles !== undefined && collegueConnecte.roles.includes('ROLE_ADMINISTRATEUR')) {
         this.isAdmin = true;
       }
-      if (collegueConnecte.roles.includes('ROLE_MANAGER')) {
+      if (collegueConnecte.roles !== undefined && collegueConnecte.roles.includes('ROLE_MANAGER')) {
         this.isManager = true;
       }
     }, (error: HttpErrorResponse) => {

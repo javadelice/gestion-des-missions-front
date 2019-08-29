@@ -18,4 +18,8 @@ export class MissionsService {
   deleteMission(idMission: number) {
     return this.httpClient.delete(environment.baseUrl + 'missions?id=' + idMission, {withCredentials: true});
   }
+
+  traitementNuit() {
+    return this.httpClient.get(environment.baseUrl + 'update', {withCredentials: true});
+  }
 }
