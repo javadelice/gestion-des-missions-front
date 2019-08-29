@@ -120,7 +120,7 @@
                 <label for="natPlafond">Plafond frais</label>
             </div>
             <div class="form-group col-md-6">
-                <input type="text" id="natPlafond" class="form-control" name="naturePlafond" [(ngModel)]="natMission.plafondFrais" required #natPfd="ngModel">
+                <input type="number" id="natPlafond" class="form-control" name="naturePlafond" [(ngModel)]="natMission.plafondFrais" required #natPfd="ngModel">
             <div class="invalid-feedback mb-1" *ngIf="(natPfd.dirty || natPfd.touched) && natPfd.invalid">
                 Veuillez saisir un montant!
             </div>
