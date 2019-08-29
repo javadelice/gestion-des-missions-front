@@ -141,15 +141,6 @@
 
           </div>
           <div class="form-row">
-            <div class="form-group col-md-6">
-                <label for="natFV">Fin de validité</label>
-            </div>
-            <div class="form-group col-md-6">
-              <input type="text" id="natFV" type="date" class="form-control" name="natureFinValidite" [(ngModel)]="natMission.finValidite" required #natFV="ngModel">
-            <div class="invalid-feedback mb-1" *ngIf="(natFV.dirty || natFV.touched) && natFV.invalid">
-                Veuillez sélectionner une date!
-            </div>
-          </div>
           <div class="alert alert-danger ml-3" *ngIf="isError">
               {{erreur}}
             </div>
