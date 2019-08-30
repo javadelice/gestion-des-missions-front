@@ -37,6 +37,8 @@ export class NoteDeFraisVisualisationComponent implements OnInit {
   creation:boolean;
   creerOk:boolean;
   err:string;
+  doublon:boolean;
+  indexMatching:number;
 
 
   constructor(private _authSrv: AuthService, private _ndfSrv: NdfService, private _router: Router, private modalService: BsModalService) { } //public dialog: MatDialog) { }
@@ -46,6 +48,7 @@ export class NoteDeFraisVisualisationComponent implements OnInit {
     this.error = false;
     this.creation=false;
     this.modification = false;
+    this.doublon=false;
 
     if(true){
     //if (this.mission) {
@@ -61,15 +64,21 @@ export class NoteDeFraisVisualisationComponent implements OnInit {
 
   }
 
-  validerModif(template: TemplateRef<any>, currentNdfId: number) {
+  validerModif(template: TemplateRef<any>, index: number) {
     // this.currentNdfEntryId = this.noteDeFraisTab.findIndex((ndfEntry) => {
     //   ndfEntry.id === this.currentNdfEntryId;
+
+    if((this.noteDeFraisTab[index].date === this.currentNdfEntry.date)
+        && (this.noteDeFraisTab[index].nature === this.currentNdfEntry.nature)){
+          this.doublon=true;
+        }else{
       this._ndfSrv.modifyNdfEntry(this.currentNdfEntry).subscribe(() => {
-        this.openModal(template, currentNdfId);
+        this.openModal(template, this.currentNdfEntry.id);
         this.modification = false;
       }, (error: HttpErrorResponse) => {
         this.errModif = error.message;
       });
+    }
     // });
   }
 
@@ -77,12 +86,13 @@ export class NoteDeFraisVisualisationComponent implements OnInit {
     this.modification = false
   }
 
-  modifierNdfEntry(ndfId: number) {
+  modifierNdfEntry(ndfId: number,i) {
     this.phaseModifier = true;
     if (ndfId) {
       this.noteDeFraisTab.find((ndfEntry) => {
         if (ndfEntry.id == ndfId) {
           this.currentNdfEntry = ndfEntry;
+          this.indexMatching= i;
         };
       })
       //this.currentNdfEntryId=ndfId;
@@ -160,6 +170,11 @@ export class NoteDeFraisVisualisationComponent implements OnInit {
   }
 
       creer() {
+
+      if((this.noteDeFraisTab[this.currentNdfEntry.id].date === this.currentNdfEntry.date)
+        && (this.noteDeFraisTab[this.currentNdfEntry.id].nature === this.currentNdfEntry.nature)){
+          this.doublon=true;
+        }else{
         this._ndfSrv.createNdfEntry(this.newNdfEntry).subscribe(() => {
           this.creerOk = true;
           this.error = false;
@@ -167,8 +182,10 @@ export class NoteDeFraisVisualisationComponent implements OnInit {
           this.creerOk = false;
           this.error = true;
           this.err = error.error;
+          this.doublon=false;
         });
       }
+    }
 }
 
 

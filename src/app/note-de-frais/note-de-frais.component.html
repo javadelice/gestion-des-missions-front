@@ -36,7 +36,7 @@
               </td>
 
               <td>
-                <div *ngIf="missionIsEchue(mission) && mission.statut == 'VALIDEE'">
+                <div *ngIf="true || missionIsEchue(mission) && mission.statut == 'VALIDEE'">
                   <a><img class="img-thumbnail" src="assets/img/ndf-ajout.png" class="rounded float-left" alt="+"
                       width='19px' (click)="ajoutNdf(mission)"></a>
                   <a (click)="exportToPDF()"><img class="img-thumbnail" src="assets/img/ndf-download.png"
