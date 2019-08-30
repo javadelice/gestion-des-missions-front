@@ -19,12 +19,12 @@
       <tr>
         <td>{{NatureMission.code}}</td>
         <td>{{NatureMission.isFacturee}}</td>
-        <td>{{NatureMission.hasPrime}}</td>
-        <td>{{NatureMission.tjm}}</td>
-        <td>{{NatureMission.pourcentagePrime}}</td>
+        <td>{{NatureMission.isFacturee === "OUI" ? NatureMission.hasPrime : "/"}}</td>
+        <td>{{NatureMission.isFacturee === "OUI" ? NatureMission.tjm : "/"}}</td>
+        <td>{{NatureMission.isFacturee === "OUI" && NatureMission.hasPrime === "OUI" ? NatureMission.pourcentagePrime : "/"}}</td>
         <td>{{NatureMission.plafondFrais}}</td>
         <td>{{NatureMission.depassPlafond}}</td>
-        <td><a><img class="mr-3" src="../../assets/img/edition.png" width="20" alt="edit" (click)="openModifModal(modif)"></a>
+        <td><a><img class="mr-3" src="../../assets/img/edition.png" width="20" alt="edit" (click)="openModifModal(modif, NatureMission)"></a>
           <a><img src="../../assets/img/delete.png" width="20" alt="delete" ></a></td>
       </tr>
     </tbody>
@@ -274,6 +274,7 @@
               <button [disabled]="natureModifier.invalid" class="btn btn-primary" (click)=modifierNature()>Valider</button>
               <button class="btn btn-info" (click)=annulerModif()>Annuler</button>
             </div>
+
           </form>
           </div>
 
@@ -293,10 +294,7 @@
     </div>
 </ng-template>
 
+<ng-template #notFactBlock>
 
-<<<<<<< HEAD
-<ng-template #elseBlock>
-  <p>Essai</p>
 </ng-template>
-=======
->>>>>>> master
+

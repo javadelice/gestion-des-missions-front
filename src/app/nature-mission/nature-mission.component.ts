@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef } from '@angular/core';
+import { Component, OnInit, TemplateRef, EventEmitter, Output } from '@angular/core';
 import { NatureDto } from '../models/nature-dto';
 import { NatureMissionService } from './nature-mission.service';
 import { AuthService } from '../auth/auth.service';
@@ -16,12 +16,14 @@ export class NatureMissionComponent implements OnInit {
   isError: boolean;
   creerNatOk: boolean;
   natureMissions: NatureDto[];
+  natModifOK: boolean;
   error: boolean;
   modalRef: BsModalRef;
   idNatureASupprimer:number;
   idNatureACreer:number;
   isAdmin: boolean;
   natMission = new NatureDto(0, '', '', '', 0, 0, 0, '');
+  idNature: number;
 
   constructor(private natureService: NatureMissionService, private _authSrv: AuthService, private modalService: BsModalService) { }
 
@@ -51,6 +53,7 @@ export class NatureMissionComponent implements OnInit {
   }
 
   openModifModal(modif: TemplateRef<any>, natureAt:NatureDto) {
+    this.natMission = {...natureAt};
     this.modalRef = this.modalService.show(modif, {class: 'modal-sm'});
   }
 
@@ -98,6 +101,24 @@ export class NatureMissionComponent implements OnInit {
       this.error = true;
     });
   }
+
+  modifierNature() {
+    this.natureService.modifyNature(this.natMission).subscribe(natureModif => {
+      this.natModifOK = true;
+      this.isError = false;
+      this.modalRef.hide();
+      this.ngOnInit();
+    }, (error: HttpErrorResponse) => {
+      this.natModifOK = false;
+      this.isError = true;
+      this.erreur = error.error;
+    });
+  }
+
+
+  annulerModif() {
+    this.modalRef.hide();
+}
 
   recommencer() {
     this.ngOnInit();
