@@ -47,7 +47,7 @@ export class NatureMissionComponent implements OnInit {
   }
 
   openCreateModal(create: TemplateRef<any>) {
-    this.modalRef = this.modalService.show(create, {class: 'modal-sm'});
+    this.modalRef = this.modalService.show(create, {class: 'modal-md'});
   }
 
   openModifModal(modif: TemplateRef<any>, natureAt:NatureDto) {
@@ -64,13 +64,44 @@ export class NatureMissionComponent implements OnInit {
     this.modalRef.hide();
   }
 
+  creerNature() {
+    if (this.natMission.isFacturee !== 'OUI') {
+      this.natMission.tjm = null;
+      this.natMission.hasPrime = null;
+    }
+    if (this.natMission.hasPrime !== 'OUI') {
+      this.natMission.pourcentagePrime = null;
+    }
+    this.natureService.createNature(this.natMission).subscribe(nature => {
+      this.creerNatOk = true;
+      this.isError = false;
+      this.modalRef.hide();
+      this.natureMissions.push(nature);
+      this.natMission = new NatureDto(0, '', '', '', 0, 0, 0, '');
+    }, (error: HttpErrorResponse) => {
+      this.creerNatOk = false;
+      this.isError = true;
+      this.erreur = error.error;
+    });
+  }
+
+  annulerCreation() {
+    this.modalRef.hide();
+    this.natMission = new NatureDto(0, '', '', '', 0, 0, 0, '');
+  }
+
   deleteNature() {
     this.natureService.deleteNature(this.idNatureASupprimer).subscribe(() => {
       this.ngOnInit();
       this.idNatureASupprimer = undefined;
     }, (error: HttpErrorResponse) => {
       this.error = true;
-    })
+    });
   }
+
+  recommencer() {
+    this.ngOnInit();
+  }
+
 
 }

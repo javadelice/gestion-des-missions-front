@@ -15,8 +15,13 @@ export class NatureMissionService {
     return this.httpClient.get<NatureDto[]>(environment.baseUrl + 'nature?id=' + idCollegueConnecte, {withCredentials:true});
   }
 
+<<<<<<< HEAD
   modifyNature(nature: NatureDto): Observable<NatureDto> {
     return this.httpClient.patch<NatureDto>(environment.baseUrl + 'nature', nature, {withCredentials: true});
+=======
+  createNature(nature: NatureDto): Observable<NatureDto>{
+    return this.httpClient.post<NatureDto>(environment.baseUrl + 'nature', nature, {withCredentials: true});
+>>>>>>> master
   }
 
   deleteNature(idNature:number) {
