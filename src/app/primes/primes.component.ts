@@ -15,8 +15,7 @@ export class PrimesComponent implements OnInit {
   missionsEchues: MissionDto[];
   anneePrimes: number = new Date().getFullYear();
   anneesPrimes: number[];
-  moisPrimes = [{mois: 0, prime: 0}, {mois: 1, prime: 0}, {mois: 2, prime: 0}, {mois: 3, prime: 0}, {mois: 4, prime: 0}, {mois: 5, prime: 0},
-    {mois: 6, prime: 0}, {mois: 7, prime: 0}, {mois: 8, prime: 0}, {mois: 9, prime: 0}, {mois: 10, prime: 0}, {mois: 11, prime: 0}];
+  moisPrimes: { mois: number; prime: number }[];
 
   primes: number[];
 
@@ -25,11 +24,33 @@ export class PrimesComponent implements OnInit {
   constructor(private primesService: PrimesService, private _authServ: AuthService) { }
 
   ngOnInit() {
-    this.missionsEchues = [];
     this.anneesPrimes = [];
+    this._authServ.collegueConnecteObs.subscribe(collegueConnecte => {
+      this.idCollegueConnecte = collegueConnecte.id;
+      this.primesService.getMissionsEchues(this.idCollegueConnecte).subscribe(missions => {
+        for (const mission of missions) {
+          if (!this.anneesPrimes.includes(new Date(mission.endDate).getFullYear())) {
+            this.anneesPrimes.push(new Date(mission.endDate).getFullYear());
+          }
+        }
+        this.anneesPrimes.sort().reverse();
+        this.anneePrimes = this.anneesPrimes[0];
+      }, (error: HttpErrorResponse) => {
+        this.isError = true;
+      });
+    }, (error: HttpErrorResponse) => {
+      this.isError = true;
+    });
+
+    this.initData();
+  }
+
+  initData() {
+    this.missionsEchues = [];
     this.primes = [];
-    this.moisPrimes = [{mois: 0, prime: 0}, {mois: 1, prime: 0}, {mois: 2, prime: 0}, {mois: 3, prime: 0}, {mois: 4, prime: 0}, {mois: 5, prime: 0},
-      {mois: 6, prime: 0}, {mois: 7, prime: 0}, {mois: 8, prime: 0}, {mois: 9, prime: 0}, {mois: 10, prime: 0}, {mois: 11, prime: 0}];
+    this.moisPrimes = [{ mois: 0, prime: 0 }, { mois: 1, prime: 0 }, { mois: 2, prime: 0 }, { mois: 3, prime: 0 },
+    { mois: 4, prime: 0 }, { mois: 5, prime: 0 }, { mois: 6, prime: 0 }, { mois: 7, prime: 0 },
+    { mois: 8, prime: 0 }, { mois: 9, prime: 0 }, { mois: 10, prime: 0 }, { mois: 11, prime: 0 }];
 
     this._authServ.collegueConnecteObs.subscribe(collegueConnecte => {
       this.idCollegueConnecte = collegueConnecte.id;
@@ -37,9 +58,6 @@ export class PrimesComponent implements OnInit {
         for (const mission of missions) {
           if (new Date(mission.endDate).getFullYear() === this.anneePrimes) {
             this.missionsEchues.push(mission);
-          }
-          if (!this.anneesPrimes.includes(new Date(mission.endDate).getFullYear())) {
-            this.anneesPrimes.push(new Date(mission.endDate).getFullYear());
           }
 
           for (const obj of this.moisPrimes) {
@@ -51,6 +69,7 @@ export class PrimesComponent implements OnInit {
         for (const obj of this.moisPrimes) {
           this.primes.push(obj.prime);
         }
+        this.primesService.publier(this.primes);
       }, (error: HttpErrorResponse) => {
         this.isError = true;
       });

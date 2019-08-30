@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { MissionDto } from '../models/mission-dto';
 import { environment } from 'src/environments/environment';
 
@@ -9,11 +9,15 @@ import { environment } from 'src/environments/environment';
 })
 export class PrimesService {
 
-  constructor(private httpClient: HttpClient) { }
-
-  getMissionsEchuesByAnnee(idCollegue: number, annee: number): Observable<MissionDto[]> {
-    return this.httpClient.get<MissionDto[]>(environment.baseUrl + 'missionsechuesannee?idCollegue=' + idCollegue + '&annee=' + annee, {withCredentials: true});
+  private subPrimes = new Subject<number[]>();
+  publier(primes: number[]) {
+    this.subPrimes.next(primes);
   }
+  abonnement(): Observable<number[]> {
+    return this.subPrimes.asObservable();
+  }
+
+  constructor(private httpClient: HttpClient) { }
 
   getMissionsEchues(idCollegue: number): Observable<MissionDto[]> {
     return this.httpClient.get<MissionDto[]>(environment.baseUrl + 'missionsechues?idCollegue=' + idCollegue, {withCredentials: true});

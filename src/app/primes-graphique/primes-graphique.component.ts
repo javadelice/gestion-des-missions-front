@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ChartDataSets, ChartOptions, ChartType } from 'chart.js';
 import { Label } from 'ng2-charts';
+import { PrimesService } from '../primes/primes.service';
 
 @Component({
   selector: 'app-primes-graphique',
@@ -9,31 +10,33 @@ import { Label } from 'ng2-charts';
 })
 export class PrimesGraphiqueComponent implements OnInit {
 
-  @Input() primes: number[];
-
-  primes2 = [{ data: [] }];
+  primes: number[];
 
   public barChartOptions: ChartOptions = {
     responsive: true,
+    title: {
+      display: true,
+      text: 'Primes en € ',
+      fontSize: 20,
+    }
   };
   public barChartLabels: Label[] = ['Janv.', 'Fév.', 'Mars', 'Avril', 'Mai', 'Juin', 'Juill.', 'Août', 'Sept.', 'Oct.', 'Nov.', 'Déc.'];
   public barChartType: ChartType = 'bar';
-  public barChartLegend = true;
+  public barChartLegend = false;
   public barChartPlugins = [];
 
-  public barChartData: ChartDataSets[] = this.primes2;
+  public barChartData: ChartDataSets[] = [{ data: [] }];
 
-  constructor() { }
+  constructor(private primesService: PrimesService) { }
 
   ngOnInit() {
-    this.primes2 = [];
-    // this.primes2[0].data = [];
-    console.log(this.primes);
-    this.primes2[0].data = this.primes;
-    // for (let obj of this.moisPrimes) {
-    //   console.log(obj.prime);
-    //   this.primes2[0].data.push(obj.prime);
-    // }
+    this.primesService.abonnement().subscribe(primes => {
+      this.primes = primes;
+      this.barChartData[0] = {
+        data: this.primes, backgroundColor: 'rgba(41,128,185,0.6)', borderColor: 'rgba(41,128,185,1)',
+        hoverBackgroundColor: 'rgba(41,128,185,0.8)', hoverBorderColor: 'rgba(41,128,185,1)'
+      };
+    });
   }
 
 }
