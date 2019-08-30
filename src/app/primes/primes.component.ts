@@ -3,6 +3,7 @@ import { PrimesService } from './primes.service';
 import { MissionDto } from '../models/mission-dto';
 import { AuthService } from '../auth/auth.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { FileSaverService } from 'ngx-filesaver';
 
 @Component({
   selector: 'app-primes',
@@ -21,7 +22,7 @@ export class PrimesComponent implements OnInit {
 
   isError: boolean;
 
-  constructor(private primesService: PrimesService, private _authServ: AuthService) { }
+  constructor(private primesService: PrimesService, private _authServ: AuthService, private _fileSaverService: FileSaverService) { }
 
   ngOnInit() {
     this.anneesPrimes = [];
@@ -78,4 +79,11 @@ export class PrimesComponent implements OnInit {
     });
   }
 
+  downloadCsv() {
+    let fichier = '"Date de début","Date de fin","Nature","Prime (€)"\n';
+    for (const mission of this.missionsEchues) {
+      fichier += `"${mission.startDate}","${mission.endDate}","${mission.nature.code}","${mission.prime}"\n`;
+    }
+    this._fileSaverService.save(new Blob(["\ufeff", fichier]), `${this.anneePrimes}.csv`);
+  }
 }

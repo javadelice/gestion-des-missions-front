@@ -22,6 +22,7 @@ import { PlanningMissionsComponent } from './planning-missions/planning-missions
 import { PrimesComponent } from './primes/primes.component';
 import { PrimesGraphiqueComponent } from './primes-graphique/primes-graphique.component';
 import { ChartsModule } from 'ng2-charts';
+import { FileSaverModule } from 'ngx-filesaver';
 
 const routes: Routes = [
   { path: 'tech', component: TechComponent, canActivate: [StatutConnecteService]},
@@ -61,6 +62,7 @@ const routes: Routes = [
     NgbModule,
     ModalModule.forRoot(),
     ChartsModule,
+    FileSaverModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

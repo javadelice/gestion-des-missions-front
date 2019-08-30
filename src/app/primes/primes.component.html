@@ -8,6 +8,7 @@
     style="width: 100px" (click)="initData()">
     <option *ngFor="let annee of anneesPrimes" [ngValue]="annee">{{annee}}</option>
   </select>
+  <a><img class="ml-2" (click)="downloadCsv()" width="35" src="../../assets/img/csv.png"/></a>
 </div>
 
 <div class="row justify-content-start mt-3">
