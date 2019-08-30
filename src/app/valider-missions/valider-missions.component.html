@@ -13,8 +13,8 @@
         <th class="th-sm">Actions</th>
       </tr>
     </thead>
-    <tbody *ngFor="let uneMission of listeMissions">
-      <tr>
+    <tbody>
+      <tr *ngFor="let uneMission of listeMissions">
         <td>{{uneMission.startDate | date: "dd/MM/yyyy"}}</td>
         <td>{{uneMission.endDate | date: "dd/MM/yyyy"}}</td>
         <td>{{uneMission.nature.code}}</td>
