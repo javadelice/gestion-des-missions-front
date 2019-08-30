@@ -14,8 +14,8 @@
         <th class="th-sm">Actions</th>
       </tr>
     </thead>
-    <tbody *ngFor="let uneMission of missions">
-      <tr>
+    <tbody>
+      <tr *ngFor="let uneMission of missions">
         <td>{{uneMission.startDate | date: "dd/MM/yyyy"}}</td>
         <td>{{uneMission.endDate | date: "dd/MM/yyyy"}}</td>
         <td>{{uneMission.nature.code}}</td>
@@ -24,7 +24,7 @@
         <td>{{uneMission.transport}}</td>
         <td>{{uneMission.statut}}</td>
         <td><a><img class="mr-3" src="../../assets/img/edition.png" *ngIf="uneMission.statut == 'INITIALE' || uneMission.statut == 'REJETEE'" width="20"  alt="edit" (click)="modifierMission(uneMission.id)"></a>
-          <a><img src="../../assets/img/delete.png" width="20" alt="delete" (click)="openModal(template, uneMission.id)"></a></td>
+          <a><img src="../../assets/img/delete.png" *ngIf="uneMission.statut == 'INITIALE' || uneMission.statut == 'REJETEE'" width="20" alt="delete" (click)="openModal(template, uneMission.id)"></a></td>
       </tr>
     </tbody>
   </table>
@@ -35,7 +35,7 @@
   <div class="modal-body text-center">
     <p>Confirmez-vous la suppression de la mission ?</p>
     <button type="button" class="btn btn-default" (click)="confirm()">Yes</button>
-    <button type="button" class="btn btn-primary" (click)="decline()">No</button>
+    <button type="button" class="btn btn-danger" (click)="decline()">No</button>
   </div>
 </ng-template>
 

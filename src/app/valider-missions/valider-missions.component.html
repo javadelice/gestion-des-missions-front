@@ -13,8 +13,8 @@
         <th class="th-sm">Actions</th>
       </tr>
     </thead>
-    <tbody *ngFor="let uneMission of listeMissions">
-      <tr>
+    <tbody>
+      <tr *ngFor="let uneMission of listeMissions">
         <td>{{uneMission.startDate | date: "dd/MM/yyyy"}}</td>
         <td>{{uneMission.endDate | date: "dd/MM/yyyy"}}</td>
         <td>{{uneMission.nature.code}}</td>
@@ -35,7 +35,7 @@
   <div class="modal-body text-center">
     <p>Confirmez-vous la validation de la mission ?</p>
     <button type="button" class="btn btn-default" (click)="validerMission()">Yes</button>
-    <button type="button" class="btn btn-primary" (click)="decline()">No</button>
+    <button type="button" class="btn btn-danger" (click)="decline()">No</button>
   </div>
 </ng-template>
 
@@ -43,7 +43,7 @@
   <div class="modal-body text-center">
     <p>Confirmez-vous le rejet de la mission ?</p>
     <button type="button" class="btn btn-default" (click)="validerMission()">Yes</button>
-    <button type="button" class="btn btn-primary" (click)="decline()">No</button>
+    <button type="button" class="btn btn-danger" (click)="decline()">No</button>
   </div>
 </ng-template>
 
