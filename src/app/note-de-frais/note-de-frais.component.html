@@ -57,5 +57,17 @@
 </div>
 
 <div *ngIf="ndfvisu">
+  <table><tr>
+    <td>{{missionChosen.id}}</td>
+    <td>{{missionChosen.startDate| date : "dd/MM/yy"}}</td>
+    <td>{{missionChosen.ndfCumul.id}}</td>
+    <td>{{missionChosen.endDate| date : "dd/MM/yy"}}</td>
+    <td>{{missionChosen.villeDepart}}</td>
+
+    <td>{{missionChosen.collegue.nom}}</td>
+    <td>{{missionChosen.collegue.id}}</td>
+    <td>{{missionChosen.villeArrivee}}</td>
+    <td>{{missionChosen.transport}}</td>
+  </tr></table>
   <app-note-de-frais-visualisation [mission]="missionChosen"></app-note-de-frais-visualisation>
 </div>

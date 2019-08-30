@@ -5,6 +5,7 @@ import { MissionDto } from '../models/mission-dto';
 import { NdfService } from '../note-de-frais/note-de-frais.service';
 import { AuthService } from '../auth/auth.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { NdfCumul } from '../note-de-frais/note-de-frais.domains';
 
 
 @Component({
@@ -14,7 +15,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class NoteDeFraisAjoutComponent implements OnInit {
   currentDate = new Date();
-  newNdfEntry: NdfEntryDto =new NdfEntryDto(0, this.currentDate, "", 0, 1);
+  newNdfEntry: NdfEntryDto =new NdfEntryDto(0, this.currentDate, "", 0, new NdfCumul());
   ndfEntries: NdfEntryDto[];
   modifierOk: boolean;
   isError: boolean;
@@ -31,7 +32,7 @@ export class NoteDeFraisAjoutComponent implements OnInit {
 
   ngOnInit() {
 if(this.mission){
- this.newNdfEntry.NdfId=this.mission.ndfId;
+ this.newNdfEntry.ndfCumul.id=this.mission.ndfCumul.id;
 }
 
     this.creerOk = false;

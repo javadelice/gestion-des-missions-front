@@ -20,3 +20,7 @@ export class NdfDto {
     }
 }
 
+export class NdfCumul{
+  id:number;
+}
+

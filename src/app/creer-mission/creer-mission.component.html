@@ -115,7 +115,7 @@
           </div> -->
 
           <div class="d-flex justify-content-around m-1">
-            <button [disabled]="missionCreer.invalid" class="btn btn-default" (click)=creer()>Créer</button>
+            <button [disabled]="missionCreer.invalid" class="btn btn-default">Créer</button>
             <button class="btn btn-danger" [routerLink]="['/missions']" routerLinkActive="router-link-active" >Annuler</button>
           </div>
         </form>
@@ -128,6 +128,21 @@
   <div class="col-6">
     <div class="alert alert-danger ml-3" role="alert">
       {{erreur}}
+      <table><tr>
+          <td>{{mission.id}}</td>
+          <td>{{mission.startDate| date : "dd/MM/yy"}}</td>
+          <td>{{mission.ndfCumul.id}}</td>
+          <td>{{mission.endDate| date : "dd/MM/yy"}}</td>
+          <td>{{mission.villeDepart}}</td>
+          <td>{{mission.villeArrivee}}</td>
+          <td>{{mission.transport}}</td>
+          <td>{{mission.collegue}}</td>
+          <td>{{mission.collegue.nom}}</td>
+          <td>{{mission.collegue.prenom}}</td>
+          <td>{{mission.collegue.id}}</td>
+
+        </tr></table>
+
     </div>
     <div class="d-flex justify-content-center m-1">
       <button class="btn btn-info" (click)="recommencer()">Ok</button>

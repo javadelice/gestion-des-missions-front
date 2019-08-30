@@ -7,6 +7,7 @@ import { NdfService } from '../note-de-frais/note-de-frais.service';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { MissionDto } from '../models/mission-dto';
 import { NatureDto } from '../models/nature-dto';
+import { NdfCumul } from '../note-de-frais/note-de-frais.domains';
 
 @Component({
   selector: 'app-note-de-frais-visualisation',
@@ -15,7 +16,7 @@ import { NatureDto } from '../models/nature-dto';
 })
 export class NoteDeFraisVisualisationComponent implements OnInit {
   noteDeFraisTab: NdfEntryDto[]=[];
-  currentMission: MissionDto = new MissionDto(3, "", "", null, "", "", "", "", null, 0);
+  currentMission: MissionDto = new MissionDto(3, "", "", null, "", "", "", "", null, new NdfCumul());
   @Input() mission: MissionDto;
   currentDate = new Date();
   phaseModifier: Boolean;
@@ -31,7 +32,7 @@ export class NoteDeFraisVisualisationComponent implements OnInit {
   //ndfNature: NdfNature;
   ndfNature:string[]= [ "ACTIVITE",  "HOTEL",  "PETIT_DEJEUNER",  "DEJEUNER",  "DINER",  "CARBURANT",  "TAXI",  "TRAIN",  "AVION"];
   errModif: string;
-  newNdfEntry: NdfEntryDto =new NdfEntryDto(0, this.currentDate, "", 0, 1);
+  newNdfEntry: NdfEntryDto =new NdfEntryDto(0, this.currentDate, "", 0, new NdfCumul());
   //validerButton:BsButton;
   creation:boolean;
   creerOk:boolean;
@@ -152,7 +153,7 @@ export class NoteDeFraisVisualisationComponent implements OnInit {
 
   creationActivate(){
     this.creation=true;
-    this.newNdfEntry.NdfId=this.currentMission.ndfId;
+    this.newNdfEntry.ndfCumul=this.mission.ndfCumul;
   }
   recommencer() {
     this.ngOnInit();

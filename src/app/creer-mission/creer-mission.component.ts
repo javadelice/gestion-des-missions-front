@@ -5,6 +5,8 @@ import { NatureDto } from '../models/nature-dto';
 import { CreerMissionService } from './creer-mission.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AuthService } from '../auth/auth.service';
+import { NdfCumul } from '../note-de-frais/note-de-frais.domains';
+import { Collegue } from '../auth/auth.domains';
 
 @Component({
   selector: 'app-creer-mission',
@@ -19,10 +21,11 @@ export class CreerMissionComponent implements OnInit {
   creerOk: boolean;
   erreur: string;
   currentDate = new Date();
+  col:Collegue;
 
   //mission = new MissionDto(0, '', '', null, '', '', '', 'INITIALE', null,0);
 
-  mission = new MissionDto(0, '', '', new NatureDto(0, '', '', '', 1, "", '', '', 0), '', '', '', 'INITIALE', null, 0);
+  mission = new MissionDto(0, '', '', new NatureDto(0, '', '', '', 1, "", '', '', 0), '', '', '', 'INITIALE', null, new NdfCumul());
   // estimationPrime = 0;
   // difference = (this.mission.endDate.valueOf() - this.mission.startDate.valueOf())/86400000;
   // startD = 10;
@@ -37,7 +40,7 @@ export class CreerMissionComponent implements OnInit {
       this.isError = false;
       this.listeNatures = natures;
       this._authSrv.collegueConnecteObs.subscribe(collegueConnecte => {
-        this.mission.collegue = collegueConnecte;
+      this.mission.collegue = collegueConnecte;
       }, (error: HttpErrorResponse) => {
         this.isError = true;
         this.erreur = error.status + ' - ' + error.error;

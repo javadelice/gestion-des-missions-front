@@ -1,4 +1,12 @@
-{{currentMission.ndfId}}
+<table><tr>
+    <td>{{currentMission.id}}</td>
+    <td>{{currentMission.startDate| date : "dd/MM/yy"}}</td>
+    <td>{{currentMission.ndfCumul.id}}</td>
+    <td>{{currentMission.endDate| date : "dd/MM/yy"}}</td>
+    <td>{{currentMission.villeDepart}}</td>
+    <td>{{currentMission.villeArrivee}}</td>
+    <td>{{currentMission.transport}}</td>
+  </tr></table>
 
 
 <div *ngIf="!creation">
@@ -233,7 +241,29 @@
   <ng-template #creerOkBlock>
     <div class="row justify-content-center">
       <div class="alert alert-success" role="alert">
-        Une nouvelle ligne de frais a été créée avec succès !
+        <div class="modal-title">
+          Title
+        </div>
+        <div class="modal-header"><h3>Ligne de frais ajoutée</h3></div>
+          <div class="modal-body">
+              <table class="ml-2">
+                <tr>
+                  <td>Date : </td>
+                  <td>{{newNdfEntry.date | date : "dd/MM/yyyy"}}</td>
+                </tr>
+                <tr>
+                  <td>Nature :</td>
+                  <td>{{newNdfEntry.nature}}</td>
+                </tr>
+                <tr>
+                  <td>Montant :</td>
+                  <td>{{newNdfEntry.montant}}</td>
+                </tr>
+                <tr>
+                <td>NdfId :</td>
+                <td>{{newNdfEntry.ndfCumul.id}}</td>
+                </tr>              </table>
+            </div>
       </div>
     </div>
     <div>

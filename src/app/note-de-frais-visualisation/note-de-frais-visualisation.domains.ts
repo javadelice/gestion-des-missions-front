@@ -1,4 +1,5 @@
 import { Collegue } from '../auth/auth.domains';
+import { NdfCumul} from '../note-de-frais/note-de-frais.domains'
 
 export class NdfEntryDto {
   constructor(
@@ -6,7 +7,7 @@ export class NdfEntryDto {
     public date:Date,
     public nature:string,
     public montant:number=0,
-    public NdfId:number
+    public ndfCumul:NdfCumul
     ) {}
 }
 
