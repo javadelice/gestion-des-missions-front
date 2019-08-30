@@ -15,6 +15,10 @@ export class NatureMissionService {
     return this.httpClient.get<NatureDto[]>(environment.baseUrl + 'nature?id=' + idCollegueConnecte, {withCredentials:true});
   }
 
+  createNature(nature: NatureDto): Observable<NatureDto>{
+    return this.httpClient.post<NatureDto>(environment.baseUrl + 'nature', nature, {withCredentials: true});
+  }
+
   deleteNature(idNature:number) {
     return this.httpClient.delete(environment.baseUrl + 'nature?id=' + idNature, {withCredentials:true});
   }
