@@ -15,8 +15,7 @@ import { NdfCumul } from '../note-de-frais/note-de-frais.domains';
   styleUrls: ['./note-de-frais-visualisation.component.css']
 })
 export class NoteDeFraisVisualisationComponent implements OnInit {
-  noteDeFraisTab: NdfEntryDto[]=[];
-  currentMission: MissionDto = new MissionDto(3, "", "", null, "", "", "", "", null, new NdfCumul());
+  noteDeFraisTab: NdfEntryDto[] = [];
   @Input() mission: MissionDto;
   currentDate = new Date();
   phaseModifier: Boolean;
@@ -30,13 +29,19 @@ export class NoteDeFraisVisualisationComponent implements OnInit {
   modalRef: BsModalRef;
   keys = Object.keys;
   //ndfNature: NdfNature;
-  ndfNature:string[]= [ "ACTIVITE",  "HOTEL",  "PETIT_DEJEUNER",  "DEJEUNER",  "DINER",  "CARBURANT",  "TAXI",  "TRAIN",  "AVION"];
+  ndfNature: string[] = ["ACTIVITE", "HOTEL", "PETIT_DEJEUNER", "DEJEUNER", "DINER", "CARBURANT", "TAXI", "TRAIN", "AVION"];
   errModif: string;
-  newNdfEntry: NdfEntryDto =new NdfEntryDto(0, this.currentDate, "", 0, new NdfCumul());
+  newNdfEntry: NdfEntryDto = new NdfEntryDto(0, this.currentDate, "", 0, new NdfCumul());
   //validerButton:BsButton;
-  creation:boolean;
-  creerOk:boolean;
-  err:string;
+  creation: boolean;
+  creerOk: boolean;
+  err: string;
+
+  ndfCumul: NdfCumul;
+  erreurAjoutLDF: boolean;
+  verifDoublonLDF: boolean;
+  montantNDF: number;
+  depassementValider: boolean;
 
 
   constructor(private _authSrv: AuthService, private _ndfSrv: NdfService, private _router: Router, private modalService: BsModalService) { } //public dialog: MatDialog) { }
@@ -44,44 +49,46 @@ export class NoteDeFraisVisualisationComponent implements OnInit {
   ngOnInit() {
     this.creerOk = false;
     this.error = false;
-    this.creation=false;
+    this.creation = false;
     this.modification = false;
+    this.erreurAjoutLDF = false;
+    this.depassementValider = false;
 
-    if(true){
+    this.ndfCumul = new NdfCumul();
+
     //if (this.mission) {
-      //this._authSrv.collegueConnecteObs.subscribe(collegueConnecte => {
-        this._ndfSrv.getNdfEntriesFromMissionId(this.mission.id).subscribe((noteDeFraisTab: NdfEntryDto[]) => {
-          this.noteDeFraisTab = noteDeFraisTab;
-          this.phaseModifier = false;
-        }, (error: HttpErrorResponse) => {
-          this.error = true;
-        })
+    //this._authSrv.collegueConnecteObs.subscribe(collegueConnecte => {
+    this._ndfSrv.getNdfEntriesFromMissionId(this.mission.id).subscribe((noteDeFraisTab: NdfEntryDto[]) => {
+      this.noteDeFraisTab = noteDeFraisTab;
+      this.phaseModifier = false;
+    }, (error: HttpErrorResponse) => {
+      this.error = true;
+    });
 
-    }
 
   }
 
   validerModif(template: TemplateRef<any>, currentNdfId: number) {
     // this.currentNdfEntryId = this.noteDeFraisTab.findIndex((ndfEntry) => {
     //   ndfEntry.id === this.currentNdfEntryId;
-      this._ndfSrv.modifyNdfEntry(this.currentNdfEntry).subscribe(() => {
-        this.openModal(template, currentNdfId);
-        this.modification = false;
-      }, (error: HttpErrorResponse) => {
-        this.errModif = error.message;
-      });
+    this._ndfSrv.modifyNdfEntry(this.currentNdfEntry).subscribe(() => {
+      this.openModal(template, currentNdfId);
+      this.modification = false;
+    }, (error: HttpErrorResponse) => {
+      this.errModif = error.message;
+    });
     // });
   }
 
   cancelModif() {
-    this.modification = false
+    this.modification = false;
   }
 
   modifierNdfEntry(ndfId: number) {
     this.phaseModifier = true;
     if (ndfId) {
       this.noteDeFraisTab.find((ndfEntry) => {
-        if (ndfEntry.id == ndfId) {
+        if (ndfEntry.id === ndfId) {
           this.currentNdfEntry = ndfEntry;
         };
       })
@@ -95,15 +102,15 @@ export class NoteDeFraisVisualisationComponent implements OnInit {
 
     if (true) {
       this.noteDeFraisTab.find((ndfEntry) => {
-        if (ndfEntry.id == ndfEntryId) {
+        if (ndfEntry.id === ndfEntryId) {
           this.currentNdfEntry = ndfEntry;
           this.ndfEntryIdToDelete = ndfEntryId;
 
-      this.modalRef = this.modalService.show(template, {
-        backdrop: true,
-        ignoreBackdropClick: true,
-        class: 'modal-sm'
-      });
+          this.modalRef = this.modalService.show(template, {
+            backdrop: true,
+            ignoreBackdropClick: true,
+            class: 'modal-sm'
+          });
         };
       });
 
@@ -111,7 +118,7 @@ export class NoteDeFraisVisualisationComponent implements OnInit {
   }
 
   confirmDelete() {
-    this._ndfSrv.deleteNdfEntry(this.ndfEntryIdToDelete).subscribe(()=>{
+    this._ndfSrv.deleteNdfEntry(this.ndfEntryIdToDelete).subscribe(() => {
       this.modalRef.hide();
       this.ngOnInit();
     });
@@ -151,24 +158,63 @@ export class NoteDeFraisVisualisationComponent implements OnInit {
   }
 
 
-  creationActivate(){
-    this.creation=true;
-    this.newNdfEntry.ndfCumul=this.mission.ndfCumul;
+  creationActivate() {
+    this.creation = true;
+    this.erreurAjoutLDF = false;
+    this.verifDoublonLDF = true;
+    this.newNdfEntry = new NdfEntryDto(0, this.currentDate, '', 0, new NdfCumul());
   }
   recommencer() {
-    this.ngOnInit();
+    this.creerOk = false;
+    this.error = false;
+    this.creation = false;
+    this.modification = false;
+    this.erreurAjoutLDF = false;
+    this.verifDoublonLDF = true;
+    this.depassementValider = false;
   }
 
-      creer() {
-        this._ndfSrv.createNdfEntry(this.newNdfEntry).subscribe(() => {
-          this.creerOk = true;
-          this.error = false;
-        }, (error: HttpErrorResponse) => {
-          this.creerOk = false;
-          this.error = true;
-          this.err = error.error;
-        });
+  creerLigneDeFrais() {
+    for (const ldf of this.noteDeFraisTab) {
+      if (ldf.date === this.newNdfEntry.date && ldf.nature === this.newNdfEntry.nature && ldf.montant === this.newNdfEntry.montant) {
+        this.verifDoublonLDF = false;
       }
+    }
+    if (new Date(this.newNdfEntry.date) > new Date(this.mission.endDate) || new Date(this.newNdfEntry.date) < new Date(this.mission.startDate)) {
+      this.verifDoublonLDF = false;
+    }
+    if (this.newNdfEntry.montant <= 0) {
+      this.verifDoublonLDF = false;
+    }
+    if (this.verifDoublonLDF) {
+      this.noteDeFraisTab.push(this.newNdfEntry);
+      this.creerOk = true;
+    } else {
+      this.erreurAjoutLDF = true;
+    }
+  }
+
+  creer() {
+    for (const ndf of this.noteDeFraisTab) {
+      if (ndf.montant < this.mission.nature.plafondFrais) {
+        this.depassementValider = true;
+      }
+    }
+
+    if (this.depassementValider === true) {
+
+    }
+
+
+    // this._ndfSrv.createNdfEntry(this.newNdfEntry).subscribe(() => {
+    //   this.creerOk = true;
+    //   this.error = false;
+    // }, (error: HttpErrorResponse) => {
+    //   this.creerOk = false;
+    //   this.error = true;
+    //   this.err = error.error;
+    // });
+  }
 }
 
 

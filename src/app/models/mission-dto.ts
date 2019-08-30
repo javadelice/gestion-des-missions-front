@@ -11,6 +11,7 @@ export class MissionDto {
     public villeArrivee:string,
     public transport:string,
     public statut:string,
+    public prime: number,
     public collegue:CollegueDto,
     public ndfCumul:NdfCumul) {}
 }
