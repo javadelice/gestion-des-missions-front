@@ -21,7 +21,7 @@ import { HttpErrorResponse } from '@angular/common/http';
         <a class="nav-link" routerLink="planning">Planning des missions</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Primes</a>
+        <a class="nav-link" routerLink="primes">Primes</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="#">Saisie note de frais</a>

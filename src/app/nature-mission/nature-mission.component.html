@@ -25,7 +25,8 @@
         <td>{{NatureMission.plafondFrais}}</td>
         <td>{{NatureMission.depassPlafond}}</td>
         <td><a><img class="mr-3" src="../../assets/img/edition.png" width="20" alt="edit" (click)="openModifModal(modif, NatureMission)"></a>
-          <a><img src="../../assets/img/delete.png" width="20" alt="delete" ></a></td>
+          <a><img src="../../assets/img/delete.png" width="20" alt="delete" (click)="openDeleteModal(supression, NatureMission)"></a></td>
+
       </tr>
     </tbody>
   </table>
@@ -280,11 +281,14 @@
 
       </ng-template>
 
-<ng-template #template>
+<ng-template #supression>
   <div class="modal-body text-center">
     <p>Confirmez-vous la suppression de la mission ?</p>
-    <button type="button" class="btn btn-default" (click)="confirm()" >Yes</button>
+    <button type="button" class="btn btn-default" (click)="confirm()">Yes</button>
     <button type="button" class="btn btn-primary" (click)="decline()">No</button>
+    <div class="alert alert-danger ml-3" *ngIf="isError">
+      {{erreur}}
+    </div>
   </div>
 </ng-template>
 
@@ -294,7 +298,4 @@
     </div>
 </ng-template>
 
-<ng-template #notFactBlock>
-
-</ng-template>
 
