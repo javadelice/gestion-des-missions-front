@@ -5,7 +5,7 @@
 <div class="row justify-content-start align-items-center mt-3 ml-1">
   Année
   <select class="custom-select custom-select-sm ml-3" id="annee" name="annee" [(ngModel)]="anneePrimes"
-    style="width: 100px" (click)="initData()">
+    style="width: 100px" (click)="selectUpdate()">
     <option *ngFor="let annee of anneesPrimes" [ngValue]="annee">{{annee}}</option>
   </select>
   <a><img class="ml-2" (click)="downloadCsv()" width="35" src="../../assets/img/csv.png"/></a>

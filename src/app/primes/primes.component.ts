@@ -15,6 +15,7 @@ export class PrimesComponent implements OnInit {
   idCollegueConnecte: number;
   missionsEchues: MissionDto[];
   anneePrimes: number = new Date().getFullYear();
+  lastAnneePrimes: number = new Date().getFullYear();
   anneesPrimes: number[];
   moisPrimes: { mois: number; prime: number }[];
 
@@ -85,5 +86,12 @@ export class PrimesComponent implements OnInit {
       fichier += `"${mission.startDate}","${mission.endDate}","${mission.nature.code}","${mission.prime}"\n`;
     }
     this._fileSaverService.save(new Blob(["\ufeff", fichier]), `${this.anneePrimes}.csv`);
+  }
+
+  selectUpdate() {
+    if (this.anneePrimes !== this.lastAnneePrimes) {
+      this.initData();
+      this.lastAnneePrimes = this.anneePrimes;
+    }
   }
 }
