@@ -10,26 +10,33 @@ import { AuthComponent } from './auth/auth.component';
 import { FormsModule} from '@angular/forms';
 import { StatutConnecteService } from './auth/statut-connecte.service';
 import { AuthInterceptorService } from './auth/auth-interceptor.service';
-
 import { MenuComponent } from './menu/menu.component';
+import { CommonModule } from '@angular/common';
+import { ModalModule } from 'ngx-bootstrap/modal';
 import { MissionsComponent } from './missions/missions.component';
 import { CreerMissionComponent } from './creer-mission/creer-mission.component';
-import { ModalModule } from 'ngx-bootstrap/modal';
 import { ModifierMissionComponent } from './modifier-mission/modifier-mission.component';
 import { NatureMissionComponent } from './nature-mission/nature-mission.component';
 import { ValiderMissionsComponent } from './valider-missions/valider-missions.component';
 import { PlanningMissionsComponent } from './planning-missions/planning-missions.component';
+import { NoteDeFraisVisualisationComponent } from './note-de-frais-visualisation/note-de-frais-visualisation.component';
+import { NoteDeFraisComponent } from './note-de-frais/note-de-frais.component';
+import { NoteDeFraisAjoutComponent } from './note-de-frais-ajout/note-de-frais-ajout.component';
+
 
 const routes: Routes = [
-  { path: 'tech', component: TechComponent, canActivate: [StatutConnecteService]},
-  { path: 'menu', component: MenuComponent, canActivate: [StatutConnecteService]},
-  { path: 'missions', component: MissionsComponent, canActivate: [StatutConnecteService]},
-  { path: 'missions/creer', component: CreerMissionComponent, canActivate: [StatutConnecteService]},
+  { path:'tech', component: TechComponent, canActivate:[StatutConnecteService]}, // /tech accessible uniquement si connecté
+  { path:'menu', component: MenuComponent, canActivate:[StatutConnecteService]},
   { path: 'planning', component: PlanningMissionsComponent, canActivate: [StatutConnecteService]},
+  { path:'notesdefrais', component: NoteDeFraisComponent, canActivate:[StatutConnecteService]},
+  { path:'lignedefrais/creer', component:NoteDeFraisAjoutComponent, canActivate:[StatutConnecteService]},
+  { path:'ndf-visu', component: NoteDeFraisVisualisationComponent, canActivate:[StatutConnecteService]},
+  { path:'missions', component: MissionsComponent, canActivate:[StatutConnecteService]}, // /missions accessible ssi connecté
+  { path:'missions/creer', component:CreerMissionComponent, canActivate:[StatutConnecteService]},
+  { path: 'nature', component: NatureMissionComponent, canActivate: [StatutConnecteService]},
   { path: 'valider', component: ValiderMissionsComponent, canActivate: [StatutConnecteService]},
-  { path: 'connexion', component: AuthComponent},
-  { path: '', redirectTo: '/tech', pathMatch: 'full'},
-  { path: 'nature', component: NatureMissionComponent, canActivate: [StatutConnecteService]}
+  { path:'connexion', component: AuthComponent},
+  { path: '', redirectTo: '/tech', pathMatch: 'full'}
 ];
 
 
@@ -39,12 +46,15 @@ const routes: Routes = [
     TechComponent,
     AuthComponent,
     MenuComponent,
+    NoteDeFraisComponent,
     MissionsComponent,
     CreerMissionComponent,
     NatureMissionComponent,
     ModifierMissionComponent,
     ValiderMissionsComponent,
-    PlanningMissionsComponent
+    PlanningMissionsComponent,
+    NoteDeFraisVisualisationComponent,
+    NoteDeFraisAjoutComponent
   ],
   imports: [
     BrowserModule,
@@ -54,6 +64,7 @@ const routes: Routes = [
     FormsModule,
     NgbModule,
     ModalModule.forRoot(),
+    CommonModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

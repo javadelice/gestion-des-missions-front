@@ -1,0 +1,94 @@
+
+<div class="row justify-content-center mt-4">
+  <h1>Ajouter ligne de frais</h1>
+</div>
+
+<div class="row justify-content-center mt-3" *ngIf="creerOk==false; else creerOkBlock">
+  <div *ngIf="isError==false; else errorBlock">
+    <div class="card shadow bg-white rounded" style="width: 400px; max-width: 800px;">
+      <div class="card-body ">
+        <form class="was-validated" #ndfEntryCreer="ngForm">
+          <div class="row align-items-center">
+            <div class="col-5">
+              <div class="row justify-content-end">
+                <strong>Date</strong>
+              </div>
+            </div>
+            <div class="col">
+              <input class="form-control mb-1" type="date" name="date" [(ngModel)]="newNdfEntry.date" required
+            #date="ngModel" placeholder="dd/MM/yyyy" min="mission.startDate" max="mission.endDate" ngvalue="newNdfEntry.date">
+              <div class="invalid-feedback mb-1" *ngIf="(date.dirty || date.touched) && date.invalid">
+              </div>
+            </div>
+          </div>
+
+
+          <div class="row align-items-center">
+            <div class="col-5">
+              <div class="row justify-content-end">
+                <strong>Nature</strong>
+              </div>
+            </div>
+            <div class="col">
+
+
+                <select class="custom-select mb-1" name="nature" id="nature" [(ngModel)]="newNdfEntry.nature" #nature="ngModel">
+                  <option *ngFor="let nature of ndfNature" [ngValue]="nature">{{nature}}</option>
+
+                </select>
+
+              <div class="invalid-feedback mb-1" *ngIf="(nature.dirty || nature.touched) && nature.invalid">
+              </div>
+            </div>
+          </div>
+
+          <div class="row align-items-center">
+            <div class="col-5">
+              <div class="row justify-content-end">
+                <strong>Montant</strong>
+              </div>
+            </div>
+            <div class="col">
+              <input class="form-control mb-1" name="montant"[(ngModel)]="newNdfEntry.montant" #montant="ngModel">
+              <div class="invalid-feedback mb-1"
+                *ngIf="(montant.dirty || montant.touched) && montant.invalid">Ville invalide (au moins 2
+                caractères)
+              </div>
+            </div>
+          </div>
+
+
+          <div class="d-flex justify-content-around m-1">
+            <button [disabled]="ndfEntryCreer.invalid" class="btn btn-info" (click)=creer()>Créer</button>
+            <button class="btn btn-info" [routerLink]="['/notesdefrais']"
+              routerLinkActive="router-link-active">Annuler</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #errorBlock>
+  <div class="col-6">
+    <div class="alert alert-danger ml-3" role="alert">
+      {{erreur}}
+    </div>
+    <div class="d-flex justify-content-center m-1">
+      <button class="btn btn-info" (click)="recommencer()">Ok</button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #creerOkBlock>
+  <div class="row justify-content-center">
+    <div class="alert alert-success" role="alert">
+      Une nouvelle ligne de frais a été créée avec succès !
+    </div>
+  </div>
+  <div>
+    <div class="d-flex justify-content-center m-1">
+      <button class="btn btn-info" [routerLink]="['/notesdefrais']" routerLinkActive="router-link-active">Ok</button>
+    </div>
+  </div>
+</ng-template>

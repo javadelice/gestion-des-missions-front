@@ -12,26 +12,45 @@ import { HttpErrorResponse } from '@angular/common/http';
   <div class="row">
     <ul class="nav justify-content-center">
       <li class="nav-item">
-        <a class="nav-link active" href="#">Accueil</a>
+        <a class="nav-link active" type="modify" [routerLink]="['../connexion/']">Accueil</a>
       </li>
       <li class="nav-item">
+<<<<<<< HEAD
         <a class="nav-link" routerLink="missions">Gestion des missions</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" routerLink="planning">Planning des missions</a>
+=======
+        <a class="nav-link" type="success" [routerLink]="['../missions/']">Gestion des missions</a>
+
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Primes</a>
+        <a class="nav-link" type="warning" [routerLink]="['../missions/']">Planning des missions</a>
+>>>>>>> ndf-creer
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Saisie note de frais</a>
+        <a class="nav-link" [routerLink]="['../primes/']">Primes</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" [routerLink]="['../notesdefrais/']">Saisie note de frais</a>
+      </li>
+      <li class="nav-item" >
+        <a class="nav-link" [routerLink]="['../ndf-visu/']">Ndf-visu</a>
       </li>
       <li class="nav-item" *ngIf="isAdmin == true">
+<<<<<<< HEAD
         <a class="nav-link" routerLink="nature">Nature de missions</a>
       </li>
       <li class="nav-item" *ngIf="isManager == true">
         <a class="nav-link" routerLink="valider">Validation des missions</a>
+=======
+        <a class="nav-link" [routerLink]="['../primes/']">Nature de missions</a>
       </li>
+      <li class="nav-item" *ngIf="isManager == true">
+        <a class="nav-link" [routerLink]="['../primes/']">Validation des missions</a>
+>>>>>>> ndf-creer
+      </li>
+
 
     </ul>
   </div>
@@ -50,12 +69,14 @@ export class MenuComponent implements OnInit {
 
   ngOnInit() {
     this._authSrv.collegueConnecteObs.subscribe(collegueConnecte => {
+      if (collegueConnecte){
       if (collegueConnecte.roles.includes('ROLE_ADMINISTRATEUR')) {
         this.isAdmin = true;
       }
       if (collegueConnecte.roles.includes('ROLE_MANAGER')) {
         this.isManager = true;
       }
+    }
     }, (error: HttpErrorResponse) => {
 
     });

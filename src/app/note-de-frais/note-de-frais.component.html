@@ -1,0 +1,61 @@
+<div *ngIf="!ndfvisu">
+  <mdb-card class="animated zoomIn">
+    <mdb-card-header class="primary-color white-text text-center">
+      <h4>Notes de frais - Visualisation</h4>
+    </mdb-card-header>
+    <mdb-card-body>
+      <table class="table table-hover table-bordered">
+        <thead>
+          <tr>
+            <th>Date de Début</th>
+            <th>Date de fin</th>
+            <th>Nature</th>
+            <th>Ville de départ</th>
+            <th>Ville d'arrivée</th>
+            <th>Transport</th>
+            <th>Frais</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let mission of missions">
+
+            <td>{{mission.startDate| date : "dd/MM/yy"}}</td>
+            <td>{{mission.endDate| date : "dd/MM/yy"}}</td>
+            <td>{{mission.nature.code}}</td>
+            <td>{{mission.villeDepart}}</td>
+            <td>{{mission.villeArrivee}}</td>
+            <td>{{mission.transport}}</td>
+            <td>{{mission.id}}</td>
+            <td>{{mission.ndfId}}</td>
+            <td>
+              <div *ngIf="false || frais ; else pasDeFrais">
+              </div>
+              <ng-template #pasDeFrais>0</ng-template>
+
+            </td>
+
+            <td>
+              <div *ngIf="(true || mission.endDate < currentDate ) ; else missionEnCours">
+
+                <a><img class="img-thumbnail" src="assets/img/ndf-ajout.png" class="rounded float-left" alt="+"
+                    width='19px' (click)="ajoutNdf(mission)"></a>
+                <a (click)="exportToPDF()"><img class="img-thumbnail" src="assets/img/ndf-download.png"
+                    class="rounded float-right" alt="DL" width='23px'></a>
+
+              </div>
+
+              <ng-template #missionEnCours>
+                <a> </a>
+              </ng-template>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </mdb-card-body>
+  </mdb-card>
+</div>
+
+<div *ngIf="ndfvisu">
+  <app-note-de-frais-visualisation [mission]="missionChosen"></app-note-de-frais-visualisation>
+</div>
