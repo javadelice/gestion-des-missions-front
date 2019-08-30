@@ -18,10 +18,11 @@ export class NatureMissionComponent implements OnInit {
   natureMissions: NatureDto[];
   error: boolean;
   modalRef: BsModalRef;
-  idNatureASupprimer:number;
-  idNatureACreer:number;
+  idNatureACreer: number;
   isAdmin: boolean;
   natMission = new NatureDto(0, '', '', '', 0, 0, 0, '');
+
+  natureASupprimer: NatureDto;
 
   constructor(private natureService: NatureMissionService, private _authSrv: AuthService, private modalService: BsModalService) { }
 
@@ -41,7 +42,9 @@ export class NatureMissionComponent implements OnInit {
       });
   }
 
-  openModal(template: TemplateRef<any>, idNature:number) {
+  openDeleteModal(template: TemplateRef<any>, nature: NatureDto) {
+    this.natureASupprimer = nature;
+    this.isError = false;
     this.modalRef = this.modalService.show(template, {class: 'modal-sm'});
   }
 
@@ -51,11 +54,10 @@ export class NatureMissionComponent implements OnInit {
 
   confirm() {
     this.deleteNature();
-    this.modalRef.hide();
   }
 
   decline() {
-    this.idNatureASupprimer = undefined;
+    this.natureASupprimer = undefined;
     this.modalRef.hide();
   }
 
@@ -86,11 +88,13 @@ export class NatureMissionComponent implements OnInit {
   }
 
   deleteNature() {
-    this.natureService.deleteNature(this.idNatureASupprimer).subscribe(() => {
-      this.ngOnInit();
-      this.idNatureASupprimer = undefined;
+    this.natureService.deleteNature(this.natureASupprimer.id).subscribe(() => {
+      this.modalRef.hide();
+      this.natureMissions.splice(this.natureMissions.indexOf(this.natureASupprimer));
+      this.natureASupprimer = undefined;
     }, (error: HttpErrorResponse) => {
-      this.error = true;
+      this.isError = true;
+      this.erreur = error.error;
     });
   }
 
