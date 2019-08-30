@@ -14,7 +14,7 @@ import { NatureDto } from '../models/nature-dto';
   styleUrls: ['./note-de-frais-visualisation.component.css']
 })
 export class NoteDeFraisVisualisationComponent implements OnInit {
-  noteDeFraisTab: NdfEntryDto[] = [];
+  noteDeFraisTab: NdfEntryDto[]=[];
   currentMission: MissionDto = new MissionDto(3, "", "", null, "", "", "", "", null, 0);
   @Input() mission: MissionDto;
   currentDate = new Date();
@@ -43,18 +43,19 @@ export class NoteDeFraisVisualisationComponent implements OnInit {
   ngOnInit() {
     this.creerOk = false;
     this.error = false;
-  this.creation=false;
+    this.creation=false;
     this.modification = false;
 
-    if (this.mission.id) {
-      this._authSrv.collegueConnecteObs.subscribe(collegueConnecte => {
+    if(true){
+    //if (this.mission) {
+      //this._authSrv.collegueConnecteObs.subscribe(collegueConnecte => {
         this._ndfSrv.getNdfEntriesFromMissionId(this.mission.id).subscribe((noteDeFraisTab: NdfEntryDto[]) => {
           this.noteDeFraisTab = noteDeFraisTab;
           this.phaseModifier = false;
         }, (error: HttpErrorResponse) => {
           this.error = true;
         })
-      })
+
     }
 
   }

@@ -15,18 +15,11 @@ import { HttpErrorResponse } from '@angular/common/http';
         <a class="nav-link active" type="modify" [routerLink]="['../connexion/']">Accueil</a>
       </li>
       <li class="nav-item">
-<<<<<<< HEAD
-        <a class="nav-link" routerLink="missions">Gestion des missions</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" routerLink="planning">Planning des missions</a>
-=======
         <a class="nav-link" type="success" [routerLink]="['../missions/']">Gestion des missions</a>
 
       </li>
       <li class="nav-item">
         <a class="nav-link" type="warning" [routerLink]="['../missions/']">Planning des missions</a>
->>>>>>> ndf-creer
       </li>
       <li class="nav-item">
         <a class="nav-link" [routerLink]="['../primes/']">Primes</a>
@@ -38,17 +31,10 @@ import { HttpErrorResponse } from '@angular/common/http';
         <a class="nav-link" [routerLink]="['../ndf-visu/']">Ndf-visu</a>
       </li>
       <li class="nav-item" *ngIf="isAdmin == true">
-<<<<<<< HEAD
-        <a class="nav-link" routerLink="nature">Nature de missions</a>
-      </li>
-      <li class="nav-item" *ngIf="isManager == true">
-        <a class="nav-link" routerLink="valider">Validation des missions</a>
-=======
         <a class="nav-link" [routerLink]="['../primes/']">Nature de missions</a>
       </li>
       <li class="nav-item" *ngIf="isManager == true">
         <a class="nav-link" [routerLink]="['../primes/']">Validation des missions</a>
->>>>>>> ndf-creer
       </li>
 
 

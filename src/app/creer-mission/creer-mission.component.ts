@@ -20,12 +20,9 @@ export class CreerMissionComponent implements OnInit {
   erreur: string;
   currentDate = new Date();
 
-  mission = new MissionDto(0, '', '', null, '', '', '', 'INITIALE', null);
+  //mission = new MissionDto(0, '', '', null, '', '', '', 'INITIALE', null,0);
 
-<<<<<<< HEAD
-=======
   mission = new MissionDto(0, '', '', new NatureDto(0, '', '', '', 1, "", '', '', 0), '', '', '', 'INITIALE', null, 0);
->>>>>>> ndf-creer
   // estimationPrime = 0;
   // difference = (this.mission.endDate.valueOf() - this.mission.startDate.valueOf())/86400000;
   // startD = 10;

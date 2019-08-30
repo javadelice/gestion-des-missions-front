@@ -21,7 +21,7 @@ export class NatureMissionComponent implements OnInit {
   idNatureASupprimer:number;
   idNatureACreer:number;
   isAdmin: boolean;
-  natMission = new NatureDto(0, '', '', '', 0, 0, 0, '');
+  natMission = new NatureDto(0, '', '', '', 0, "", "",'', 0);
 
   constructor(private natureService: NatureMissionService, private _authSrv: AuthService, private modalService: BsModalService) { }
 
@@ -72,7 +72,7 @@ export class NatureMissionComponent implements OnInit {
       this.isError = false;
       this.modalRef.hide();
       this.natureMissions.push(nature);
-      this.natMission = new NatureDto(0, '', '', '', 0, 0, 0, '');
+      this.natMission = new NatureDto(0, '', '', '', 0, "", "",'', 0);
     }, (error: HttpErrorResponse) => {
       this.creerNatOk = false;
       this.isError = true;
@@ -82,7 +82,7 @@ export class NatureMissionComponent implements OnInit {
 
   annulerCreation() {
     this.modalRef.hide();
-    this.natMission = new NatureDto(0, '', '', '', 0, 0, 0, '');
+    this.natMission = new NatureDto(0, '', '', '', 0, "", "",'', 0);
   }
 
   deleteNature() {

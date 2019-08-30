@@ -22,7 +22,7 @@
         <td>{{NatureMission.hasPrime}}</td>
         <td>{{NatureMission.tjm}}</td>
         <td>{{NatureMission.pourcentagePrime}}</td>
-        <td>{{NatureMission.plafondFrais}}</td>
+        <!--<td>{{NatureMission.plafondFrais}}</td>-->
         <td>{{NatureMission.depassPlafond}}</td>
         <td><a href=""><img class="mr-3" src="../../assets/img/edition.png" width="20"  alt="edit"></a>
           <a><img src="../../assets/img/delete.png" width="20" alt="delete" (click)="openModal(template, NatureMission.id)"></a></td>
@@ -120,8 +120,12 @@
                 <label for="natPlafond">Plafond frais</label>
             </div>
             <div class="form-group col-md-6">
+              input nat mission plafond frais
+              <!--
                 <input type="number" id="natPlafond" class="form-control" name="naturePlafond" [(ngModel)]="natMission.plafondFrais" required #natPfd="ngModel">
-            <div class="invalid-feedback mb-1" *ngIf="(natPfd.dirty || natPfd.touched) && natPfd.invalid">
+
+            -->
+                <div class="invalid-feedback mb-1" *ngIf="(natPfd.dirty || natPfd.touched) && natPfd.invalid">
                 Veuillez saisir un montant!
             </div>
           </div>
