@@ -76,7 +76,7 @@
             </div>
 
             </div>
-            <div class="form-row" *ngIf="isNonFacturee==false; else errorBlock">
+            <div class="form-row">
               <div class="form-group col-md-6">
                   <label for="isFacturee">Facturée</label>
               </div>
@@ -91,7 +91,7 @@
               </div>
               </div>
             </div>
-            <div class="form-row" *ngIf="hasPrimeOK==false; else errorBlock">
+            <div class="form-row"*ngIf="natMission.isFacturee === 'OUI'">
               <div class="form-group col-md-6">
                   <label for="natPrime">Versement prime</label>
               </div>
@@ -107,7 +107,7 @@
               </div>
 
             </div>
-            <div class="form-row">
+            <div class="form-row" *ngIf="natMission.isFacturee === 'OUI'">
               <div class="form-group col-md-6">
                   <label for="natTJM">TJM (€)</label>
               </div>
@@ -119,7 +119,7 @@
             </div>
 
             </div>
-            <div class="form-row">
+            <div class="form-row" *ngIf="natMission.isFacturee === 'OUI' && natMission.hasPrime === 'OUI'">
               <div class="form-group col-md-6">
                   <label for="nat%Prime">%Prime</label>
               </div>

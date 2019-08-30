@@ -12,15 +12,16 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 })
 export class NatureMissionComponent implements OnInit {
 
-  idNatureAModifier: number;
+  erreur: string;
+  isError: boolean;
+  creerNatOk: boolean;
   natureMissions: NatureDto[];
   error: boolean;
   modalRef: BsModalRef;
   idNatureASupprimer:number;
+  idNatureACreer:number;
   isAdmin: boolean;
-  phaseModifier: boolean;
-  isNonFacturee: boolean;
-  hasPrimeOK: boolean;
+  natMission = new NatureDto(0, '', '', '', 0, 0, 0, '');
 
   constructor(private natureService: NatureMissionService, private _authSrv: AuthService, private modalService: BsModalService) { }
 
@@ -33,7 +34,8 @@ export class NatureMissionComponent implements OnInit {
         this.natureMissions = natureMissions;
       }, (error: HttpErrorResponse) => {
         this.error = true;
-      });
+      })
+      ;
     }
       , (error: HttpErrorResponse) => {
         this.error = true;

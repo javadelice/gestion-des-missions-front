@@ -22,4 +22,8 @@ export class NatureMissionService {
   deleteNature(idNature:number) {
     return this.httpClient.delete(environment.baseUrl + 'nature?id=' + idNature, {withCredentials:true});
   }
+
+  getNature(idNature: number): Observable<NatureDto> {
+    return this.httpClient.get<NatureDto>(environment.baseUrl + 'nature?idNature=' + idNature, {withCredentials: true});
+  }
 }
