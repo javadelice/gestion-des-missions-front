@@ -14,38 +14,42 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
   styleUrls: ['./note-de-frais.component.css']
 })
 export class NoteDeFraisComponent implements OnInit {
-  missions:MissionDto[];
-  frais:number[];
-  currentDate=new Date();
-  phaseModifier:Boolean;
-  error:boolean;
+  missions: MissionDto[];
+  frais: number[];
+  currentDate = new Date();
+  phaseModifier: Boolean;
+  error: boolean;
   modalRef: BsModalRef;
-  ndfvisu:boolean;
-  missionChosen:MissionDto;
+  ndfvisu: boolean;
+  missionChosen: MissionDto;
 
-  constructor(private _authSrv:AuthService, private missionService:MissionsService, private _ndfService:NdfService, private _router:Router){} //public dialog: MatDialog) { }
+  constructor(private _authSrv: AuthService, private missionService: MissionsService, private _ndfService: NdfService, private _router: Router) { } //public dialog: MatDialog) { }
 
   ngOnInit() {
 
+    this._authSrv.collegueConnecteObs.subscribe(collegueConnecte => {
+      this.missionService.getMissions(collegueConnecte.id).subscribe((missions: MissionDto[]) => {
+        this.missions = missions;
+        this.phaseModifier = false;
+      }, (error: HttpErrorResponse) => {
+        this.error = true;
+      });
+    });
 
-      this._authSrv.collegueConnecteObs.subscribe(collegueConnecte => {
-        this.missionService.getMissions(collegueConnecte.id).subscribe((missions: MissionDto[]) => {
-          this.missions = missions;
-          this.phaseModifier = false;
-        }, (error: HttpErrorResponse) => {
-          this.error = true;
-        })
 
-  })
-}
+  }
 
-ajoutNdf(mission){
-this.ndfvisu=true;
-this.missionChosen=mission;
-}
+  missionIsEchue(mission: MissionDto) {
+    return new Date(mission.endDate) < this.currentDate;
+  }
 
-  openDialog(mission:MissionDto):void{
-   // this._ndfService.publier(mission);
+  ajoutNdf(mission) {
+    this.ndfvisu = true;
+    this.missionChosen = mission;
+  }
+
+  openDialog(mission: MissionDto): void {
+    // this._ndfService.publier(mission);
 
 
     /*
@@ -63,7 +67,7 @@ this.missionChosen=mission;
   }
 
 
-  exportToPDF():void{
+  exportToPDF(): void {
     //TODO
   }
 
