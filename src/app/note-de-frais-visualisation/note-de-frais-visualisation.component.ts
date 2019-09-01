@@ -8,6 +8,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { MissionDto } from '../models/mission-dto';
 import { NatureDto } from '../models/nature-dto';
 import { NdfCumul } from '../note-de-frais/note-de-frais.domains';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-note-de-frais-visualisation',
@@ -41,7 +42,12 @@ export class NoteDeFraisVisualisationComponent implements OnInit {
   erreurAjoutLDF: boolean;
   verifDoublonLDF: boolean;
   montantNDF: number;
-  depassementValider: boolean;
+  depassementValide: boolean;
+  depassementFrais: boolean;
+  errorMessage: string;
+  estimationPrime: number;
+  dateTemp;
+  nbJoursTravailles: number;
 
 
   constructor(private _authSrv: AuthService, private _ndfSrv: NdfService, private _router: Router, private modalService: BsModalService) { } //public dialog: MatDialog) { }
@@ -52,20 +58,21 @@ export class NoteDeFraisVisualisationComponent implements OnInit {
     this.creation = false;
     this.modification = false;
     this.erreurAjoutLDF = false;
-    this.depassementValider = false;
+    this.depassementValide = true;
+    this.depassementFrais = false;
 
     this.ndfCumul = new NdfCumul();
 
-    //if (this.mission) {
-    //this._authSrv.collegueConnecteObs.subscribe(collegueConnecte => {
     this._ndfSrv.getNdfEntriesFromMissionId(this.mission.id).subscribe((noteDeFraisTab: NdfEntryDto[]) => {
       this.noteDeFraisTab = noteDeFraisTab;
       this.phaseModifier = false;
     }, (error: HttpErrorResponse) => {
       this.error = true;
     });
+  }
 
-
+  estimerPrime() {
+    this.dateTemp = moment(this.mission.startDate);
   }
 
   validerModif(template: TemplateRef<any>, currentNdfId: number) {
@@ -157,13 +164,13 @@ export class NoteDeFraisVisualisationComponent implements OnInit {
     }
   }
 
-
   creationActivate() {
     this.creation = true;
     this.erreurAjoutLDF = false;
     this.verifDoublonLDF = true;
     this.newNdfEntry = new NdfEntryDto(0, this.currentDate, '', 0, new NdfCumul());
   }
+
   recommencer() {
     this.creerOk = false;
     this.error = false;
@@ -171,7 +178,8 @@ export class NoteDeFraisVisualisationComponent implements OnInit {
     this.modification = false;
     this.erreurAjoutLDF = false;
     this.verifDoublonLDF = true;
-    this.depassementValider = false;
+    this.depassementValide = true;
+    this.depassementFrais = false;
   }
 
   creerLigneDeFrais() {
@@ -195,13 +203,29 @@ export class NoteDeFraisVisualisationComponent implements OnInit {
   }
 
   creer() {
-    for (const ndf of this.noteDeFraisTab) {
-      if (ndf.montant < this.mission.nature.plafondFrais) {
-        this.depassementValider = true;
+    this.montantNDF = 0;
+    if (!this.mission.nature.hasPrime) {
+      for (const ndf of this.noteDeFraisTab) {
+        if (ndf.montant > this.mission.nature.plafondFrais) {
+          this.depassementValide = false;
+          this.errorMessage = 'Vous n\'avez pas droit au dépassement de frais sur cette mission !';
+          break;
+        }
+      }
+    } else {
+      for (const ndf of this.noteDeFraisTab) {
+        this.montantNDF += ndf.montant;
+        if (ndf.montant > this.mission.nature.plafondFrais) {
+          this.depassementFrais = true;
+        }
+      }
+      if (this.depassementFrais) {
+
       }
     }
 
-    if (this.depassementValider === true) {
+
+    if (this.depassementValide === true) {
 
     }
 

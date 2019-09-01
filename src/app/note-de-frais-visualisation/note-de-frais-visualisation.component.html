@@ -10,7 +10,7 @@
 </table>
 
 
-<div *ngIf="!creation && depassementValider == false">
+<div *ngIf="!creation && depassementValide == false">
   <div class="jumbotron" width=15>
     <h2>Saisie de Notes de frais</h2>
 
@@ -290,12 +290,11 @@
   </div>
 </div>
 
-<div *ngIf="creation == false && depassementValider == true">
+<div *ngIf="creation == false && depassementValide == false">
     <div class="row justify-content-center">
       <div class="col-6">
         <div class="alert alert-danger ml-3" role="alert">
-          Erreur : vous ne pouvez pas créer deux lignes de frais identiques, la date de la ligne de frais doit être
-          comprise dans les dates de la mission et le montant doit être supérieur à 0!
+          {{errorMessage}}
         </div>
         <div class="d-flex justify-content-center m-1">
           <button class="btn btn-info" (click)="recommencer()">Ok</button>
