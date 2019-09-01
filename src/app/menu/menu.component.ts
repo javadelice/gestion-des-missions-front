@@ -55,7 +55,7 @@ export class MenuComponent implements OnInit {
 
   ngOnInit() {
     this._authSrv.collegueConnecteObs.subscribe(collegueConnecte => {
-      if (collegueConnecte){
+      if (collegueConnecte && collegueConnecte.email){
       if (collegueConnecte.roles.includes('ROLE_ADMINISTRATEUR')) {
         this.isAdmin = true;
       }

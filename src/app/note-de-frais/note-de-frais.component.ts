@@ -23,9 +23,13 @@ export class NoteDeFraisComponent implements OnInit {
   ndfvisu: boolean;
   missionChosen: MissionDto;
 
-  constructor(private _authSrv: AuthService, private missionService: MissionsService, private _ndfService: NdfService, private _router: Router) { } //public dialog: MatDialog) { }
+ constructor(private _authSrv: AuthService, 
+    private missionService: MissionsService, 
+    private _ndfService: NdfService, 
+    private _router: Router) { }
+  
+ngOnInit() {
 
-  ngOnInit() {
 
     this._authSrv.collegueConnecteObs.subscribe(collegueConnecte => {
       this.missionService.getMissions(collegueConnecte.id).subscribe((missions: MissionDto[]) => {
@@ -46,24 +50,6 @@ export class NoteDeFraisComponent implements OnInit {
   ajoutNdf(mission) {
     this.ndfvisu = true;
     this.missionChosen = mission;
-  }
-
-  openDialog(mission: MissionDto): void {
-    // this._ndfService.publier(mission);
-
-
-    /*
-    const dialogRef = this.dialog.open(ModifierNoteDeFraisComponent), {
-      width: '250px',
-      data: {date: this.date, nature: this.nature, montant: this.montant}
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      this.animal = result;
-    });
-
-  }*/
   }
 
 

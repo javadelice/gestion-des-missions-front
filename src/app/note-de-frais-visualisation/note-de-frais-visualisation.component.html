@@ -1,24 +1,28 @@
-<div>{{currentMission.id}}</div>
-    <div>{{currentMission.startDate| date : "dd/MM/yy"}}</div>
-    <div>{{currentMission.ndfCumul.id}}</div>
-    <div>{{currentMission.endDate| date : "dd/MM/yy"}}</div>
-    <div>{{currentMission.villeDepart}}</div>
-    <div>{{currentMission.villeArrivee}}</div>
-    <div>{{currentMission.transport}}</div>
-
+<!--
+<div>{{mission.id}}</div>
+<div>{{mission.startDate| date : "dd/MM/yy"}}</div>
+<div>{{mission.ndfCumul.id}}</div>
+<div>{{mission.endDate| date : "dd/MM/yy"}}</div>
+<div>{{mission.villeDepart}}</div>
+<div>{{mission.villeArrivee}}</div>
+<div>{{mission.transport}}</div>
+-->
 
 <div *ngIf="!creation">
-  <div class="jumbotron" width=15>
-    <h2>Saisie de Notes de frais</h2>
+  <h2 class="row justify-content-center align-items-center mt-3">Saisie de frais</h2>
+  <mdb-card class="animated zoomIn orange">
+<mdb-card-header class="primary-color white-text text-left">
+    <h3>Informations sur la mission :</h3>
+  </mdb-card-header>
 
-    <table>
+    <table class="table">
       <tr>
         <th></th>
       </tr>
       <tr>
         <td>Date de Début : </td>
         <td>{{mission.startDate| date :"dd/MM/yyyy"}}</td>
-        <td></td>
+        <td> </td>
         <td>Estimation Prix : </td>
         <td>#</td>
       </tr>
@@ -38,13 +42,13 @@
       </tr>
 
     </table>
-  </div>
+  </mdb-card>
 
 
-  <mdb-card class="animated zoomIn">
-    <mdb-card-header class="primary-color white-text text-center">
-        <div *ngIf="doublon" class="row align-items-center" style="color:red"> Cette entrée existe déjà !!</div>
-    </mdb-card-header>
+  <mdb-card class="animated zoomIn mt-3">
+      <mdb-card-header class="primary-color white-text text-center">
+        <h5>Liste des frais</h5>
+        </mdb-card-header>
     <mdb-card-body>
       <table class="table table-hover table-bordered">
         <thead>
@@ -55,24 +59,26 @@
             <th>Action</th>
           </tr>
         </thead>
+
         <tbody *ngIf="!modification">
           <!-- <tr *ngFor="let ndf of noteDeFraisTab ;let i = index" [attr.data-index]="i">-->
-          <tr *ngFor="let ndf of noteDeFraisTab ; let i = index">
+          <tr *ngFor="let ndf of noteDeFraisTab ; let indexLigneDeFraisDansTab = index">
             <td>{{ndf.date| date : "dd/MM/yyyy"}}</td>
             <td>{{ndf.nature}}</td>
             <td>{{ndf.montant}}</td>
             <td>
               <a><img class="rounded float-center " src="assets/img/ndf-edit.png" alt="edit" width='19px'
-                  (click)="modifierNdfEntry(ndf.id, i)"></a>
+                  (click)="showNdfEntryEditPanel(ndf.id, indexLigneDeFraisDansTab )"></a>
               <a><img class="rounded float-center ml-4" src="assets/img/ndf-trash.png" alt="delete" width='12px'
                   (click)="openModalDelete(templateDelete, ndf.id)"></a>
             </td>
           </tr>
         </tbody>
         <tbody *ngIf="modification">
-          <td><input class="form-control mb-1" type="date" name="date" [(ngModel)]="currentNdfEntry.date" required
-              #date="ngModel" placeholder="dd/MM/yyyy" min="{{currentDate | date: 'yyyy-MM-dd'}}" ngvalue="currentDate" >
+          <td><input class="form-control mb-1" type="date" name="date" [(ngModel)]="currentNdfEntry.date"
+              #date="ngModel" placeholder="dd/MM/yyyy" min="{{mission.startDate | date: 'dd/MM/yyyy'}}" max ="{{mission.endDate | date: 'dd/MM/yyyy'}}" ngvalue="currentDate">
             <div class="invalid-feedback mb-1" *ngIf="(date.dirty || date.touched) && date.invalid">
+                <p style="color:crimson">La date doit être comprise dans les dates de la mission.</p>
             </div>
           </td>
           <td>
@@ -81,10 +87,18 @@
 
             </select>
           </td>
-          <td><input class="form-control" [(ngModel)]="currentNdfEntry.montant" min="0"></td>
-          <td><a class="btn btn-success mr-2" (click)="validerModif(templateModif, indexMatching)" >Valider </a>
-            <a class="btn btn-warning mr-2" (click)="cancelModif()">Annuler </a></td>
+          <td>
+            <input class="form-control" [(ngModel)]="currentNdfEntry.montant" min="1">
+            <div class="invalid-feedback mb-1" *ngIf="(date.dirty || date.touched) && date.invalid">
+                <p style="color:crimson">Le montant doit être supérieur à 1€.</p>
+            </div>
+          </td>
 
+          <td>
+            <a class="btn btn-success mr-2" (click)="validerModif(templateModif)">Valider </a>
+            <a class="btn btn-warning mr-2" (click)="cancelModif()">Annuler </a>
+          </td>
+          <!---->
           <tr>
             <td>{{currentNdfEntry.date}}</td>
             <td>{{currentNdfEntry.nature}}</td>
@@ -95,10 +109,22 @@
             <td>{{noteDeFraisTab[indexMatching].nature}}</td>
             <td>{{noteDeFraisTab[indexMatching].montant}}</td>
           </tr>
+          
+          <td>imatch {{indexMatching}}</td>
+          <td>tab match ndf {{noteDeFraisTab[indexMatching].ndfCumul}}</td>
+          <td>m ndf {{mission.ndfCumul}}</td>
+          <td>m {{mission}}</td>
+          <td>m ndf id{{mission.ndfCumul.id}}</td>
+          <td>cndfe ndf id{{currentNdfEntry.ndfCumul.id}}</td>
 
-              <td>{{indexMatching}}</td>
-      </tbody>
+
+        </tbody>
+
       </table>
+      <div *ngIf="doublon" >
+        <p style="color:crimson">Cette entrée existe déjà !!</p>
+      </div>
+
       <div *ngIf="!modification" class="text-right">
         <button class="btn btn-success" (click)="creationActivate()">+</button>
       </div>
@@ -167,9 +193,6 @@
   <div class="row justify-content-center mt-4">
     <h1>Ajouter ligne de frais</h1>
   </div>
-  <div class="row align-items-center">
-      <strong *ngIf="doublon"> Cette entrée existe déjà !!</strong>
-    </div>
   <div class="row justify-content-center mt-3" *ngIf="creerOk==false; else creerOkBlock">
     <div *ngIf="error==false; else errorBlock">
       <div class="card shadow bg-white rounded" style="width: 400px; max-width: 800px;">
@@ -182,10 +205,10 @@
                 </div>
               </div>
               <div class="col">
-                <input class="form-control mb-1" type="date" name="date" [(ngModel)]="newNdfEntry.date" required
-                  #date="ngModel" placeholder="dd/MM/yyyy" min="mission.startDate" max="mission.endDate"
+                <input class="form-control mb-1" type="date" name="dateNew" [(ngModel)]="newNdfEntry.date" required
+                  #datenNew="ngModel" placeholder="dd/MM/yyyy" min="mission.startDate" max="mission.endDate"
                   ngvalue="newNdfEntry.date">
-                <div class="invalid-feedback mb-1" *ngIf="(date.dirty || date.touched) && date.invalid">
+                <div class="invalid-feedback mb-1" *ngIf="(dateNew.dirty || dateNew.touched) && dateNew.invalid">
                 </div>
               </div>
             </div>
@@ -200,8 +223,8 @@
               <div class="col">
 
 
-                <select class="custom-select mb-1" name="nature" id="nature" [(ngModel)]="newNdfEntry.nature"
-                  #nature="ngModel">
+                <select class="custom-select mb-1" name="natureNew" id="natureNew" [(ngModel)]="newNdfEntry.nature"
+                  #natureNew="ngModel">
                   <option *ngFor="let nature of ndfNature" [ngValue]="nature">{{nature}}</option>
 
                 </select>
@@ -216,10 +239,10 @@
                 </div>
               </div>
               <div class="col">
-                <input class="form-control mb-1" name="montant" [(ngModel)]="newNdfEntry.montant" type="number" min="1"
-                  #montant="ngModel">
-                <div class="invalid-feedback mb-1" *ngIf="(montant.dirty || montant.touched) && montant.invalid">Montant
-                  Invalide (au moins 2 caractères)
+                <input class="form-control mb-1" name="montantNew" [(ngModel)]="newNdfEntry.montant" type="number" min="1"
+                  #montantNew="ngModel" id="montantNew">
+                <div class="invalid-feedback mb-1" *ngIf="(montantNew.dirty || montantNew.touched) && montantNew.invalid">
+                  Montant Invalide (au moins 1$)
                 </div>
               </div>
             </div>
