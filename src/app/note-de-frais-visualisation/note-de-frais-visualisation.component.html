@@ -8,187 +8,190 @@
 <div>{{mission.transport}}</div>
 -->
 
-<div *ngIf="!creation">
-  <h2 class="row justify-content-center align-items-center mt-3">Saisie de frais</h2>
-  <mdb-card class="animated zoomIn orange">
-<mdb-card-header class="primary-color white-text text-left">
-    <h3>Informations sur la mission :</h3>
-  </mdb-card-header>
 
-    <table class="table">
-      <tr>
-        <th></th>
-      </tr>
-      <tr>
-        <td>Date de Début : </td>
-        <td>{{mission.startDate| date :"dd/MM/yyyy"}}</td>
-        <td> </td>
-        <td>Estimation Prix : </td>
-        <td>#</td>
-      </tr>
-      <tr>
-        <td>Date de Fin : </td>
-        <td>{{mission.endDate| date :"dd/MM/yyyy"}}</td>
-        <td> </td>
-        <td>Ville de Départ : </td>
-        <td>{{mission.villeDepart}}</td>
-      </tr>
-      <tr>
-        <td>Nature : </td>
-        <td>{{mission.nature.code}}</td>
-        <td> </td>
-        <td>Ville d'arrivée : </td>
-        <td>{{mission.villeArrivee}}</td>
-      </tr>
+  <div ng-show="!creation">
+    <h2 class="row justify-content-center align-items-center mt-3">Saisie de frais</h2>
+    <mdb-card class="animated zoomIn orange">
+      <mdb-card-header class="primary-color white-text text-left">
+        <h3>Informations sur la mission :</h3>
+      </mdb-card-header>
 
-    </table>
-  </mdb-card>
+      <table class="table" id='tableMissionCourante'>
+        <tr>
+          <th></th>
+        </tr>
+        <tr>
+          <td>Date de Début : </td>
+          <td>{{mission.startDate| date :"dd/MM/yyyy"}}</td>
+          <td> </td>
+          <td>Estimation Prix : </td>
+          <td>#</td>
+        </tr>
+        <tr>
+          <td>Date de Fin : </td>
+          <td>{{mission.endDate| date :"dd/MM/yyyy"}}</td>
+          <td> </td>
+          <td>Ville de Départ : </td>
+          <td>{{mission.villeDepart}}</td>
+        </tr>
+        <tr>
+          <td>Nature : </td>
+          <td>{{mission.nature.code}}</td>
+          <td> </td>
+          <td>Ville d'arrivée : </td>
+          <td>{{mission.villeArrivee}}</td>
+        </tr>
+
+      </table>
+    </mdb-card>
 
 
-  <mdb-card class="animated zoomIn mt-3">
+    <mdb-card class="animated zoomIn mt-3">
       <mdb-card-header class="primary-color white-text text-center">
-        <h5>Liste des frais</h5>
-        </mdb-card-header>
-    <mdb-card-body>
-      <table class="table table-hover table-bordered">
-        <thead>
-          <tr>
-            <th>Date</th>
-            <th>Nature</th>
-            <th>Montant</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-
-        <tbody *ngIf="!modification">
-          <!-- <tr *ngFor="let ndf of noteDeFraisTab ;let i = index" [attr.data-index]="i">-->
-          <tr *ngFor="let ndf of noteDeFraisTab ; let indexLigneDeFraisDansTab = index">
-            <td>{{ndf.date| date : "dd/MM/yyyy"}}</td>
-            <td>{{ndf.nature}}</td>
-            <td>{{ndf.montant}}</td>
-            <td>
-              <a><img class="rounded float-center " src="assets/img/ndf-edit.png" alt="edit" width='19px'
-                  (click)="showNdfEntryEditPanel(ndf.id, indexLigneDeFraisDansTab )"></a>
-              <a><img class="rounded float-center ml-4" src="assets/img/ndf-trash.png" alt="delete" width='12px'
-                  (click)="openModalDelete(templateDelete, ndf.id)"></a>
-            </td>
-          </tr>
-        </tbody>
-        <tbody *ngIf="modification">
-          <td><input class="form-control mb-1" type="date" name="date" [(ngModel)]="currentNdfEntry.date"
-              #date="ngModel" placeholder="dd/MM/yyyy" min="{{mission.startDate | date: 'dd/MM/yyyy'}}" max ="{{mission.endDate | date: 'dd/MM/yyyy'}}" ngvalue="currentDate">
-            <div class="invalid-feedback mb-1" *ngIf="(date.dirty || date.touched) && date.invalid">
+        <h4>Liste des frais</h4>
+      </mdb-card-header>
+      <mdb-card-body>
+        <table class="table table-hover table-bordered" id='tableLignesDeFrais'>
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Nature</th>
+              <th>Montant</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <!-- MODIFICATION-->
+          <tbody *ngIf="!modification">
+            <!-- <tr *ngFor="let ndf of noteDeFraisTab ;let i = index" [attr.data-index]="i">-->
+            <tr *ngFor="let ndf of noteDeFraisTab ; let indexLigneDeFraisDansTab = index">
+              <td>{{ndf.date| date : "dd/MM/yyyy"}}</td>
+              <td>{{ndf.nature}}</td>
+              <td>{{ndf.montant}}</td>
+              <td>
+                <a><img class="rounded float-center " src="assets/img/ndf-edit.png" alt="edit" width='19px'
+                    (click)="showNdfEntryEditPanel(ndf.id, indexLigneDeFraisDansTab )"></a>
+                <a><img class="rounded float-center ml-4" src="assets/img/ndf-trash.png" alt="delete" width='12px'
+                    (click)="openModalDelete(templateDelete, ndf.id)"></a>
+              </td>
+            </tr>
+          </tbody>
+          <tbody *ngIf="modification">
+            <td><input class="form-control mb-1" type="date" name="date" [(ngModel)]="currentNdfEntry.date"
+                #date="ngModel" placeholder="dd/MM/yyyy" min="{{mission.startDate | date: 'dd/MM/yyyy'}}"
+                max="{{mission.endDate | date: 'dd/MM/yyyy'}}" ngvalue="currentDate">
+              <div class="invalid-feedback mb-1" *ngIf="(date.dirty || date.touched) && date.invalid">
                 <p style="color:crimson">La date doit être comprise dans les dates de la mission.</p>
-            </div>
-          </td>
-          <td>
-            <select class="custom-select mb-1" name="nature" id="nature" [(ngModel)]="currentNdfEntry.nature">
-              <option *ngFor="let nature of ndfNature" [ngValue]="nature">{{nature}}</option>
+              </div>
+            </td>
+            <td>
+              <select class="custom-select mb-1" name="nature" id="nature" [(ngModel)]="currentNdfEntry.nature">
+                <option *ngFor="let nature of ndfNature" [ngValue]="nature">{{nature}}</option>
 
-            </select>
-          </td>
-          <td>
-            <input class="form-control" [(ngModel)]="currentNdfEntry.montant" min="1">
-            <div class="invalid-feedback mb-1" *ngIf="(date.dirty || date.touched) && date.invalid">
+              </select>
+            </td>
+            <td>
+              <input class="form-control" [(ngModel)]="currentNdfEntry.montant" min="1">
+              <div class="invalid-feedback mb-1" *ngIf="(date.dirty || date.touched) && date.invalid">
                 <p style="color:crimson">Le montant doit être supérieur à 1€.</p>
-            </div>
-          </td>
+              </div>
+            </td>
 
-          <td>
-            <a class="btn btn-success mr-2" (click)="validerModif(templateModif)">Valider </a>
-            <a class="btn btn-warning mr-2" (click)="cancelModif()">Annuler </a>
-          </td>
-          <!---->
-          <tr>
-            <td>{{currentNdfEntry.date}}</td>
-            <td>{{currentNdfEntry.nature}}</td>
-            <td>{{currentNdfEntry.montant}}</td>
-          </tr>
-          <tr>
-            <td>{{noteDeFraisTab[indexMatching].date}}</td>
-            <td>{{noteDeFraisTab[indexMatching].nature}}</td>
-            <td>{{noteDeFraisTab[indexMatching].montant}}</td>
-          </tr>
-          
-          <td>imatch {{indexMatching}}</td>
-          <td>tab match ndf {{noteDeFraisTab[indexMatching].ndfCumul}}</td>
-          <td>m ndf {{mission.ndfCumul}}</td>
-          <td>m {{mission}}</td>
-          <td>m ndf id{{mission.ndfCumul.id}}</td>
-          <td>cndfe ndf id{{currentNdfEntry.ndfCumul.id}}</td>
+            <td>
+              <a class="btn btn-success btn-sm mr-2" (click)="validerModif(templateModif)">Valider</a>
+              <a class="btn btn-warning btn-sm mr-2" (click)="cancelModif()">Annuler</a>
+            </td>
+            <!-- 
+            <tr>
+              <td>{{currentNdfEntry.date}}</td>
+              <td>{{currentNdfEntry.nature}}</td>
+              <td>{{currentNdfEntry.montant}}</td>
+            </tr>
+            <tr>
+              <td>{{noteDeFraisTab[indexMatching].date}}</td>
+              <td>{{noteDeFraisTab[indexMatching].nature}}</td>
+              <td>{{noteDeFraisTab[indexMatching].montant}}</td>
+            </tr>
 
+            <td>imatch {{indexMatching}}</td>
+            <td>tab match ndf {{noteDeFraisTab[indexMatching].ndfCumul}}</td>
+            <td>m ndf {{mission.ndfCumul}}</td>
+            <td>m {{mission}}</td>
+            <td>m ndf id{{mission.ndfCumul.id}}</td>
+            <td>cndfe ndf id{{currentNdfEntry.ndfCumul.id}}</td>
 
-        </tbody>
+-->
+          </tbody>
 
-      </table>
-      <div *ngIf="doublon" >
-        <p style="color:crimson">Cette entrée existe déjà !!</p>
-      </div>
+        </table>
+        <div *ngIf="doublon">
+          <p style="color:crimson">Cette entrée existe déjà !!</p>
+        </div>
 
-      <div *ngIf="!modification" class="text-right">
-        <button class="btn btn-success" (click)="creationActivate()">+</button>
-      </div>
-    </mdb-card-body>
-  </mdb-card>
-
-  <ng-template #templateDelete>
-    <div class="modal-header">
-      <h4 class="modal-title pull-left">Suppression de ligne :</h4>
-    </div>
-    <div class="modal-body">
-      <table class="ml-2">
-        <tr>
-          <td>Date : </td>
-          <td>{{currentNdfEntry.date | date : "dd/MM/yyyy"}}</td>
-        </tr>
-        <tr>
-          <td>Nature :</td>
-          <td>{{currentNdfEntry.nature}}</td>
-        </tr>
-        <tr>
-          <td>Montant :</td>
-          <td>{{currentNdfEntry.montant}}</td>
-        </tr>
-      </table>
-    </div>
-    <div class="modal-footer">
-      <p></p>
-      <button type="button" class="btn btn-warning" (click)="confirmDelete()">Oui</button>
-      <button type="button" class="btn btn-success" (click)="decline()">Non</button>
-
-    </div>
-
-  </ng-template>
-
-  <ng-template #templateModif>
-    <div class="modal-header">
-      <h4 class="modal-title pull-left">Ligne modifiée :</h4>
-    </div>
-    <div class="modal-body">
-      <table class="ml-2">
-        <tr>
-          <td>Date : </td>
-          <td>{{currentNdfEntry.date | date : "dd/MM/yyyy"}}</td>
-        </tr>
-        <tr>
-          <td>Nature :</td>
-          <td>{{currentNdfEntry.nature}}</td>
-        </tr>
-        <tr>
-          <td>Montant :</td>
-          <td>{{currentNdfEntry.montant}}</td>
-        </tr>
-      </table>
-    </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-success" (click)="confirmModif()">OK</button>
+        <div *ngIf="!modification" class="text-right">
+          <button class="btn btn-success" (click)="creationActivate()">+</button>
+        </div>
+      </mdb-card-body>
+    </mdb-card>
+  </div>
 
 
-    </div>
-  </ng-template>
-</div>
+<!-- Template Modal Delete-->
+<ng-template #templateDelete>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Suppression de ligne :</h4>
+  </div>
+  <div class="modal-body">
+    <table class="ml-2">
+      <tr>
+        <td>Date : </td>
+        <td>{{currentNdfEntry.date | date : "dd/MM/yyyy"}}</td>
+      </tr>
+      <tr>
+        <td>Nature :</td>
+        <td>{{currentNdfEntry.nature}}</td>
+      </tr>
+      <tr>
+        <td>Montant :</td>
+        <td>{{currentNdfEntry.montant}}</td>
+      </tr>
+    </table>
+  </div>
+  <div class="modal-footer">
+    <p></p>
+    <button type="button" class="btn btn-warning" (click)="confirmDelete()">Oui</button>
+    <button type="button" class="btn btn-success" (click)="decline()">Non</button>
+
+  </div>
+</ng-template>
+
+<!-- Template Modal confirmation modification-->
+<ng-template #templateModif>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Ligne modifiée :</h4>
+  </div>
+  <div class="modal-body">
+    <table class="ml-2">
+      <tr>
+        <td>Date : </td>
+        <td>{{currentNdfEntry.date | date : "dd/MM/yyyy"}}</td>
+      </tr>
+      <tr>
+        <td>Nature :</td>
+        <td>{{currentNdfEntry.nature}}</td>
+      </tr>
+      <tr>
+        <td>Montant :</td>
+        <td>{{currentNdfEntry.montant}}</td>
+      </tr>
+    </table>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-success" (click)="confirmModif()">OK</button>
+  </div>
+</ng-template>
 
 
+<!-- Formulaire Creation -->
 <div *ngIf="creation">
   <div class="row justify-content-center mt-4">
     <h1>Ajouter ligne de frais</h1>
@@ -239,10 +242,11 @@
                 </div>
               </div>
               <div class="col">
-                <input class="form-control mb-1" name="montantNew" [(ngModel)]="newNdfEntry.montant" type="number" min="1"
-                  #montantNew="ngModel" id="montantNew">
-                <div class="invalid-feedback mb-1" *ngIf="(montantNew.dirty || montantNew.touched) && montantNew.invalid">
-                  Montant Invalide (au moins 1$)
+                <input class="form-control mb-1" name="montantNew" [(ngModel)]="newNdfEntry.montant" type="number"
+                  min="1" #montantNew="ngModel" id="montantNew">
+                <div class="invalid-feedback mb-1"
+                  *ngIf="(montantNew.dirty || montantNew.touched) && montantNew.invalid">
+                  Montant Invalide (au moins 1€)
                 </div>
               </div>
             </div>

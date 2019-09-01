@@ -3,7 +3,8 @@ import { CollegueDto } from './collegue-dto';
 import { NdfCumul} from '../note-de-frais/note-de-frais.domains'
 
 export class MissionDto {
-  constructor(public id:number,
+  constructor(
+    public id:number,
     public startDate:string,
     public endDate:string,
     public nature:NatureDto,

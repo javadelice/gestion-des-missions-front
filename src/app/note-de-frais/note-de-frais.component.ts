@@ -7,6 +7,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { MissionsService } from '../missions/missions.service';
 import { NdfService } from './note-de-frais.service';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import {Title }  from '@angular/platform-browser';
 
 @Component({
   selector: 'app-note-de-frais',
@@ -20,16 +21,19 @@ export class NoteDeFraisComponent implements OnInit {
   phaseModifier: Boolean;
   error: boolean;
   modalRef: BsModalRef;
-  ndfvisu: boolean;
+  ndfVisu: boolean;
   missionChosen: MissionDto;
+  exportPdf:boolean;
 
  constructor(private _authSrv: AuthService, 
     private missionService: MissionsService, 
     private _ndfService: NdfService, 
-    private _router: Router) { }
+    private _router: Router,
+    private _titleService: Title) { }
   
 ngOnInit() {
-
+  this._titleService.setTitle("Notes de frais")
+  this.exportPdf =false;
 
     this._authSrv.collegueConnecteObs.subscribe(collegueConnecte => {
       this.missionService.getMissions(collegueConnecte.id).subscribe((missions: MissionDto[]) => {
@@ -48,13 +52,16 @@ ngOnInit() {
   }
 
   ajoutNdf(mission) {
-    this.ndfvisu = true;
+    this.ndfVisu = true;
     this.missionChosen = mission;
   }
 
 
-  exportToPDF(): void {
-    //TODO
+  exportToPDF(mission:MissionDto): void {
+   
+   this.missionChosen = mission;
+   this.ndfVisu = true;
+   this.exportPdf = true;
   }
 
 }

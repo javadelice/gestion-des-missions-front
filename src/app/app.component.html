@@ -2,14 +2,13 @@
   <img class="img-thumbnail" src="assets/img/GM_Logo.png" class="rounded mx-auto d-block" alt="GM_Logo" width="150px">
   <h1 class="h1 h1-responsive text-center">GDM</h1>
   <h2 class="h1 h1-responsive text-center">Gestion des Missions</h2>
- </div>
-  <div *ngIf="!(collegueConnecte | async).estAnonyme()">
+</div>
+<div *ngIf="!(collegueConnecte | async).estAnonyme()" style="right: -200px">
     <span>{{(collegueConnecte | async).email}}</span>
     <span>({{(collegueConnecte | async).roles}})</span>
-    <a  class="btn btn-danger float-right" (click)="seDeconnecter()">Se déconnecter</a>
-  </div>
+    <button class="btn btn-danger" (click)="seDeconnecter()">Se déconnecter</button>
+</div>
 <div *ngIf="!(collegueConnecte | async).estAnonyme()">
-<app-menu></app-menu>
+  <app-menu></app-menu>
 </div>
 <router-outlet></router-outlet>
-
