@@ -15,24 +15,23 @@ import { HttpErrorResponse } from '@angular/common/http';
         <a class="nav-link active" type="modify" [routerLink]="['../tech']">Accueil</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" type="success" [routerLink]="['../missions/']">Gestion des missions</a>
-
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" type="warning" [routerLink]="['../missions/']">Planning des missions</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" [routerLink]="['../primes/']">Primes</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" [routerLink]="['../notesdefrais/']">Saisie note de frais</a>
-      </li>
-      <li class="nav-item" *ngIf="isAdmin == true">
-        <a class="nav-link" [routerLink]="['../primes/']">Nature de missions</a>
-      </li>
-      <li class="nav-item" *ngIf="isManager == true">
-        <a class="nav-link" [routerLink]="['../primes/']">Validation des missions</a>
-      </li>
+      <a class="nav-link" routerLink="missions">Gestion des missions</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" routerLink="planning">Planning des missions</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" routerLink="primes">Primes</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">Saisie note de frais</a>
+    </li>
+    <li class="nav-item" *ngIf="isAdmin == true">
+      <a class="nav-link" routerLink="nature">Nature de missions</a>
+    </li>
+    <li class="nav-item" *ngIf="isManager == true">
+      <a class="nav-link" routerLink="valider">Validation des missions</a>
+    </li>
 
 
     </ul>
