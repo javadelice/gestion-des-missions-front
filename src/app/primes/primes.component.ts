@@ -22,10 +22,12 @@ export class PrimesComponent implements OnInit {
   primes: number[];
 
   isError: boolean;
+  erreur: string;
 
   constructor(private primesService: PrimesService, private _authServ: AuthService, private _fileSaverService: FileSaverService) { }
 
   ngOnInit() {
+    this.isError = false;
     this.anneesPrimes = [];
     this._authServ.collegueConnecteObs.subscribe(collegueConnecte => {
       this.idCollegueConnecte = collegueConnecte.id;
@@ -39,15 +41,18 @@ export class PrimesComponent implements OnInit {
         this.anneePrimes = this.anneesPrimes[0];
       }, (error: HttpErrorResponse) => {
         this.isError = true;
+        this.erreur = error.status + ' - ' + error.message;
       });
     }, (error: HttpErrorResponse) => {
       this.isError = true;
+      this.erreur = error.status + ' - ' + error.message;
     });
 
     this.initData();
   }
 
   initData() {
+    this.isError = false;
     this.missionsEchues = [];
     this.primes = [];
     this.moisPrimes = [{ mois: 0, prime: 0 }, { mois: 1, prime: 0 }, { mois: 2, prime: 0 }, { mois: 3, prime: 0 },
@@ -74,9 +79,11 @@ export class PrimesComponent implements OnInit {
         this.primesService.publier(this.primes);
       }, (error: HttpErrorResponse) => {
         this.isError = true;
+        this.erreur = error.status + ' - ' + error.message;
       });
     }, (error: HttpErrorResponse) => {
       this.isError = true;
+      this.erreur = error.status + ' - ' + error.message;
     });
   }
 
@@ -94,4 +101,10 @@ export class PrimesComponent implements OnInit {
       this.lastAnneePrimes = this.anneePrimes;
     }
   }
+
+  recommencer() {
+    this.ngOnInit();
+  }
+
 }
+

@@ -3,11 +3,6 @@
   <h1 class="h1 h1-responsive text-center">GDM</h1>
   <h2 class="h1 h1-responsive text-center">Gestion des Missions</h2>
 </div>
-<div *ngIf="!(collegueConnecte | async).estAnonyme()" style="right: -200px">
-    <span>{{(collegueConnecte | async).email}}</span>
-    <span>({{(collegueConnecte | async).roles}})</span>
-    <button class="btn btn-danger" (click)="seDeconnecter()">Se déconnecter</button>
-</div>
 <div *ngIf="!(collegueConnecte | async).estAnonyme()">
   <app-menu></app-menu>
 </div>
