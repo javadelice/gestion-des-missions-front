@@ -61,6 +61,7 @@ export class NoteDeFraisVisualisationComponent implements OnInit {
   isExportPDFcurr: boolean=false;
   currentNdfCumul: NdfCumul;
   currentMissionId: number;
+  currentMission:MissionDto;
 
 
   constructor(private _authSrv: AuthService, private _ndfSrv: NdfService,
@@ -80,7 +81,7 @@ export class NoteDeFraisVisualisationComponent implements OnInit {
     this.depassementValide = true;
 
     this.doublon = false;
-    //this.currentMission = this.mission;
+    this.currentMission = this.mission;
     this.currentMissionId = this.mission.id;
 
     this.ndfCumul = new NdfCumul();

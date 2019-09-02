@@ -99,7 +99,7 @@
             <a class="btn btn-warning btn-md mr-2" (click)="validerModif(templateModif)">Valider</a>
             <a class="btn btn-dark btn-md mr-2" (click)="cancelModif()">Annuler</a>
           </td>
-          <!-- 
+          <!--
             <tr>
               <td>{{currentNdfEntry.date}}</td>
               <td>{{currentNdfEntry.nature}}</td>
@@ -211,14 +211,15 @@
               </div>
               <div class="col">
 
-                  <input class="form-control mb-1" type="date" name="dateNew" [(ngModel)]="newNdfEntry.date"
-                    required #dateNew="ngModel" placeholder="dd/MM/yyyy" min="mission.startDate" max="mission.endDate"
-                    ngvalue="newNdfEntry.date">
-                  <div class="invalid-feedback mb-1" *ngIf="(newNdfEntry.date.dirty || newNdfEntry.date.touched) && newNdfEntry.date.invalid">
-                  </div>
+                <input class="form-control mb-1" type="date" name="dateNew" [(ngModel)]="newNdfEntry.date" required
+                  #dateNew="ngModel" placeholder="dd/MM/yyyy" min="mission.startDate" max="mission.endDate"
+                  ngvalue="newNdfEntry.date">
+                <div class="invalid-feedback mb-1"
+                  *ngIf="(newNdfEntry.date.dirty || newNdfEntry.date.touched) && newNdfEntry.date.invalid">
                 </div>
+              </div>
             </div>
-              
+
 
             <div class="row align-items-center">
               <div class="col-5">
@@ -234,23 +235,24 @@
                 <div class="invalid-feedback mb-1" *ngIf="(nature.dirty || nature.touched) && nature.invalid">
                 </div>
               </div>
+            </div>
 
-              <div class="row align-items-center">
-                <div class="col-5">
-                  <div class="row justify-content-end">
-                    <strong>Montant</strong>
-                  </div>
-                </div>
-
-                <div class="col">
-                  <input class="form-control mb-1" name="montantNew" [(ngModel)]="newNdfEntry.montant" type="number"
-                    min="1" #montantNew="ngModel" id="montantNew">
-                  <div class="invalid-feedback mb-1"
-                    *ngIf="(montantNew.dirty || montantNew.touched) && montantNew.invalid">
-                    Montant Invalide (au moins 1€)
-                  </div>
+            <div class="row align-items-center">
+              <div class="col-5">
+                <div class="row justify-content-end">
+                  <strong>Montant</strong>
                 </div>
               </div>
+
+              <div class="col">
+                <input class="form-control mb-1" name="montantNew" [(ngModel)]="newNdfEntry.montant" type="number"
+                  min="1" #montantNew="ngModel" id="montantNew">
+                <div class="invalid-feedback mb-1"
+                  *ngIf="(montantNew.dirty || montantNew.touched) && montantNew.invalid">
+                  Montant Invalide (au moins 1€)
+                </div>
+              </div>
+            </div>
 
 
             <div class="d-flex justify-content-around m-1">
@@ -258,7 +260,9 @@
               <button class="btn btn-info" (click)="recommencer()">Annuler</button>
             </div>
 
+
           </form>
+
         </div>
       </div>
     </div>
@@ -276,32 +280,32 @@
   </div>
 </ng-template>
 
-  <ng-template #creerOkBlock>
-    <div class="row justify-content-center">
-      <div class="alert alert-success" role="alert">
-        <div class="modal-header">
-          <h3>Ligne de frais ajoutée</h3>
-        </div>
-        <div class="modal-body">
-          <table class="ml-2">
-            <tr>
-              <td>Date : </td>
-              <td>{{newNdfEntry.date | date : "dd/MM/yyyy"}}</td>
-            </tr>
-            <tr>
-              <td>Nature :</td>
-              <td>{{newNdfEntry.nature}}</td>
-            </tr>
-            <tr>
-              <td>Montant :</td>
-              <td>{{newNdfEntry.montant}} €</td>
-            </tr>
-          </table>
-        </div>
+<ng-template #creerOkBlock>
+  <div class="row justify-content-center">
+    <div class="alert alert-success" role="alert">
+      <div class="modal-header">
+        <h3>Ligne de frais ajoutée</h3>
+      </div>
+      <div class="modal-body">
+        <table class="ml-2">
+          <tr>
+            <td>Date : </td>
+            <td>{{newNdfEntry.date | date : "dd/MM/yyyy"}}</td>
+          </tr>
+          <tr>
+            <td>Nature :</td>
+            <td>{{newNdfEntry.nature}}</td>
+          </tr>
+          <tr>
+            <td>Montant :</td>
+            <td>{{newNdfEntry.montant}} €</td>
+          </tr>
+        </table>
+      </div>
     </div>
+    </div>
+</ng-template>
 
-  </ng-template>
-</div>
 
 <div *ngIf="creation == true && erreurAjoutLDF == true">
   <div class="row justify-content-center">
@@ -341,4 +345,3 @@
     </div>
   </div>
 </div>
-
