@@ -10,13 +10,13 @@
         <th class="th-sm">TJM (€)</th>
         <th class="th-sm">%Prime</th>
         <th class="th-sm">Plafond frais</th>
-        <th class="th-sm">Dépt. frais</th>
+        <th class="th-sm">Dépassement frais</th>
         <th class="th-sm">Actions</th>
       </tr>
     </thead>
 
-    <tbody *ngFor="let nature of naturesMissions">
-      <tr>
+    <tbody>
+      <tr *ngFor="let nature of naturesMissions">
         <td>{{nature.code}}</td>
         <td>{{nature.isFacturee}}</td>
         <td>{{nature.isFacturee === "OUI" ? nature.hasPrime : "/"}}</td>
@@ -138,7 +138,7 @@
 
         <div class="form-row">
           <div class="form-group col-md-6">
-            <label for="depassPlafond">Dépt. frais</label>
+            <label for="depassPlafond">Dépassement frais</label>
           </div>
           <div class="form-group col-md-6">
             <select class="custom-select" name="natureDept" id="depassPlafond" [(ngModel)]="natureACreer.depassPlafond"
@@ -271,7 +271,7 @@
 
         <div class="form-row">
           <div class="form-group col-md-6">
-            <label for="depassPlafond">Dépt. frais</label>
+            <label for="depassPlafond">Dépassement frais</label>
           </div>
           <div class="form-group col-md-6">
             <select class="custom-select" name="natureDept" id="depassPlafond"

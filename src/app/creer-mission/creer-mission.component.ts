@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { MissionDto } from '../models/mission-dto';
 import { NatureDto } from '../models/nature-dto';
@@ -22,28 +22,23 @@ export class CreerMissionComponent implements OnInit {
 
   mission = new MissionDto(0, '', '', null, '', '', '', 'INITIALE', 0, null);
 
-  // estimationPrime = 0;
-  // difference = (this.mission.endDate.valueOf() - this.mission.startDate.valueOf())/86400000;
-  // startD = 10;
-  // endD = 0;
-
   constructor(private creerMissionService: CreerMissionService, private _authSrv: AuthService) {
   }
 
   ngOnInit() {
+    this.creerOk = false;
+    this.isError = false;
     this.creerMissionService.getNatures().subscribe(natures => {
-      this.creerOk = false;
-      this.isError = false;
       this.listeNatures = natures;
       this._authSrv.collegueConnecteObs.subscribe(collegueConnecte => {
         this.mission.collegue = collegueConnecte;
       }, (error: HttpErrorResponse) => {
         this.isError = true;
-        this.erreur = error.status + ' - ' + error.error;
+        this.erreur = error.status + ' - ' + error.message;
       });
     }, (error: HttpErrorResponse) => {
       this.isError = true;
-      this.erreur = error.status + ' - ' + error.error;
+      this.erreur = error.status + ' - ' + error.message;
     });
   }
 
@@ -54,7 +49,7 @@ export class CreerMissionComponent implements OnInit {
     }, (error: HttpErrorResponse) => {
       this.creerOk = false;
       this.isError = true;
-      this.erreur = error.error;
+      this.erreur = error.status + ' - ' + error.message;
     });
   }
 
