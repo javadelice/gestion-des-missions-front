@@ -33,9 +33,7 @@
       </tr>
     </tbody>
   </table>
-  Ajouter une nature de mission <button type="button" class="btn btn-primary" (click)="openCreateModal(creation)">
-    +
-  </button>
+  Ajouter une nature de mission <button mdbBtn type="button" color="mdb-color" mdbWavesEffect (click)="openCreateModal(creation)">+</button>
 </div>
 
 <ng-template #creation>
@@ -163,8 +161,8 @@
 
 
       <div class="modal-footer">
-        <button [disabled]="natureCreer.invalid" class="btn btn-primary" (click)=creerNature()>Valider</button>
-        <button class="btn btn-info" (click)=annulerCreation()>Annuler</button>
+        <button [disabled]="natureCreer.invalid" class="btn btn-info" (click)=creerNature()>Valider</button>
+        <button class="btn btn-danger" (click)=annulerCreation()>Annuler</button>
       </div>
 
     </form>
@@ -293,8 +291,8 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button [disabled]="natureModifier.invalid" class="btn btn-primary" (click)=modifierNature()>Valider</button>
-        <button class="btn btn-info" (click)=annulerModif()>Annuler</button>
+        <button [disabled]="natureModifier.invalid" class="btn btn-info" (click)=modifierNature()>Valider</button>
+        <button class="btn btn-danger" (click)=annulerModif()>Annuler</button>
       </div>
 
     </form>
@@ -306,7 +304,7 @@
   <div class="modal-body text-center">
     <p>Confirmez-vous la suppression de la mission ?</p>
     <button type="button" class="btn btn-default" (click)="confirm()">Yes</button>
-    <button type="button" class="btn btn-primary" (click)="decline()">No</button>
+    <button type="button" class="btn btn-danger" (click)="decline()">No</button>
     <div class="alert alert-danger ml-3" *ngIf="isError">
       {{error}}
     </div>
