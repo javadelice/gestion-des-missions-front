@@ -39,6 +39,7 @@ export class NoteDeFraisVisualisationComponent implements OnInit {
   err: string;
 
   ndfCumul: NdfCumul;
+  ndfCumulExists: boolean;
   erreurAjoutLDF: boolean;
   verifDoublonLDF: boolean;
   montantNDF: number;
@@ -71,6 +72,14 @@ export class NoteDeFraisVisualisationComponent implements OnInit {
 
     this._ndfSrv.getNdfEntriesFromMissionId(this.mission.id).subscribe((noteDeFraisTab: NdfEntryDto[]) => {
       this.noteDeFraisTab = noteDeFraisTab;
+      if (this.noteDeFraisTab.length === 0) {
+        this.ndfCumulExists = false;
+        this.ndfCumul.mission = this.mission;
+      }
+      else {
+        this.ndfCumulExists = true;
+        this.ndfCumul = this.noteDeFraisTab[0].ndfCumul;
+      }
       this.phaseModifier = false;
     }, (error: HttpErrorResponse) => {
       this.error = true;
@@ -133,7 +142,7 @@ export class NoteDeFraisVisualisationComponent implements OnInit {
             ignoreBackdropClick: true,
             class: 'modal-sm'
           });
-        };
+        }
       });
 
     }
@@ -241,33 +250,25 @@ export class NoteDeFraisVisualisationComponent implements OnInit {
         this.depassementValide = false;
         this.errorMessage = 'Le dépassement des frais est trop important (prime - déduction < 0) !';
       } else {
-        if (this.noteDeFraisTab[0].ndfCumul.id === undefined) {
-          this.ndfCumul.mission = this.mission;
+        if (!this.ndfCumulExists) {
           this._ndfSrv.createNdf(this.ndfCumul).subscribe(ndfCumul => {
             for (const ndf of this.noteDeFraisTab) {
               ndf.ndfCumul = this.ndfCumul;
-              this._ndfSrv.createNdfEntry(ndf).subscribe(notedefrais => {
+              this._ndfSrv.createNdfEntry(ndf).subscribe(noteDeFrais => {
               });
             }
           }, (error: HttpErrorResponse) => {
             this.isError = true;
           });
         } else {
-
+          for (const ndf of this.noteDeFraisTab) {
+            ndf.ndfCumul = this.ndfCumul;
+            this._ndfSrv.createNdfEntry(ndf).subscribe(noteDeFrais => {
+            });
+          }
         }
       }
     }
-
-
-
-    // this._ndfSrv.createNdfEntry(this.newNdfEntry).subscribe(() => {
-    //   this.creerOk = true;
-    //   this.error = false;
-    // }, (error: HttpErrorResponse) => {
-    //   this.creerOk = false;
-    //   this.error = true;
-    //   this.err = error.error;
-    // });
   }
 }
 
