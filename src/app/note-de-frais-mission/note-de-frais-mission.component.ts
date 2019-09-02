@@ -7,7 +7,7 @@ import { ModifierMissionService } from '../modifier-mission/modifier-mission.ser
 import { NdfService } from '../note-de-frais/note-de-frais.service';
 import { NdfEntryDto } from '../note-de-frais-visualisation/note-de-frais-visualisation.domains';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-
+import * as jsPDF from 'jspdf';
 
 @Component({
   selector: 'app-note-de-frais-mission',
@@ -50,7 +50,10 @@ export class NoteDeFraisMissionComponent implements OnInit {
   }
 
   generatePDF(idMission: number) {
+    const doc = new jsPDF();
+    doc.autoTable({ html: '#tableLignesDeFrais' });
 
+    doc.save('mission' + this.mission.id + '-' + 'Note-de-frais' + '.pdf');
   }
 
   edit(editTemplate: TemplateRef<any>, ndfEntry:NdfEntryDto) {
