@@ -13,7 +13,7 @@ export class CreerMissionService {
   constructor(private httpClient: HttpClient) { }
 
   getNatures(): Observable<NatureDto[]> {
-    return this.httpClient.get<NatureDto[]>(environment.baseUrl + 'natures', {withCredentials: true});
+    return this.httpClient.get<NatureDto[]>(environment.baseUrl + 'nature', {withCredentials: true});
   }
 
   createMission(mission: MissionDto): Observable<MissionDto> {

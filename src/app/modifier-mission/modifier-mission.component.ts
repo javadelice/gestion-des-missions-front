@@ -34,11 +34,11 @@ export class ModifierMissionComponent implements OnInit {
         this.listeNatures = natures;
       }, (error: HttpErrorResponse) => {
         this.isError = true;
-        this.erreur = error.status + ' - ' + error.error;
+        this.erreur = error.status + ' - ' + error.message;
       });
     }, (error: HttpErrorResponse) => {
       this.isError = true;
-      this.erreur = error.status + ' - ' + error.error;
+      this.erreur = error.status + ' - ' + error.message;
     });
   }
 
