@@ -29,7 +29,7 @@ import { Router } from '@angular/router';
         <a class="nav-link waves-light" mdbWavesEffect routerLink="primes">Primes</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link waves-light" mdbWavesEffect routerLink="tech">Saisie note de frais</a>
+        <a class="nav-link waves-light" mdbWavesEffect routerLink="notesdefrais">Saisie note de frais</a>
       </li>
       <li class="nav-item" *ngIf="isAdmin == true">
         <a class="nav-link waves-light" mdbWavesEffect routerLink="nature">Nature de missions</a>
@@ -37,9 +37,7 @@ import { Router } from '@angular/router';
       <li class="nav-item" *ngIf="isManager == true">
         <a class="nav-link waves-light" mdbWavesEffect routerLink="valider">Validation des missions</a>
       </li>
-
     </ul>
-    <!-- Links -->
 
     <ul class="navbar-nav ml-auto nav-flex-icons">
       <li class="nav-item">
@@ -76,16 +74,22 @@ export class MenuComponent implements OnInit {
   ngOnInit() {
     this.collegueConnecte = this._authSrv.collegueConnecteObs;
     this._authSrv.collegueConnecteObs.subscribe(collegueConnecte => {
-      if (collegueConnecte.roles !== undefined && collegueConnecte.roles.includes('ROLE_ADMINISTRATEUR')) {
-        this.isAdmin = true;
+
+      if (collegueConnecte && collegueConnecte.email) {
+        if (collegueConnecte.roles.includes('ROLE_ADMINISTRATEUR')) {
+
+          if (collegueConnecte.roles !== undefined && collegueConnecte.roles.includes('ROLE_ADMINISTRATEUR')) {
+            this.isAdmin = true;
+          }
+          if (collegueConnecte.roles !== undefined && collegueConnecte.roles.includes('ROLE_MANAGER')) {
+            this.isManager = true;
+          }
+
       }
-      if (collegueConnecte.roles !== undefined && collegueConnecte.roles.includes('ROLE_MANAGER')) {
-        this.isManager = true;
+
       }
     }, (error: HttpErrorResponse) => {
-
-    });
-  }
+  });
 
   seDeconnecter() {
     this._authSrv.seDeconnecter().subscribe(
@@ -94,3 +98,4 @@ export class MenuComponent implements OnInit {
   }
 
 }
+  }

@@ -7,5 +7,14 @@ export const config = {
   apiActuator: 'actuator',
   apiLogin: 'login',
   apiLogout: 'logout',
-  apiAuthMe: 'me'
+  apiAuthMe: 'me',
+  apiNoteDeFrais: 'notedefrais',
+  apiCreateNoteDeFrais: 'notedefrais',
+  apiLignesDeFraisFromNdfId: 'notedefrais/',
+  apiLignedefrais: 'lignedefrais',
+  apiLignesDeFraisFromMissionId: 'notedefrais?idMission=',
+  apiModifyLigneDeFrais: 'lignedefrais',
+  apiAjouterLigneDeFrais: 'lignedefrais',
+  apiDeleteLigneDeFrais: 'lignedefrais?id=',
+  apiMissions : 'missions'
 };
