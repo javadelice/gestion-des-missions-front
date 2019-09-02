@@ -55,8 +55,6 @@ export class NoteDeFraisVisualisationComponent implements OnInit {
   isError: boolean;
   modification: boolean;
   confirmation: boolean;
-  creerOk: boolean;
-  err: string;
   doublon: boolean;
   indexMatching: number;
   @Input() isExportPDF: boolean;
@@ -80,9 +78,9 @@ export class NoteDeFraisVisualisationComponent implements OnInit {
     this.depassementAutorise = true;
     this.depassementFrais = false;
     this.depassementValide = true;
-    
+
     this.doublon = false;
-    this.currentMission = this.mission;
+    //this.currentMission = this.mission;
     this.currentMissionId = this.mission.id;
 
     this.ndfCumul = new NdfCumul();
@@ -103,7 +101,7 @@ export class NoteDeFraisVisualisationComponent implements OnInit {
     }, (error: HttpErrorResponse) => {
       this.error = true;
     });
-    
+
     if (!this.isExportPDFcurr) {
       if (this.isExportPDF) {
         this.isExportPDFcurr = true;
@@ -118,7 +116,7 @@ export class NoteDeFraisVisualisationComponent implements OnInit {
       doc.autoTable({ html: '#tableLignesDeFrais' });
 
       doc.save('mission' + this.currentMissionId + '-' + 'Note-de-frais' + '.pdf');
-
+  }
 
   estimerPrime() {
     this.nbJoursTravailles = 0;
@@ -163,7 +161,7 @@ export class NoteDeFraisVisualisationComponent implements OnInit {
     this.currentNdfEntry.date = this.noteDeFraisTab[indexMatchingTab].date;
     this.currentNdfEntry.nature = this.noteDeFraisTab[indexMatchingTab].nature;
     this.currentNdfEntry.montant = this.noteDeFraisTab[indexMatchingTab].montant;
-    this.currentNdfEntry.ndfCumul = this.currentMission.ndfCumul;
+    this.currentNdfEntry.ndfCumul = this.mission.ndfCumul;
     //this.ndfEntryToggle = true;
     this.modification = true;
     this.indexMatching = indexMatchingTab;

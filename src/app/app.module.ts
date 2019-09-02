@@ -72,7 +72,7 @@ const routes: Routes = [
     FormsModule,
     NgbModule,
     ModalModule.forRoot(),
-    CommonModule
+    CommonModule,
     ChartsModule,
     FileSaverModule
   ],
