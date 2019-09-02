@@ -25,7 +25,7 @@ import { HttpErrorResponse } from '@angular/common/http';
       <a class="nav-link" routerLink="primes">Primes</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="#">Saisie note de frais</a>
+      <a class="nav-link" routerLink="notesdefrais">Saisie note de frais</a>
     </li>
     <li class="nav-item" *ngIf="isAdmin == true">
       <a class="nav-link" routerLink="nature">Nature de missions</a>

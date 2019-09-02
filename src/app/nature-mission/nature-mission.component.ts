@@ -44,7 +44,7 @@ export class NatureMissionComponent implements OnInit {
   }
 
   openCreateModal(create: TemplateRef<any>) {
-    this.natureACreer = new NatureDto(0, '', '', '', 0, 0, 0, '');
+    this.natureACreer = new NatureDto(0, '', '', '', 0, '', 0, '', '', 0);
     this.modalRef = this.modalService.show(create, {class: 'modal-md'});
   }
 
@@ -73,12 +73,8 @@ export class NatureMissionComponent implements OnInit {
     this.natureService.createNature(this.natureACreer).subscribe(nature => {
       this.isError = false;
       this.modalRef.hide();
-<<<<<<< HEAD
-      this.natureMissions.push(nature);
-      this.natMission = new NatureDto(0, '', '', '', 0, "", 0, "",'', 0);
-=======
+
       this.naturesMissions.push(nature);
->>>>>>> master
     }, (error: HttpErrorResponse) => {
       this.isError = true;
       this.error = error.error;
@@ -87,10 +83,6 @@ export class NatureMissionComponent implements OnInit {
 
   annulerCreation() {
     this.modalRef.hide();
-<<<<<<< HEAD
-    this.natMission = new NatureDto(0, '', '', '', 0, "", 0, "",'', 0);
-=======
->>>>>>> master
   }
 
   deleteNature() {
