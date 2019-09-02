@@ -16,25 +16,25 @@ import { Router } from '@angular/router';
 
     <!-- Links -->
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item">
+      <li class="nav-item" routerLinkActive="active">
         <a class="nav-link waves-light" mdbWavesEffect routerLink="tech">Accueil<span class="sr-only">(current)</span></a>
       </li>
-      <li class="nav-item">
+      <li class="nav-item" routerLinkActive="active">
         <a class="nav-link waves-light" mdbWavesEffect routerLink="missions">Gestion des missions</a>
       </li>
-      <li class="nav-item">
+      <li class="nav-item" routerLinkActive="active">
         <a class="nav-link waves-light" mdbWavesEffect routerLink="planning">Planning des missions</a>
       </li>
-      <li class="nav-item">
+      <li class="nav-item" routerLinkActive="active">
         <a class="nav-link waves-light" mdbWavesEffect routerLink="primes">Primes</a>
       </li>
-      <li class="nav-item">
+      <li class="nav-item" routerLinkActive="active">
         <a class="nav-link waves-light" mdbWavesEffect routerLink="notesdefrais">Saisie note de frais</a>
       </li>
-      <li class="nav-item" *ngIf="isAdmin == true">
+      <li class="nav-item" *ngIf="isAdmin == true" routerLinkActive="active">
         <a class="nav-link waves-light" mdbWavesEffect routerLink="nature">Nature de missions</a>
       </li>
-      <li class="nav-item" *ngIf="isManager == true">
+      <li class="nav-item" *ngIf="isManager == true" routerLinkActive="active">
         <a class="nav-link waves-light" mdbWavesEffect routerLink="valider">Validation des missions</a>
       </li>
     </ul>
