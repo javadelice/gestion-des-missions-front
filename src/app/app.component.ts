@@ -3,7 +3,7 @@ import {AuthService} from './auth/auth.service';
 import {Router} from '@angular/router';
 import {Observable} from 'rxjs/internal/Observable';
 import {Collegue} from './auth/auth.domains';
-import { BrowserModule, Title }  from '@angular/platform-browser';
+import { BrowserModule, Title } from '@angular/platform-browser';
 
 /**
  * Composant principal de l'application.

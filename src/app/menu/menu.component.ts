@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
   selector: 'app-menu',
   template: `
 <!--Navbar-->
-<mdb-navbar SideClass="navbar navbar-expand-lg navbar-dark unique-color mt-2" [containerInside]="false">
+<mdb-navbar SideClass="navbar navbar-expand-lg navbar-dark unique-color" [containerInside]="false">
 
   <!-- Collapsible content -->
   <links>
@@ -75,21 +75,15 @@ export class MenuComponent implements OnInit {
     this.collegueConnecte = this._authSrv.collegueConnecteObs;
     this._authSrv.collegueConnecteObs.subscribe(collegueConnecte => {
 
-      if (collegueConnecte && collegueConnecte.email) {
-        if (collegueConnecte.roles.includes('ROLE_ADMINISTRATEUR')) {
-
-          if (collegueConnecte.roles !== undefined && collegueConnecte.roles.includes('ROLE_ADMINISTRATEUR')) {
-            this.isAdmin = true;
-          }
-          if (collegueConnecte.roles !== undefined && collegueConnecte.roles.includes('ROLE_MANAGER')) {
-            this.isManager = true;
-          }
-
+      if (collegueConnecte.roles !== undefined && collegueConnecte.roles.includes('ROLE_ADMINISTRATEUR')) {
+        this.isAdmin = true;
       }
-
+      if (collegueConnecte.roles !== undefined && collegueConnecte.roles.includes('ROLE_MANAGER')) {
+        this.isManager = true;
       }
     }, (error: HttpErrorResponse) => {
-  });
+    });
+  }
 
   seDeconnecter() {
     this._authSrv.seDeconnecter().subscribe(
@@ -98,4 +92,3 @@ export class MenuComponent implements OnInit {
   }
 
 }
-  }

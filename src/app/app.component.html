@@ -1,9 +1,13 @@
-<div class="jumbotron" *ngIf="(collegueConnecte | async).estAnonyme()">
-  <img class="img-thumbnail" src="assets/img/GM_Logo.png" class="rounded mx-auto d-block" alt="GM_Logo" width="150px">
-  <h1 class="h1 h1-responsive text-center">GDM</h1>
-  <h2 class="h1 h1-responsive text-center">Gestion des Missions</h2>
+<div class="container">
+  <div class="jumbotron" *ngIf="(collegueConnecte | async).estAnonyme()">
+    <img class="img-thumbnail" src="assets/img/GM_Logo.png" class="rounded mx-auto d-block" alt="GM_Logo" width="150px">
+    <h1 class="h1 h1-responsive text-center">GDM</h1>
+    <h2 class="h1 h1-responsive text-center">Gestion des Missions</h2>
+  </div>
 </div>
 <div *ngIf="!(collegueConnecte | async).estAnonyme()">
   <app-menu></app-menu>
 </div>
-<router-outlet></router-outlet>
+<div class="container">
+  <router-outlet></router-outlet>
+</div>

@@ -38,8 +38,12 @@
             <div class="row justify-content-start ml-2">{{day}}</div>
             <div class="row justify-content-center" *ngFor="let uneMission of missionDates"><span
                 *ngIf="uneMission.date == day">
-                <button mdbBtn type="button" color="unique" mdbWavesEffect style="width: 140px; height: 60px"
-                (click)="openModalMission(templateMission, uneMission.missionId)">{{uneMission.type}}</button>
+                <button mdbBtn type="button" color="unique" mdbWavesEffect style="width: 150px; height: 60px"
+                (click)="openModalMission(templateMission, uneMission.missionId)" *ngIf="uneMission.type == 'Conseil'">{{uneMission.type}}</button>
+                <button mdbBtn type="button" color="indigo" mdbWavesEffect style="width: 150px; height: 60px"
+                (click)="openModalMission(templateMission, uneMission.missionId)" *ngIf="uneMission.type == 'Expertise technique'">{{uneMission.type}}</button>
+                <button mdbBtn type="button" color="blue-grey" mdbWavesEffect style="width: 150px; height: 60px"
+                (click)="openModalMission(templateMission, uneMission.missionId)" *ngIf="uneMission.type == 'Formation'">{{uneMission.type}}</button>
               </span></div>
           </td>
         </tr>
