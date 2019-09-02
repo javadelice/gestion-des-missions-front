@@ -5,6 +5,8 @@ import { NatureDto } from '../models/nature-dto';
 import { CreerMissionService } from './creer-mission.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AuthService } from '../auth/auth.service';
+import { NdfCumul } from '../note-de-frais/note-de-frais.domains';
+import { Collegue } from '../auth/auth.domains';
 
 @Component({
   selector: 'app-creer-mission',
@@ -19,8 +21,12 @@ export class CreerMissionComponent implements OnInit {
   creerOk: boolean;
   erreur: string;
   currentDate = new Date();
+  col:Collegue;
 
-  mission = new MissionDto(0, '', '', null, '', '', '', 'INITIALE', 0, null);
+
+  //mission = new MissionDto(0, '', '', null, '', '', '', 'INITIALE', null,0);
+
+  mission = new MissionDto(0, '', '', new NatureDto(0, '', '', '', 1, "", 0, '', '', 0), '', '', '', 'INITIALE', 0, null, new NdfCumul());
 
   constructor(private creerMissionService: CreerMissionService, private _authSrv: AuthService) {
   }
@@ -31,7 +37,7 @@ export class CreerMissionComponent implements OnInit {
     this.creerMissionService.getNatures().subscribe(natures => {
       this.listeNatures = natures;
       this._authSrv.collegueConnecteObs.subscribe(collegueConnecte => {
-        this.mission.collegue = collegueConnecte;
+      this.mission.collegue = collegueConnecte;
       }, (error: HttpErrorResponse) => {
         this.isError = true;
         this.erreur = error.status + ' - ' + error.message;

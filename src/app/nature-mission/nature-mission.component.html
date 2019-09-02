@@ -15,6 +15,7 @@
       </tr>
     </thead>
 
+
     <tbody>
       <tr *ngFor="let nature of naturesMissions">
         <td>{{nature.code}}</td>
@@ -29,7 +30,6 @@
           <a><img src="../../assets/img/delete.png" width="20" alt="delete"
               (click)="openDeleteModal(supression, nature)"></a>
         </td>
-
       </tr>
     </tbody>
   </table>
@@ -196,6 +196,7 @@
             </div>
           </div>
         </div>
+
 
         <div class="form-row">
           <div class="form-group col-md-6">
