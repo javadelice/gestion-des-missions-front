@@ -20,7 +20,7 @@ export class NatureMissionComponent implements OnInit {
   modalRef: BsModalRef;
   idNatureACreer: number;
   isAdmin: boolean;
-  natMission = new NatureDto(0, '', '', '', 0, "", "",'', 0);
+  natMission = new NatureDto(0, '', '', '', 0, "", 0, "",'', 0);
 
   natureASupprimer: NatureDto;
 
@@ -74,7 +74,7 @@ export class NatureMissionComponent implements OnInit {
       this.isError = false;
       this.modalRef.hide();
       this.natureMissions.push(nature);
-      this.natMission = new NatureDto(0, '', '', '', 0, "", "",'', 0);
+      this.natMission = new NatureDto(0, '', '', '', 0, "", 0, "",'', 0);
     }, (error: HttpErrorResponse) => {
       this.creerNatOk = false;
       this.isError = true;
@@ -84,7 +84,7 @@ export class NatureMissionComponent implements OnInit {
 
   annulerCreation() {
     this.modalRef.hide();
-    this.natMission = new NatureDto(0, '', '', '', 0, "", "",'', 0);
+    this.natMission = new NatureDto(0, '', '', '', 0, "", 0, "",'', 0);
   }
 
   deleteNature() {

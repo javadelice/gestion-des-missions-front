@@ -1,4 +1,5 @@
 import { Time } from '@angular/common';
+import { MissionDto } from '../models/mission-dto';
 
 /**
  * Modélisation d'un lien Backend : nom et lien.
@@ -20,7 +21,8 @@ export class NdfDto {
     }
 }
 
-export class NdfCumul{
-  id:number;
+export class NdfCumul {
+  id: number;
+  mission: MissionDto;
 }
 

@@ -1,55 +1,50 @@
-<!-- 
-<div>{{mission.id}}</div>
-<div>{{mission.startDate| date : "dd/MM/yy"}}</div>
-<div>{{mission.ndfCumul.id}}</div>
-<div>{{mission.endDate| date : "dd/MM/yy"}}</div>
-<div>{{mission.villeDepart}}</div>
-<div>{{mission.villeArrivee}}</div>
-<div>{{mission.transport}}</div>
-<div>{{currentMissionId}}</div>
--->
+<table>
+  <tr>
+    <td>{{mission.id}}</td>
+    <td>{{mission.startDate| date : "dd/MM/yy"}}</td>
+    <td>{{mission.endDate| date : "dd/MM/yy"}}</td>
+    <td>{{mission.villeDepart}}</td>
+    <td>{{mission.villeArrivee}}</td>
+    <td>{{mission.transport}}</td>
+  </tr>
+</table>
 
 
-<div *ngIf="!creation">
-  <h2 class="row justify-content-center align-items-center mt-3">Saisie de frais</h2>
-  <mdb-card class="animated zoomIn">
-    <mdb-card-header class="primary-color white-text text-left">
-      <h3>Informations sur la mission :</h3>
-    </mdb-card-header>
+<div *ngIf="!creation && depassementValide == true">
+  <div class="jumbotron" width=15>
+    <h2>Saisie de Notes de frais</h2>
 
-    <table class="table" id='tableMissionCourante'>
+    <table>
       <tr>
         <th></th>
       </tr>
       <tr>
-        <td>Nature : </td>
-        <td>{{mission.nature.code}}</td>
-        <td> </td>
-        <td>Estimation Prix : </td>
-        <td>#</td>
-      </tr>
-      <tr>
         <td>Date de Début : </td>
         <td>{{mission.startDate| date :"dd/MM/yyyy"}}</td>
+        <td></td>
+        <td>Estimation Prix : </td>
+        <td>{{estimationPrime}}</td>
+      </tr>
+      <tr>
+        <td>Date de Fin : </td>
+        <td>{{mission.endDate| date :"dd/MM/yyyy"}}</td>
         <td> </td>
         <td>Ville de Départ : </td>
         <td>{{mission.villeDepart}}</td>
       </tr>
       <tr>
-        <td>Date de Fin : </td>
-        <td>{{mission.endDate| date :"dd/MM/yyyy"}}</td>
+        <td>Nature : </td>
+        <td>{{mission.nature.code}}</td>
         <td> </td>
         <td>Ville d'arrivée : </td>
         <td>{{mission.villeArrivee}}</td>
       </tr>
 
     </table>
-  </mdb-card>
+  </div>
 
-
-  <mdb-card class="animated zoomIn mt-3">
-    <mdb-card-header class="info-color">
-      <h4 class="white-text text-center">Liste des frais</h4>
+  <mdb-card class="animated zoomIn">
+    <mdb-card-header class="primary-color white-text text-center">
     </mdb-card-header>
     <div>
       <a class="btn btn-outline-info btn-sm mr-2" (click)="generatePDF(currentMission.id)" style="float:right;">Export
@@ -65,9 +60,7 @@
             <th>Action</th>
           </tr>
         </thead>
-        <!-- MODIFICATION-->
         <tbody *ngIf="!modification">
-          <!-- <tr *ngFor="let ndf of noteDeFraisTab ;let i = index" [attr.data-index]="i">-->
           <tr *ngFor="let ndf of noteDeFraisTab ; let indexLigneDeFraisDansTab = index">
             <td>{{ndf.date| date : "dd/MM/yyyy"}}</td>
             <td>{{ndf.nature}}</td>
@@ -80,6 +73,7 @@
             </td>
           </tr>
         </tbody>
+        <!-- MODIFICATION-->
         <tbody *ngIf="modification">
           <td><input class="form-control mb-1" type="date" name="date" [(ngModel)]="currentNdfEntry.date"
               #date="ngModel" placeholder="dd/MM/yyyy" min="{{mission.startDate | date: 'dd/MM/yyyy'}}"
@@ -133,71 +127,72 @@
       </div>
 
       <div *ngIf="!modification" class="text-right">
-        <button class="btn btn-success btn-md" (click)="creationActivate()">Ajout</button>
+        <button class="btn btn-success" (click)="creationActivate()">+</button>
+      </div>
+
+      <div *ngIf="noteDeFraisTab.length !== 0" class="text-right">
+        <button class="btn btn-success" (click)="creer()">Valider</button>
       </div>
     </mdb-card-body>
   </mdb-card>
+
+  <!-- Template Modal Delete-->
+  <ng-template #templateDelete>
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">Suppression de ligne :</h4>
+    </div>
+    <div class="modal-body">
+      <table class="ml-2">
+        <tr>
+          <td>Date : </td>
+          <td>{{currentNdfEntry.date | date : "dd/MM/yyyy"}}</td>
+        </tr>
+        <tr>
+          <td>Nature :</td>
+          <td>{{currentNdfEntry.nature}}</td>
+        </tr>
+        <tr>
+          <td>Montant :</td>
+          <td>{{currentNdfEntry.montant}}</td>
+        </tr>
+      </table>
+    </div>
+    <div class="modal-footer">
+      <p></p>
+      <button type="button" class="btn btn-warning" (click)="confirmDelete()">Oui</button>
+      <button type="button" class="btn btn-success" (click)="decline()">Non</button>
+    </div>
+  </ng-template>
+
+  <!-- Template Modal confirmation modification-->
+  <ng-template #templateModif>
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">Ligne modifiée :</h4>
+    </div>
+    <div class="modal-body">
+      <table class="ml-2">
+        <tr>
+          <td>Date : </td>
+          <td>{{currentNdfEntry.date | date : "dd/MM/yyyy"}}</td>
+        </tr>
+        <tr>
+          <td>Nature :</td>
+          <td>{{currentNdfEntry.nature}}</td>
+        </tr>
+        <tr>
+          <td>Montant :</td>
+          <td>{{currentNdfEntry.montant}}</td>
+        </tr>
+      </table>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-success" (click)="confirmModif()">OK</button>
+    </div>
+  </ng-template>
 </div>
 
 
-<!-- Template Modal Delete-->
-<ng-template #templateDelete>
-  <div class="modal-header">
-    <h4 class="modal-title pull-left">Suppression de ligne :</h4>
-  </div>
-  <div class="modal-body">
-    <table class="ml-2">
-      <tr>
-        <td>Date : </td>
-        <td>{{currentNdfEntry.date | date : "dd/MM/yyyy"}}</td>
-      </tr>
-      <tr>
-        <td>Nature :</td>
-        <td>{{currentNdfEntry.nature}}</td>
-      </tr>
-      <tr>
-        <td>Montant :</td>
-        <td>{{currentNdfEntry.montant}}</td>
-      </tr>
-    </table>
-  </div>
-  <div class="modal-footer">
-    <p></p>
-    <button type="button" class="btn btn-warning" (click)="confirmDelete()">Oui</button>
-    <button type="button" class="btn btn-success" (click)="decline()">Non</button>
-
-  </div>
-</ng-template>
-
-<!-- Template Modal confirmation modification-->
-<ng-template #templateModif>
-  <div class="modal-header">
-    <h4 class="modal-title pull-left">Ligne modifiée :</h4>
-  </div>
-  <div class="modal-body">
-    <table class="ml-2">
-      <tr>
-        <td>Date : </td>
-        <td>{{currentNdfEntry.date | date : "dd/MM/yyyy"}}</td>
-      </tr>
-      <tr>
-        <td>Nature :</td>
-        <td>{{currentNdfEntry.nature}}</td>
-      </tr>
-      <tr>
-        <td>Montant :</td>
-        <td>{{currentNdfEntry.montant}}</td>
-      </tr>
-    </table>
-  </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-success" (click)="confirmModif()">OK</button>
-  </div>
-</ng-template>
-
-
-<!-- Formulaire Creation -->
-<div *ngIf="creation">
+<div *ngIf="creation == true && erreurAjoutLDF == false">
   <div class="row justify-content-center mt-4">
     <h1>Ajouter ligne de frais</h1>
   </div>
@@ -215,27 +210,28 @@
                 </div>
               </div>
               <div class="col">
-                  <input class="form-control mb-1" type="date" name="dateNew" [(ngModel)]="this.newNdfEntry.date"
-                    required #datenNew="ngModel" placeholder="dd/MM/yyyy" min="mission.startDate" max="mission.endDate"
+
+                  <input class="form-control mb-1" type="date" name="dateNew" [(ngModel)]="newNdfEntry.date"
+                    required #dateNew="ngModel" placeholder="dd/MM/yyyy" min="mission.startDate" max="mission.endDate"
                     ngvalue="newNdfEntry.date">
                   <div class="invalid-feedback mb-1" *ngIf="(newNdfEntry.date.dirty || newNdfEntry.date.touched) && newNdfEntry.date.invalid">
                   </div>
                 </div>
             </div>
               
-            
-            
 
-              <div class="row align-items-center">
-                <div class="col-5">
-                  <div class="row justify-content-end">
-                    <strong>Nature</strong>
-                  </div>
+            <div class="row align-items-center">
+              <div class="col-5">
+                <div class="row justify-content-end">
+                  <strong>Nature</strong>
                 </div>
-                <div class="col">
-                  <select class="custom-select mb-1" name="natureNew" id="nature" [(ngModel)]="this.newNdfEntry.nature">
-                    <option *ngFor="let nature of ndfNature" [ngValue]="nature">{{nature}}</option>
-                  </select>
+              </div>
+              <div class="col">
+                <select class="custom-select mb-1" name="nature" id="nature" [(ngModel)]="newNdfEntry.nature"
+                  #nature="ngModel" required>
+                  <option *ngFor="let nature of ndfNature" [ngValue]="nature">{{nature}}</option>
+                </select>
+                <div class="invalid-feedback mb-1" *ngIf="(nature.dirty || nature.touched) && nature.invalid">
                 </div>
               </div>
 
@@ -245,6 +241,7 @@
                     <strong>Montant</strong>
                   </div>
                 </div>
+
                 <div class="col">
                   <input class="form-control mb-1" name="montantNew" [(ngModel)]="newNdfEntry.montant" type="number"
                     min="1" #montantNew="ngModel" id="montantNew">
@@ -256,11 +253,11 @@
               </div>
 
 
+            <div class="d-flex justify-content-around m-1">
+              <button [disabled]="ndfEntryCreer.invalid" class="btn btn-info" (click)=creerLigneDeFrais()>Créer</button>
+              <button class="btn btn-info" (click)="recommencer()">Annuler</button>
+            </div>
 
-              <div class="d-flex justify-content-around m-1">
-                <button [disabled]="ndfEntryCreer.invalid" class="btn btn-info" (click)=creer()>Créer</button>
-                <button class="btn btn-info" (click)=recommencer()>Annuler</button>
-              </div>
           </form>
         </div>
       </div>
@@ -279,40 +276,69 @@
   </div>
 </ng-template>
 
-<ng-template #creerOkBlock>
+  <ng-template #creerOkBlock>
+    <div class="row justify-content-center">
+      <div class="alert alert-success" role="alert">
+        <div class="modal-header">
+          <h3>Ligne de frais ajoutée</h3>
+        </div>
+        <div class="modal-body">
+          <table class="ml-2">
+            <tr>
+              <td>Date : </td>
+              <td>{{newNdfEntry.date | date : "dd/MM/yyyy"}}</td>
+            </tr>
+            <tr>
+              <td>Nature :</td>
+              <td>{{newNdfEntry.nature}}</td>
+            </tr>
+            <tr>
+              <td>Montant :</td>
+              <td>{{newNdfEntry.montant}} €</td>
+            </tr>
+          </table>
+        </div>
+    </div>
+
+  </ng-template>
+</div>
+
+<div *ngIf="creation == true && erreurAjoutLDF == true">
   <div class="row justify-content-center">
-    <div class="alert alert-success" role="alert">
-      <div class="modal-title">
-        Title
+    <div class="col-6">
+      <div class="alert alert-danger ml-3" role="alert">
+        {{errorMessage}}
       </div>
-      <div class="modal-header">
-        <h3>Ligne de frais ajoutée</h3>
-      </div>
-      <div class="modal-body">
-        <table class="ml-2">
-          <tr>
-            <td>Date : </td>
-            <td>{{newNdfEntry.date | date : "dd/MM/yyyy"}}</td>
-          </tr>
-          <tr>
-            <td>Nature :</td>
-            <td>{{newNdfEntry.nature}}</td>
-          </tr>
-          <tr>
-            <td>Montant :</td>
-            <td>{{newNdfEntry.montant}}</td>
-          </tr>
-          <tr>
-            <td>NdfId :</td>
-            <td>{{newNdfEntry.ndfCumul.id}}</td>
-          </tr>
-        </table>
+      <div class="d-flex justify-content-center m-1">
+        <button class="btn btn-info" (click)="creationActivate()">Ok</button>
       </div>
     </div>
   </div>
-  <div>
-    <div class="d-flex justify-content-center m-1">
-      <button class="btn btn-info" (click)="recommencer()">Ok</button>
+</div>
+
+<div *ngIf="creation == false && depassementAutorise == false">
+  <div class="row justify-content-center">
+    <div class="col-6">
+      <div class="alert alert-danger ml-3" role="alert">
+        {{errorMessage}}
+      </div>
+      <div class="d-flex justify-content-center m-1">
+        <button class="btn btn-info" (click)="recommencer()">Ok</button>
+      </div>
     </div>
   </div>
-</ng-template>
+</div>
+
+<div *ngIf="creation == false && depassementValide == false">
+  <div class="row justify-content-center">
+    <div class="col-6">
+      <div class="alert alert-danger ml-3" role="alert">
+        {{errorMessage}}
+      </div>
+      <div class="d-flex justify-content-center m-1">
+        <button class="btn btn-info" (click)="recommencer()">Ok</button>
+      </div>
+    </div>
+  </div>
+</div>
+

@@ -6,6 +6,7 @@ export class NatureDto {
     public hasPrime:string,
     public pourcentagePrime:number,
     public depassPlafond:string,
+    public plafondFrais: number,
     public debutValidite:string,
     public finValidite:string,
     public tjm:number) {}

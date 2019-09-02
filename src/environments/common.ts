@@ -9,6 +9,7 @@ export const config = {
   apiLogout: 'logout',
   apiAuthMe: 'me',
   apiNoteDeFrais: 'notedefrais',
+  apiCreateNoteDeFrais: 'notedefrais',
   apiLignesDeFraisFromNdfId: 'notedefrais/',
   apiLignedefrais: 'lignedefrais',
   apiLignesDeFraisFromMissionId: 'notedefrais?mission=',
