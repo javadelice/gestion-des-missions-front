@@ -9,6 +9,10 @@ import { MissionDto } from '../models/mission-dto';
 import { NatureDto } from '../models/nature-dto';
 import { NdfCumul } from '../note-de-frais/note-de-frais.domains';
 import * as moment from 'moment';
+import * as jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
+import 'jspdf-autotable';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-note-de-frais-visualisation',
@@ -21,11 +25,9 @@ export class NoteDeFraisVisualisationComponent implements OnInit {
   currentDate = new Date();
   phaseModifier: Boolean;
   error: boolean;
-  currentNdfEntryId: number;
-  ndfEntryToggle: boolean;
-  modification: boolean;
-  confirmation: boolean;
-  currentNdfEntry: NdfEntryDto;
+  //currentNdfEntryId: number;
+  //ndfEntryToggle: boolean;
+  currentNdfEntry: NdfEntryDto = new NdfEntryDto(0, this.currentDate, "", 0, new NdfCumul());
   ndfEntryIdToDelete: number;
   modalRef: BsModalRef;
   keys = Object.keys;
@@ -51,12 +53,25 @@ export class NoteDeFraisVisualisationComponent implements OnInit {
   dateTemp;
   nbJoursTravailles: number;
   isError: boolean;
+  modification: boolean;
+  confirmation: boolean;
+  creerOk: boolean;
+  err: string;
+  doublon: boolean;
+  indexMatching: number;
+  @Input() isExportPDF: boolean;
+  isExportPDFcurr: boolean=false;
+  currentNdfCumul: NdfCumul;
+  currentMissionId: number;
 
 
-  constructor(private _authSrv: AuthService, private _ndfSrv: NdfService, private _router: Router, private modalService: BsModalService) { } //public dialog: MatDialog) { }
+  constructor(private _authSrv: AuthService, private _ndfSrv: NdfService,
+    private _router: Router, private modalService: BsModalService,
+    private _titleSrv: Title) { } //public dialog: MatDialog) { }
 
   ngOnInit() {
     this.noteDeFraisTab = [];
+    this._titleSrv.setTitle('Mission ' + this.mission.id + ' ' + 'Note de frais')
     this.creerOk = false;
     this.error = false;
     this.creation = false;
@@ -65,6 +80,10 @@ export class NoteDeFraisVisualisationComponent implements OnInit {
     this.depassementAutorise = true;
     this.depassementFrais = false;
     this.depassementValide = true;
+    
+    this.doublon = false;
+    this.currentMission = this.mission;
+    this.currentMissionId = this.mission.id;
 
     this.ndfCumul = new NdfCumul();
 
@@ -84,7 +103,22 @@ export class NoteDeFraisVisualisationComponent implements OnInit {
     }, (error: HttpErrorResponse) => {
       this.error = true;
     });
+    
+    if (!this.isExportPDFcurr) {
+      if (this.isExportPDF) {
+        this.isExportPDFcurr = true;
+        this.generatePDF(this.currentMissionId);
+      }
+    }
   }
+  generatePDF(missionId: number) {
+      //let doc = new jsPDF('p', 'mm', 'a4'); //portrait/landscape mmcmin A4 size page of PDF
+
+      var doc = new jsPDF();
+      doc.autoTable({ html: '#tableLignesDeFrais' });
+
+      doc.save('mission' + this.currentMissionId + '-' + 'Note-de-frais' + '.pdf');
+
 
   estimerPrime() {
     this.nbJoursTravailles = 0;
@@ -99,34 +133,41 @@ export class NoteDeFraisVisualisationComponent implements OnInit {
     this.estimationPrime = this.nbJoursTravailles * this.mission.nature.tjm * this.mission.nature.pourcentagePrime / 100;
   }
 
-  validerModif(template: TemplateRef<any>, currentNdfId: number) {
+  validerModif(template: TemplateRef<any>) {
     // this.currentNdfEntryId = this.noteDeFraisTab.findIndex((ndfEntry) => {
     //   ndfEntry.id === this.currentNdfEntryId;
-    this._ndfSrv.modifyNdfEntry(this.currentNdfEntry).subscribe(() => {
-      this.openModal(template, currentNdfId);
-      this.modification = false;
-    }, (error: HttpErrorResponse) => {
-      this.errModif = error.message;
-    });
+
+    if ((this.noteDeFraisTab[this.indexMatching].date === this.currentNdfEntry.date)
+      && (this.noteDeFraisTab[this.indexMatching].nature === this.currentNdfEntry.nature)) {
+      this.doublon = true;
+    } else {
+      this._ndfSrv.modifyNdfEntry(this.currentNdfEntry).subscribe(() => {
+        this.openModal(template, this.currentNdfEntry.id);
+        this.modification = false;
+        this.doublon = false;
+        this.recommencer();
+      }, (error: HttpErrorResponse) => {
+        this.errModif = error.message;
+      });
+    }
     // });
   }
 
   cancelModif() {
     this.modification = false;
+    this.doublon = false;
   }
 
-  modifierNdfEntry(ndfId: number) {
-    this.phaseModifier = true;
-    if (ndfId) {
-      this.noteDeFraisTab.find((ndfEntry) => {
-        if (ndfEntry.id === ndfId) {
-          this.currentNdfEntry = ndfEntry;
-        };
-      })
-      //this.currentNdfEntryId=ndfId;
-    }
-    this.ndfEntryToggle = true;
+  showNdfEntryEditPanel(ndfId: number, indexMatchingTab: number) {
+    this.currentNdfEntry.id = this.noteDeFraisTab[indexMatchingTab].id;
+    this.currentNdfEntry.date = this.noteDeFraisTab[indexMatchingTab].date;
+    this.currentNdfEntry.nature = this.noteDeFraisTab[indexMatchingTab].nature;
+    this.currentNdfEntry.montant = this.noteDeFraisTab[indexMatchingTab].montant;
+    this.currentNdfEntry.ndfCumul = this.currentMission.ndfCumul;
+    //this.ndfEntryToggle = true;
     this.modification = true;
+    this.indexMatching = indexMatchingTab;
+
   }
 
   openModalDelete(template: TemplateRef<any>, ndfEntryId: number) {
@@ -142,7 +183,7 @@ export class NoteDeFraisVisualisationComponent implements OnInit {
             ignoreBackdropClick: true,
             class: 'modal-sm'
           });
-        }
+        };
       });
 
     }
@@ -164,7 +205,6 @@ export class NoteDeFraisVisualisationComponent implements OnInit {
     });
   }
 
-
   confirmModif() {
     this.modalRef.hide();
   }
@@ -182,17 +222,11 @@ export class NoteDeFraisVisualisationComponent implements OnInit {
     });
   }
 
-  finModifier($event) {
-    if ($event) {
-      this.ngOnInit();
-    }
-  }
-
   creationActivate() {
     this.creation = true;
     this.erreurAjoutLDF = false;
     this.verifDoublonLDF = true;
-    this.newNdfEntry = new NdfEntryDto(0, this.currentDate, '', 0, new NdfCumul());
+
   }
 
   recommencer() {

@@ -1,7 +1,8 @@
-<div *ngIf="!ndfvisu">
+<div *ngIf="!ndfVisu">
+    <h2 class="row justify-content-center align-items-center mt-3">Notes de frais - Visualisation</h2>
     <mdb-card class="animated zoomIn">
       <mdb-card-header class="primary-color white-text text-center">
-        <h4>Notes de frais - Visualisation</h4>
+        <h4>Liste des Missions</h4>
       </mdb-card-header>
       <mdb-card-body>
         <table class="table table-hover table-bordered">
@@ -33,10 +34,10 @@
               </td>
 
               <td>
-                <div *ngIf="missionIsEchue(mission) && mission.statut == 'VALIDEE'">
+                <div *ngIf="true || missionIsEchue(mission) && mission.statut == 'VALIDEE'">
                   <a><img class="img-thumbnail" src="assets/img/ndf-ajout.png" class="rounded float-left" alt="+"
                       width='19px' (click)="ajoutNdf(mission)"></a>
-                  <a (click)="exportToPDF()"><img class="img-thumbnail" src="assets/img/ndf-download.png"
+                  <a (click)="exportToPDF(mission)"><img class="img-thumbnail" src="assets/img/ndf-download.png"
                       class="rounded float-right" alt="DL" width='23px'></a>
                 </div>
               </td>
@@ -47,6 +48,6 @@
     </mdb-card>
   </div>
 
-  <div *ngIf="ndfvisu">
-    <app-note-de-frais-visualisation [mission]="missionChosen"></app-note-de-frais-visualisation>
+  <div *ngIf="ndfVisu">
+    <app-note-de-frais-visualisation [mission]="missionChosen" [isExportPDF]="exportPdf"></app-note-de-frais-visualisation>
   </div>

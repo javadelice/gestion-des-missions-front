@@ -27,9 +27,6 @@ import { HttpErrorResponse } from '@angular/common/http';
       <li class="nav-item">
         <a class="nav-link" [routerLink]="['../notesdefrais/']">Saisie note de frais</a>
       </li>
-      <li class="nav-item" >
-        <a class="nav-link" [routerLink]="['../ndf-visu/']">Ndf-visu</a>
-      </li>
       <li class="nav-item" *ngIf="isAdmin == true">
         <a class="nav-link" [routerLink]="['../primes/']">Nature de missions</a>
       </li>
@@ -55,7 +52,7 @@ export class MenuComponent implements OnInit {
 
   ngOnInit() {
     this._authSrv.collegueConnecteObs.subscribe(collegueConnecte => {
-      if (collegueConnecte){
+      if (collegueConnecte && collegueConnecte.email){
       if (collegueConnecte.roles.includes('ROLE_ADMINISTRATEUR')) {
         this.isAdmin = true;
       }

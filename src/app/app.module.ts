@@ -36,7 +36,7 @@ const routes: Routes = [
   { path: 'nature', component: NatureMissionComponent, canActivate: [StatutConnecteService]},
   { path: 'valider', component: ValiderMissionsComponent, canActivate: [StatutConnecteService]},
   { path:'connexion', component: AuthComponent},
-  { path: '', redirectTo: '/tech', pathMatch: 'full'}
+  { path: '', redirectTo: '/missions', pathMatch: 'full'}
 ];
 
 

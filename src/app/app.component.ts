@@ -3,6 +3,7 @@ import {AuthService} from './auth/auth.service';
 import {Router} from '@angular/router';
 import {Observable} from 'rxjs/internal/Observable';
 import {Collegue} from './auth/auth.domains';
+import { BrowserModule, Title }  from '@angular/platform-browser';
 
 /**
  * Composant principal de l'application.
@@ -16,7 +17,7 @@ export class AppComponent implements OnInit {
 
   collegueConnecte: Observable<Collegue>;
 
-  constructor(private _authSrv: AuthService, private _router: Router) {
+  constructor(private _authSrv: AuthService, private _router: Router, private _titleService: Title ) {
 
   }
 
@@ -35,8 +36,13 @@ export class AppComponent implements OnInit {
    * Celui lui permet de rester à jour en fonction des connexions et déconnexions.
    */
   ngOnInit(): void {
-
+this.setTitle("Authentication")
     this.collegueConnecte = this._authSrv.collegueConnecteObs;
   }
 
+  public setTitle( newTitle: string) {
+    this._titleService.setTitle( newTitle );
+  }
 }
+
+
