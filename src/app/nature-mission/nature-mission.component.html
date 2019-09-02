@@ -10,158 +10,298 @@
         <th class="th-sm">TJM (€)</th>
         <th class="th-sm">%Prime</th>
         <th class="th-sm">Plafond frais</th>
-        <th class="th-sm">Dépt. frais</th>
+        <th class="th-sm">Dépassement frais</th>
         <th class="th-sm">Actions</th>
       </tr>
     </thead>
 
-    <tbody *ngFor="let NatureMission of natureMissions">
-      <tr>
-        <td>{{NatureMission.code}}</td>
-        <td>{{NatureMission.isFacturee}}</td>
-        <td>{{NatureMission.hasPrime}}</td>
-        <td>{{NatureMission.tjm}}</td>
-        <td>{{NatureMission.pourcentagePrime}}</td>
-        <!--<td>{{NatureMission.plafondFrais}}</td>-->
-        <td>{{NatureMission.depassPlafond}}</td>
-        <td><a href=""><img class="mr-3" src="../../assets/img/edition.png" width="20"  alt="edit"></a>
-          <a><img src="../../assets/img/delete.png" width="20" alt="delete" (click)="openDeleteModal(supression, NatureMission)"></a></td>
+
+    <tbody>
+      <tr *ngFor="let nature of naturesMissions">
+        <td>{{nature.code}}</td>
+        <td>{{nature.isFacturee}}</td>
+        <td>{{nature.isFacturee === "OUI" ? nature.hasPrime : "/"}}</td>
+        <td>{{nature.isFacturee === "OUI" ? nature.tjm : "/"}}</td>
+        <td>{{nature.isFacturee === "OUI" && nature.hasPrime === "OUI" ? nature.pourcentagePrime : "/"}}</td>
+        <td>{{nature.plafondFrais}}</td>
+        <td>{{nature.depassPlafond}}</td>
+        <td><a><img class="mr-3" src="../../assets/img/edition.png" width="20" alt="edit"
+              (click)="openModifModal(modif, nature)"></a>
+          <a><img src="../../assets/img/delete.png" width="20" alt="delete"
+              (click)="openDeleteModal(supression, nature)"></a>
+        </td>
       </tr>
     </tbody>
   </table>
   Ajouter une nature de mission <button type="button" class="btn btn-primary" (click)="openCreateModal(creation)">
-      +
-    </button>
+    +
+  </button>
+</div>
+
+<ng-template #creation>
+
+  <div class="modal-content">
+    <form class="was-validated" #natureCreer="ngForm">
+
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Ajout d'une nature de mission</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="natCode">Nature</label>
+          </div>
+          <div class="form-group col-md-6">
+            <input type="text" name="natureCode" id="natCode" class="form-control" [(ngModel)]="natureACreer.code"
+              required #natCode="ngModel">
+            <div class="invalid-feedback mb-1" *ngIf="(natCode.dirty || natCode.touched) && natCode.invalid">
+              Veuillez saisir un code!
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="isFacturee">Facturée</label>
+          </div>
+          <div class="form-group col-md-6">
+            <select class="custom-select" name="isFacturee" id="isFacturee" [(ngModel)]="natureACreer.isFacturee"
+              required #isFacturee="ngModel">
+              <option value="OUI">Oui</option>
+              <option value="NON">Non</option>
+            </select>
+            <div class="invalid-feedback mb-1" *ngIf="(isFacturee.dirty || isFacturee.touched) && isFacturee.invalid">
+              Champ obligatoire!
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row" *ngIf="natureACreer.isFacturee === 'OUI'">
+          <div class="form-group col-md-6">
+            <label for="natTJM">TJM (€)</label>
+          </div>
+          <div class="form-group col-md-6">
+            <input type="number" id="natTJM" class="form-control" name="natureTJM" [(ngModel)]="natureACreer.tjm"
+              required #natTJM="ngModel">
+            <div class="invalid-feedback mb-1" *ngIf="(natTJM.dirty || natTJM.touched) && natTJM.invalid">
+              Veuillez saisir un montant!
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row" *ngIf="natureACreer.isFacturee === 'OUI'">
+          <div class="form-group col-md-6">
+            <label for="natPrime">Versement prime</label>
+          </div>
+          <div class="form-group col-md-6">
+            <select class="custom-select" name="hasPrime" id="hasPrime" [(ngModel)]="natureACreer.hasPrime" required
+              #hasPrime="ngModel">
+              <option value="OUI">Oui</option>
+              <option value="NON">Non</option>
+            </select>
+            <div class="invalid-feedback mb-1">
+              Champ obligatoire!
+            </div>
+          </div>
+        </div>
+
+
+        <div class="form-row" *ngIf="natureACreer.isFacturee === 'OUI' && natureACreer.hasPrime === 'OUI'">
+          <div class="form-group col-md-6">
+            <label for="nat%Prime">%Prime</label>
+          </div>
+          <div class="form-group col-md-6">
+            <input type="number" step="0.1" id="%Prime" class="form-control" name="nature%Prime"
+              [(ngModel)]="natureACreer.pourcentagePrime" required #natPrcPrime="ngModel">
+          </div>
+          <div class="invalid-feedback mb-1" *ngIf="(natPrcPrime.dirty || natPrcPrime.touched) && natPrcPrime.invalid">
+            Veuillez saisir une valeur!
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="natPlafond">Plafond frais</label>
+          </div>
+          <div class="form-group col-md-6">
+            <input type="number" id="natPlafond" class="form-control" name="naturePlafond"
+              [(ngModel)]="natureACreer.plafondFrais" required #natPfd="ngModel">
+            <div class="invalid-feedback mb-1" *ngIf="(natPfd.dirty || natPfd.touched) && natPfd.invalid">
+              Veuillez saisir un montant!
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="depassPlafond">Dépassement frais</label>
+          </div>
+          <div class="form-group col-md-6">
+            <select class="custom-select" name="natureDept" id="depassPlafond" [(ngModel)]="natureACreer.depassPlafond"
+              required #depassPlafond="ngModel">
+              <option value="OUI">Oui</option>
+              <option value="NON">Non</option>
+            </select>
+            <div class="invalid-feedback mb-1"
+              *ngIf="(depassPlafond.dirty || depassPlafond.touched) && depassPlafond.invalid">
+              Champ obligatoire!
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="alert alert-danger ml-3" *ngIf="isError">
+            {{error}}
+          </div>
+        </div>
+
+      </div>
+
+
+      <div class="modal-footer">
+        <button [disabled]="natureCreer.invalid" class="btn btn-primary" (click)=creerNature()>Valider</button>
+        <button class="btn btn-info" (click)=annulerCreation()>Annuler</button>
+      </div>
+
+    </form>
+  </div>
+</ng-template>
+
+<ng-template #modif>
+
+  <div class="modal-content">
+    <form class="was-validated" #natureModifier="ngForm">
+
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modification d'une nature de mission</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="natCode">Nature</label>
+          </div>
+          <div class="form-group col-md-6">
+            <input type="text" name="natureCode" id="natCode" class="form-control" [(ngModel)]="natureAModifier.code"
+              required #natCode="ngModel">
+            <div class="invalid-feedback mb-1" *ngIf="(natCode.dirty || natCode.touched) && natCode.invalid">
+              Veuillez saisir un code!
+            </div>
+          </div>
+        </div>
+
+
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="isFacturee">Facturée</label>
+          </div>
+          <div class="form-group col-md-6">
+            <select class="custom-select" name="isFacturee" id="isFacturee" [(ngModel)]="natureAModifier.isFacturee"
+              required #isFacturee="ngModel">
+              <option value="OUI">Oui</option>
+              <option value="NON">Non</option>
+            </select>
+            <div class="invalid-feedback mb-1" *ngIf="(isFacturee.dirty || isFacturee.touched) && isFacturee.invalid">
+              Champ obligatoire!
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row" *ngIf="natureAModifier.isFacturee === 'OUI'">
+          <div class="form-group col-md-6">
+            <label for="natPrime">Versement prime</label>
+          </div>
+          <div class="form-group col-md-6">
+            <select class="custom-select" name="hasPrime" id="hasPrime" [(ngModel)]="natureAModifier.hasPrime" required
+              #hasPrime="ngModel">
+              <option value="OUI">Oui</option>
+              <option value="NON">Non</option>
+            </select>
+            <div class="invalid-feedback mb-1">
+              Champ obligatoire!
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row" *ngIf="natureAModifier.isFacturee === 'OUI'">
+          <div class="form-group col-md-6">
+            <label for="natTJM">TJM (€)</label>
+          </div>
+          <div class="form-group col-md-6">
+            <input type="number" id="natTJM" class="form-control" name="natureTJM" [(ngModel)]="natureAModifier.tjm"
+              required #natTJM="ngModel">
+            <div class="invalid-feedback mb-1" *ngIf="(natTJM.dirty || natTJM.touched) && natTJM.invalid">
+              Veuillez saisir un montant!
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row" *ngIf="natureAModifier.isFacturee === 'OUI' && natureAModifier.hasPrime === 'OUI'">
+          <div class="form-group col-md-6">
+            <label for="nat%Prime">%Prime</label>
+          </div>
+          <div class="form-group col-md-6">
+            <input type="number" step="0.1" id="%Prime" class="form-control" name="nature%Prime"
+              [(ngModel)]="natureAModifier.pourcentagePrime" required #natPrcPrime="ngModel">
+            <div class="invalid-feedback mb-1"
+              *ngIf="(natPrcPrime.dirty || natPrcPrime.touched) && natPrcPrime.invalid">
+              Veuillez saisir une valeur!
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="natPlafond">Plafond frais</label>
+          </div>
+          <div class="form-group col-md-6">
+            <input type="text" id="natPlafond" class="form-control" name="naturePlafond"
+              [(ngModel)]="natureAModifier.plafondFrais" required #natPfd="ngModel">
+            <div class="invalid-feedback mb-1" *ngIf="(natPfd.dirty || natPfd.touched) && natPfd.invalid">
+              Veuillez saisir un montant!
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="depassPlafond">Dépassement frais</label>
+          </div>
+          <div class="form-group col-md-6">
+            <select class="custom-select" name="natureDept" id="depassPlafond"
+              [(ngModel)]="natureAModifier.depassPlafond" required #depassPlafond="ngModel">
+              <option value="OUI">Oui</option>
+              <option value="NON">Non</option>
+            </select>
+            <div class="invalid-feedback mb-1"
+              *ngIf="(depassPlafond.dirty || depassPlafond.touched) && depassPlafond.invalid">
+              Champ obligatoire!
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="alert alert-danger ml-3" *ngIf="isError">
+            {{error}}
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button [disabled]="natureModifier.invalid" class="btn btn-primary" (click)=modifierNature()>Valider</button>
+        <button class="btn btn-info" (click)=annulerModif()>Annuler</button>
+      </div>
+
+    </form>
   </div>
 
-    <ng-template #creation>
-      <div class="modal-content">
-        <form class="was-validated" #natureCreer="ngForm">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Ajout d'une nature de mission</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <div class="form-row">
-            <div class="form-group col-md-6">
-                <label for="natCode">Nature</label>
-            </div>
-            <div class="form-group col-md-6">
-                <input type="text" name="natureCode" id="natCode" class="form-control" [(ngModel)]="natMission.code" required #natCode="ngModel">
-            <div class="invalid-feedback mb-1" *ngIf="(natCode.dirty || natCode.touched) && natCode.invalid">
-                Veuillez saisir un code!
-            </div>
-          </div>
-
-          </div>
-          <div class="form-row">
-            <div class="form-group col-md-6">
-                <label for="isFacturee">Facturée</label>
-            </div>
-              <div class="form-group col-md-6">
-                <select class="custom-select" name="isFacturee" id="isFacturee" [(ngModel)]="natMission.isFacturee"
-                required #isFacturee="ngModel">
-                <option value="OUI">Oui</option>
-                <option value="NON">Non</option>
-              </select>
-              <div class="invalid-feedback mb-1" *ngIf="(isFacturee.dirty || isFacturee.touched) && isFacturee.invalid">
-                Champ obligatoire!
-              </div>
-            </div>
-
-          </div>
-
-          <div class="form-row" *ngIf="natMission.isFacturee === 'OUI'">
-            <div class="form-group col-md-6">
-                <label for="natTJM">TJM (€)</label>
-            </div>
-            <div class="form-group col-md-6">
-                <input type="number" id="natTJM" class="form-control" name="natureTJM" [(ngModel)]="natMission.tjm" required #natTJM="ngModel">
-            <div class="invalid-feedback mb-1" *ngIf="(natTJM.dirty || natTJM.touched) && natTJM.invalid">
-                Veuillez saisir un montant!
-            </div>
-          </div>
-          </div>
-
-          <div class="form-row"*ngIf="natMission.isFacturee === 'OUI'">
-            <div class="form-group col-md-6">
-                <label for="natPrime">Versement prime</label>
-            </div>
-            <div class="form-group col-md-6">
-                <select class="custom-select" name="hasPrime" id="hasPrime" [(ngModel)]="natMission.hasPrime"
-                required #hasPrime="ngModel">
-                <option value="OUI">Oui</option>
-                <option value="NON">Non</option>
-              </select>
-              <div class="invalid-feedback mb-1">
-                Champ obligatoire!
-            </div>
-            </div>
-
-          </div>
-
-
-          <div class="form-row" *ngIf="natMission.isFacturee === 'OUI' && natMission.hasPrime === 'OUI'">
-            <div class="form-group col-md-6">
-                <label for="nat%Prime">%Prime</label>
-            </div>
-            <div class="form-group col-md-6">
-                <input type="number" step="0.1" id="%Prime" class="form-control" name="nature%Prime" [(ngModel)]="natMission.pourcentagePrime" required #natPrcPrime="ngModel">
-              </div>
-            <div class="invalid-feedback mb-1" *ngIf="(natPrcPrime.dirty || natPrcPrime.touched) && natPrcPrime.invalid">
-                Veuillez saisir une valeur!
-            </div>
-          </div>
-
-          <div class="form-row">
-            <div class="form-group col-md-6">
-                <label for="natPlafond">Plafond frais</label>
-            </div>
-            <div class="form-group col-md-6">
-              input nat mission plafond frais
-              <!--
-                <input type="number" id="natPlafond" class="form-control" name="naturePlafond" [(ngModel)]="natMission.plafondFrais" required #natPfd="ngModel">
-
-            -->
-                <div class="invalid-feedback mb-1" *ngIf="(natPfd.dirty || natPfd.touched) && natPfd.invalid">
-                Veuillez saisir un montant!
-            </div>
-          </div>
-
-          </div>
-          <div class="form-row">
-            <div class="form-group col-md-6">
-                <label for="depassPlafond">Dépt. frais</label>
-            </div>
-            <div class="form-group col-md-6">
-                <select class="custom-select" name="natureDept" id="depassPlafond" [(ngModel)]="natMission.depassPlafond"
-                required #depassPlafond="ngModel">
-                <option value="OUI">Oui</option>
-                <option value="NON">Non</option>
-              </select>
-            <div class="invalid-feedback mb-1" *ngIf="(depassPlafond.dirty || depassPlafond.touched) && depassPlafond.invalid">
-                Champ obligatoire!
-            </div>
-          </div>
-
-          </div>
-          <div class="form-row">
-          <div class="alert alert-danger ml-3" *ngIf="isError">
-              {{erreur}}
-            </div>
-          </div>
-          </div>
-          <div class="modal-footer">
-
-            <button [disabled]="natureCreer.invalid" class="btn btn-primary" (click)=creerNature()>Valider</button>
-            <button class="btn btn-info" (click)=annulerCreation()>Annuler</button>
-          </div>
-        </form>
-
-        </div>
-    </ng-template>
+</ng-template>
 
 <ng-template #supression>
   <div class="modal-body text-center">
@@ -169,15 +309,13 @@
     <button type="button" class="btn btn-default" (click)="confirm()">Yes</button>
     <button type="button" class="btn btn-primary" (click)="decline()">No</button>
     <div class="alert alert-danger ml-3" *ngIf="isError">
-      {{erreur}}
+      {{error}}
     </div>
   </div>
 </ng-template>
 
 <ng-template #errorBlock>
-    <div class="row justify-content-center align-items-center">
-      <p>Vous ne disposez pas des autorisations nécessaires pour accéder à cette page!</p>
-    </div>
+  <div class="row justify-content-center align-items-center">
+    <p>Vous ne disposez pas des autorisations nécessaires pour accéder à cette page!</p>
+  </div>
 </ng-template>
-
-

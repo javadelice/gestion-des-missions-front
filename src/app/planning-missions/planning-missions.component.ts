@@ -30,12 +30,14 @@ export class PlanningMissionsComponent implements OnInit {
   }[];
   dateTemp;
   isError: boolean;
+  erreur: string;
 
   modalRef: BsModalRef;
 
   constructor(private planningService: PlanningService, private missionService: MissionsService, private _authService: AuthService, private modalService: BsModalService) { }
 
   ngOnInit() {
+    this.isError = false;
     this._authService.collegueConnecteObs.subscribe(collegueConnecte => {
       this.missionService.getMissions(collegueConnecte.id).subscribe((missions: MissionDto[]) => {
         this.missionDates = [];
@@ -44,9 +46,11 @@ export class PlanningMissionsComponent implements OnInit {
         this.generateCalendar();
       }, (error: HttpErrorResponse) => {
         this.isError = true;
+        this.erreur = error.status + ' - ' + error.message;
       });
     }, (error: HttpErrorResponse) => {
       this.isError = true;
+      this.erreur = error.status + ' - ' + error.message;
     });
   }
 
@@ -108,6 +112,10 @@ export class PlanningMissionsComponent implements OnInit {
     }, (error: HttpErrorResponse) => {
       this.isError = true;
     });
+  }
+
+  recommencer() {
+    this.ngOnInit();
   }
 
 }

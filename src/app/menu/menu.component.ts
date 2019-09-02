@@ -12,7 +12,8 @@ import { HttpErrorResponse } from '@angular/common/http';
   <div class="row">
     <ul class="nav justify-content-center">
       <li class="nav-item">
-        <a class="nav-link active" type="modify" [routerLink]="['../tech']">Accueil</a>
+
+        <a class="nav-link active" routerLink="tech">Accueil</a>
       </li>
       <li class="nav-item">
       <a class="nav-link" routerLink="missions">Gestion des missions</a>

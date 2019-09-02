@@ -9,17 +9,21 @@ import { Observable } from 'rxjs';
 })
 export class NatureMissionService {
 
-  constructor(private httpClient:HttpClient) { }
+  constructor(private httpClient: HttpClient) { }
 
-  recupNature(idCollegueConnecte:number):Observable<NatureDto[]> {
-    return this.httpClient.get<NatureDto[]>(environment.baseUrl + 'nature?id=' + idCollegueConnecte, {withCredentials:true});
+  recupNature(idCollegueConnecte: number): Observable<NatureDto[]> {
+    return this.httpClient.get<NatureDto[]>(environment.baseUrl + 'nature?id=' + idCollegueConnecte, {withCredentials: true});
+  }
+
+  modifyNature(nature: NatureDto): Observable<NatureDto> {
+    return this.httpClient.patch<NatureDto>(environment.baseUrl + 'nature', nature, {withCredentials: true});
   }
 
   createNature(nature: NatureDto): Observable<NatureDto>{
     return this.httpClient.post<NatureDto>(environment.baseUrl + 'nature', nature, {withCredentials: true});
   }
 
-  deleteNature(idNature:number) {
+  deleteNature(idNature: number) {
     return this.httpClient.delete(environment.baseUrl + 'nature?id=' + idNature, {withCredentials:true});
   }
 }
