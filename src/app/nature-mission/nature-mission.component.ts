@@ -12,19 +12,17 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 })
 export class NatureMissionComponent implements OnInit {
 
-  erreur: string;
-  isError: boolean;
-  creerNatOk: boolean;
-  natureMissions: NatureDto[];
-  natModifOK: boolean;
-  error: boolean;
-  modalRef: BsModalRef;
-  idNatureACreer: number;
   isAdmin: boolean;
-  natMission = new NatureDto(0, '', '', '', 0, 0, 0, '');
-  idNature: number;
+
+  error: string;
+  isError: boolean;
+
+  naturesMissions: NatureDto[];
+  modalRef: BsModalRef;
 
   natureASupprimer: NatureDto;
+  natureAModifier: NatureDto;
+  natureACreer: NatureDto;
 
   constructor(private natureService: NatureMissionService, private _authSrv: AuthService, private modalService: BsModalService) { }
 
@@ -34,15 +32,9 @@ export class NatureMissionComponent implements OnInit {
         this.isAdmin = true;
       }
       this.natureService.recupNature(collegueConnecte.id).subscribe((natureMissions: NatureDto[]) => {
-        this.natureMissions = natureMissions;
-      }, (error: HttpErrorResponse) => {
-        this.error = true;
-      })
-      ;
-    }
-      , (error: HttpErrorResponse) => {
-        this.error = true;
+        this.naturesMissions = natureMissions;
       });
+    });
   }
 
   openDeleteModal(template: TemplateRef<any>, nature: NatureDto) {
@@ -52,11 +44,12 @@ export class NatureMissionComponent implements OnInit {
   }
 
   openCreateModal(create: TemplateRef<any>) {
+    this.natureACreer = new NatureDto(0, '', '', '', 0, 0, 0, '');
     this.modalRef = this.modalService.show(create, {class: 'modal-md'});
   }
 
-  openModifModal(modif: TemplateRef<any>, natureAt:NatureDto) {
-    this.natMission = {...natureAt};
+  openModifModal(modif: TemplateRef<any>, natureAt: NatureDto) {
+    this.natureAModifier = {...natureAt};
     this.modalRef = this.modalService.show(modif, {class: 'modal-sm'});
   }
 
@@ -70,52 +63,46 @@ export class NatureMissionComponent implements OnInit {
   }
 
   creerNature() {
-    if (this.natMission.isFacturee !== 'OUI') {
-      this.natMission.tjm = null;
-      this.natMission.hasPrime = null;
+    if (this.natureACreer.isFacturee !== 'OUI') {
+      this.natureACreer.tjm = null;
+      this.natureACreer.hasPrime = null;
     }
-    if (this.natMission.hasPrime !== 'OUI') {
-      this.natMission.pourcentagePrime = null;
+    if (this.natureACreer.hasPrime !== 'OUI') {
+      this.natureACreer.pourcentagePrime = null;
     }
-    this.natureService.createNature(this.natMission).subscribe(nature => {
-      this.creerNatOk = true;
+    this.natureService.createNature(this.natureACreer).subscribe(nature => {
       this.isError = false;
       this.modalRef.hide();
-      this.natureMissions.push(nature);
-      this.natMission = new NatureDto(0, '', '', '', 0, 0, 0, '');
+      this.naturesMissions.push(nature);
     }, (error: HttpErrorResponse) => {
-      this.creerNatOk = false;
       this.isError = true;
-      this.erreur = error.error;
+      this.error = error.error;
     });
   }
 
   annulerCreation() {
     this.modalRef.hide();
-    this.natMission = new NatureDto(0, '', '', '', 0, 0, 0, '');
   }
 
   deleteNature() {
     this.natureService.deleteNature(this.natureASupprimer.id).subscribe(() => {
       this.modalRef.hide();
-      this.natureMissions.splice(this.natureMissions.indexOf(this.natureASupprimer));
+      this.naturesMissions.splice(this.naturesMissions.indexOf(this.natureASupprimer));
       this.natureASupprimer = undefined;
     }, (error: HttpErrorResponse) => {
       this.isError = true;
-      this.erreur = error.error;
+      this.error = error.error;
     });
   }
 
   modifierNature() {
-    this.natureService.modifyNature(this.natMission).subscribe(natureModif => {
-      this.natModifOK = true;
+    this.natureService.modifyNature(this.natureAModifier).subscribe(natureModif => {
       this.isError = false;
       this.modalRef.hide();
       this.ngOnInit();
     }, (error: HttpErrorResponse) => {
-      this.natModifOK = false;
       this.isError = true;
-      this.erreur = error.error;
+      this.error = error.error;
     });
   }
 
