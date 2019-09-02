@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { Routes, RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
-import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { TechComponent } from './tech/tech.component';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { AuthComponent } from './auth/auth.component';
@@ -22,7 +22,10 @@ import { PlanningMissionsComponent } from './planning-missions/planning-missions
 import { NoteDeFraisVisualisationComponent } from './note-de-frais-visualisation/note-de-frais-visualisation.component';
 import { NoteDeFraisComponent } from './note-de-frais/note-de-frais.component';
 import { NoteDeFraisAjoutComponent } from './note-de-frais-ajout/note-de-frais-ajout.component';
-
+import { PrimesComponent } from './primes/primes.component';
+import { PrimesGraphiqueComponent } from './primes-graphique/primes-graphique.component';
+import { ChartsModule } from 'ng2-charts';
+import { FileSaverModule } from 'ngx-filesaver';
 
 const routes: Routes = [
   { path:'tech', component: TechComponent, canActivate:[StatutConnecteService]}, // /tech accessible uniquement si connecté
@@ -35,8 +38,10 @@ const routes: Routes = [
   { path:'missions/creer', component:CreerMissionComponent, canActivate:[StatutConnecteService]},
   { path: 'nature', component: NatureMissionComponent, canActivate: [StatutConnecteService]},
   { path: 'valider', component: ValiderMissionsComponent, canActivate: [StatutConnecteService]},
-  { path:'connexion', component: AuthComponent},
-  { path: '', redirectTo: '/missions', pathMatch: 'full'}
+  { path: 'primes', component: PrimesComponent, canActivate: [StatutConnecteService]},
+  { path: 'connexion', component: AuthComponent},
+  { path: '', redirectTo: '/tech', pathMatch: 'full'},
+
 ];
 
 
@@ -54,7 +59,10 @@ const routes: Routes = [
     ValiderMissionsComponent,
     PlanningMissionsComponent,
     NoteDeFraisVisualisationComponent,
-    NoteDeFraisAjoutComponent
+    NoteDeFraisAjoutComponent,
+    PrimesComponent,
+    PrimesGraphiqueComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -65,6 +73,8 @@ const routes: Routes = [
     NgbModule,
     ModalModule.forRoot(),
     CommonModule
+    ChartsModule,
+    FileSaverModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

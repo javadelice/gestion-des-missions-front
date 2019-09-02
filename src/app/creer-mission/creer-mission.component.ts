@@ -23,9 +23,11 @@ export class CreerMissionComponent implements OnInit {
   currentDate = new Date();
   col:Collegue;
 
+
   //mission = new MissionDto(0, '', '', null, '', '', '', 'INITIALE', null,0);
 
   mission = new MissionDto(0, '', '', new NatureDto(0, '', '', '', 1, "", 0, '', '', 0), '', '', '', 'INITIALE', 0, null, new NdfCumul());
+
   // estimationPrime = 0;
   // difference = (this.mission.endDate.valueOf() - this.mission.startDate.valueOf())/86400000;
   // startD = 10;

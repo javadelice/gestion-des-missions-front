@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {TechService} from "./tech.service";
 import {BackendLink} from "./tech.domains";
+import { MissionsService } from '../missions/missions.service';
 
 /**
  * Composant d'affichage d'informations techniques (liens utiles pour connaître l'état du backend).
@@ -27,6 +28,10 @@ import {BackendLink} from "./tech.domains";
             <td>{{link.name}}</td>
             <td><a [href]="link.href">{{link.href}}</a></td>
           </tr>
+          <tr>
+            <td>Forcer le traitement de nuit</td>
+            <td><button class="btn btn-primary btn-sm" (click)="traitementNuit()">Traitement de nuit</button></td>
+          </tr>
           </tbody>
         </table>
       </mdb-card-body>
@@ -43,9 +48,9 @@ import {BackendLink} from "./tech.domains";
 })
 export class TechComponent implements OnInit {
 
-  links:BackendLink[]=[];
+  links: BackendLink[] = [];
 
-  constructor(private _techSrv:TechService) { }
+  constructor(private _techSrv: TechService, private _missionServ: MissionsService) { }
 
   ngOnInit() {
    this._techSrv.listBackendLinks().subscribe(
@@ -53,5 +58,8 @@ export class TechComponent implements OnInit {
    );
   }
 
+  traitementNuit() {
+    this._missionServ.traitementNuit().subscribe();
+  }
 
 }
