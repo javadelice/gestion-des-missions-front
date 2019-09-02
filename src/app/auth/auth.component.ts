@@ -25,7 +25,7 @@ import {Router} from "@angular/router";
               <ul>
                 <li>admin@dev.fr / superpass / ROLE_ADMINISTRATEUR, ROLE_UTILISATEUR</li>
                 <li>user@dev.fr / superpass / ROLE_UTILISATEUR</li>
-                <li>manager@dev.fr / superpass / ROLE_MANAGER, ROLE_UTILISATEUR</li>
+                <li>manager.dev.gdm@gmail.com / superpass / ROLE_MANAGER, ROLE_UTILISATEUR</li>
               </ul>
 
             </mdb-card-text>

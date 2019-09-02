@@ -23,7 +23,11 @@ export class CreerMissionComponent implements OnInit {
   currentDate = new Date();
   col:Collegue;
 
+
   //mission = new MissionDto(0, '', '', null, '', '', '', 'INITIALE', null,0);
+
+  mission = new MissionDto(0, '', '', null, '', '', '', 'INITIALE', 0, null);
+
 
   mission = new MissionDto(0, '', '', new NatureDto(0, '', '', '', 1, "", '', '', 0), '', '', '', 'INITIALE', null, new NdfCumul());
   // estimationPrime = 0;
