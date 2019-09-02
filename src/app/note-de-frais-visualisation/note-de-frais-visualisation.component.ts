@@ -16,7 +16,7 @@ import * as moment from 'moment';
   styleUrls: ['./note-de-frais-visualisation.component.css']
 })
 export class NoteDeFraisVisualisationComponent implements OnInit {
-  noteDeFraisTab: NdfEntryDto[] = [];
+  noteDeFraisTab: NdfEntryDto[];
   @Input() mission: MissionDto;
   currentDate = new Date();
   phaseModifier: Boolean;
@@ -42,26 +42,32 @@ export class NoteDeFraisVisualisationComponent implements OnInit {
   erreurAjoutLDF: boolean;
   verifDoublonLDF: boolean;
   montantNDF: number;
-  depassementValide: boolean;
+  depassementAutorise: boolean;
   depassementFrais: boolean;
+  depassementValide: boolean;
   errorMessage: string;
   estimationPrime: number;
   dateTemp;
   nbJoursTravailles: number;
+  isError: boolean;
 
 
   constructor(private _authSrv: AuthService, private _ndfSrv: NdfService, private _router: Router, private modalService: BsModalService) { } //public dialog: MatDialog) { }
 
   ngOnInit() {
+    this.noteDeFraisTab = [];
     this.creerOk = false;
     this.error = false;
     this.creation = false;
     this.modification = false;
     this.erreurAjoutLDF = false;
-    this.depassementValide = true;
+    this.depassementAutorise = true;
     this.depassementFrais = false;
+    this.depassementValide = true;
 
     this.ndfCumul = new NdfCumul();
+
+    this.estimerPrime();
 
     this._ndfSrv.getNdfEntriesFromMissionId(this.mission.id).subscribe((noteDeFraisTab: NdfEntryDto[]) => {
       this.noteDeFraisTab = noteDeFraisTab;
@@ -72,7 +78,16 @@ export class NoteDeFraisVisualisationComponent implements OnInit {
   }
 
   estimerPrime() {
+    this.nbJoursTravailles = 0;
+    this.estimationPrime = 0;
     this.dateTemp = moment(this.mission.startDate);
+    while (moment(this.dateTemp).isBefore(moment(this.mission.endDate))) {
+      if (moment(this.dateTemp).isoWeekday() !== 6 && moment(this.dateTemp).isoWeekday() !== 7) {
+        this.nbJoursTravailles += 1;
+      }
+      this.dateTemp = moment(this.dateTemp).add(1, 'day');
+    }
+    this.estimationPrime = this.nbJoursTravailles * this.mission.nature.tjm * this.mission.nature.pourcentagePrime / 100;
   }
 
   validerModif(template: TemplateRef<any>, currentNdfId: number) {
@@ -178,8 +193,9 @@ export class NoteDeFraisVisualisationComponent implements OnInit {
     this.modification = false;
     this.erreurAjoutLDF = false;
     this.verifDoublonLDF = true;
-    this.depassementValide = true;
+    this.depassementAutorise = true;
     this.depassementFrais = false;
+    this.depassementValide = true;
   }
 
   creerLigneDeFrais() {
@@ -199,6 +215,7 @@ export class NoteDeFraisVisualisationComponent implements OnInit {
       this.creerOk = true;
     } else {
       this.erreurAjoutLDF = true;
+      this.errorMessage = 'Erreur : vous ne pouvez pas créer deux lignes de frais identiques, la date de la ligne de frais doit être comprise dans les dates de la mission et le montant doit être supérieur à 0!';
     }
   }
 
@@ -207,7 +224,7 @@ export class NoteDeFraisVisualisationComponent implements OnInit {
     if (!this.mission.nature.hasPrime) {
       for (const ndf of this.noteDeFraisTab) {
         if (ndf.montant > this.mission.nature.plafondFrais) {
-          this.depassementValide = false;
+          this.depassementAutorise = false;
           this.errorMessage = 'Vous n\'avez pas droit au dépassement de frais sur cette mission !';
           break;
         }
@@ -219,15 +236,28 @@ export class NoteDeFraisVisualisationComponent implements OnInit {
           this.depassementFrais = true;
         }
       }
-      if (this.depassementFrais) {
+      if (this.depassementFrais &&
+        this.estimationPrime - (this.montantNDF - this.mission.nature.plafondFrais * this.nbJoursTravailles) < 0) {
+        this.depassementValide = false;
+        this.errorMessage = 'Le dépassement des frais est trop important (prime - déduction < 0) !';
+      } else {
+        if (this.noteDeFraisTab[0].ndfCumul.id === undefined) {
+          this.ndfCumul.mission = this.mission;
+          this._ndfSrv.createNdf(this.ndfCumul).subscribe(ndfCumul => {
+            for (const ndf of this.noteDeFraisTab) {
+              ndf.ndfCumul = this.ndfCumul;
+              this._ndfSrv.createNdfEntry(ndf).subscribe(notedefrais => {
+              });
+            }
+          }, (error: HttpErrorResponse) => {
+            this.isError = true;
+          });
+        } else {
 
+        }
       }
     }
 
-
-    if (this.depassementValide === true) {
-
-    }
 
 
     // this._ndfSrv.createNdfEntry(this.newNdfEntry).subscribe(() => {

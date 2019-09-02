@@ -3,7 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {Observable, combineLatest, merge, from, of, Subject} from "rxjs";
 import {environment} from "../../environments/environment";
 import {flatMap, concatMap, delay, map, tap, publishReplay} from "rxjs/operators";
-import { NdfDto } from './note-de-frais.domains';
+import { NdfDto, NdfCumul } from './note-de-frais.domains';
 import { MissionDto } from '../models/mission-dto';
 import { NdfEntryDto } from '../note-de-frais-visualisation/note-de-frais-visualisation.domains';
 
@@ -89,6 +89,10 @@ modifyNdfEntry(ndfEntry: NdfEntryDto): Observable<NdfEntryDto> {
 deleteNdfEntry(ndfEntryId:number){
 return this._http
   .delete(`${environment.baseUrl}${environment.apiDeleteLigneDeFrais}`+ndfEntryId, {withCredentials:true});
+}
+
+createNdf(ndfCumul: NdfCumul): Observable<NdfCumul> {
+  return this._http.post<NdfCumul>(`${environment.baseUrl}${environment.apiCreateNoteDeFrais}`, ndfCumul, {withCredentials: true});
 }
 
 }
