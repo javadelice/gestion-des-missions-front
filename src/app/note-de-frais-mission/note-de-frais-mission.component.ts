@@ -32,6 +32,9 @@ export class NoteDeFraisMissionComponent implements OnInit {
 
   modalRef: BsModalRef;
 
+  errorMsg: string;
+  isError: boolean;
+
 
 
   ngOnInit() {
@@ -43,6 +46,7 @@ export class NoteDeFraisMissionComponent implements OnInit {
     .subscribe(mission => {
       this.mission = mission;
     });
+    this.isError = false;
   }
 
   generatePDF(idMission: number) {
@@ -50,16 +54,19 @@ export class NoteDeFraisMissionComponent implements OnInit {
   }
 
   edit(editTemplate: TemplateRef<any>, ndfEntry:NdfEntryDto) {
+    this.isError = false;
     this.editedNdfEntry = {... ndfEntry};
     this.modalRef = this.bsModalService.show(editTemplate, {class: 'modal-md'});
   }
 
   delete(deleteTemplate: TemplateRef<any>, ndfEntry:NdfEntryDto) {
+    this.isError = false;
     this.deleteNdfEntry = {... ndfEntry};
     this.modalRef = this.bsModalService.show(deleteTemplate, {class: 'modal-md'});
   }
 
   create(createTemplate: TemplateRef<any>) {
+    this.isError = false;
     this.newNdfEntry = new NdfEntryDto(0, new Date(), '', 0, this.mission.id);
     this.modalRef = this.bsModalService.show(createTemplate, {class: 'modal-md'});
   }
@@ -68,6 +75,10 @@ export class NoteDeFraisMissionComponent implements OnInit {
     this.ndfService.createNdfEntry(this.newNdfEntry).subscribe(() => {
       this.ngOnInit();
       this.modalRef.hide();
+    },
+    error => {
+      this.errorMsg = error.error;
+      this.isError = true;
     });
 
   }
@@ -80,12 +91,20 @@ export class NoteDeFraisMissionComponent implements OnInit {
     this.ndfService.modifyNdfEntry(this.editedNdfEntry).subscribe(() => {
       this.ngOnInit();
       this.modalRef.hide();
+    },
+    error => {
+      this.errorMsg = error.error;
+      this.isError = true;
     });
   }
   confirmDelete(){
     this.ndfService.deleteNdfEntry(this.deleteNdfEntry.id).subscribe(() => {
       this.ngOnInit();
       this.modalRef.hide();
+    },
+    error => {
+      this.errorMsg = error.error;
+      this.isError = true;
     });
   }
 }
