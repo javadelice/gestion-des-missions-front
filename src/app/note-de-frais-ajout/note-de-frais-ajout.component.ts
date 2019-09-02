@@ -15,7 +15,7 @@ import { NdfCumul } from '../note-de-frais/note-de-frais.domains';
 })
 export class NoteDeFraisAjoutComponent implements OnInit {
   currentDate = new Date();
-  newNdfEntry: NdfEntryDto =new NdfEntryDto(0, this.currentDate, "", 0, new NdfCumul());
+  newNdfEntry: NdfEntryDto = new NdfEntryDto(0, this.currentDate, "", 0, 0);
   ndfEntries: NdfEntryDto[];
   modifierOk: boolean;
   isError: boolean;
@@ -32,7 +32,7 @@ export class NoteDeFraisAjoutComponent implements OnInit {
 
   ngOnInit() {
 if(this.mission){
- this.newNdfEntry.ndfCumul.id=this.mission.ndfCumul.id;
+
 }
 
     this.creerOk = false;

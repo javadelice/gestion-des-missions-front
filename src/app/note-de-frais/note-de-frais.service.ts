@@ -67,7 +67,7 @@ listMission():Observable<MissionDto[]> {
 
 getNdfEntriesFromMissionId (missionId:number):Observable<NdfEntryDto[]> {
   return this._http
-    .get<NdfEntryDto[]>(`${environment.baseUrl}${environment.apiLignesDeFraisFromMissionId}`+missionId, {withCredentials: true})
+    .get<NdfEntryDto[]>(`${environment.baseUrl}${environment.apiLignesDeFraisFromMissionId}${missionId}`, {withCredentials: true})
     }
 
 getNdfEntriesFromNdfId (id:number):Observable<NdfEntryDto[]> {
@@ -76,7 +76,7 @@ getNdfEntriesFromNdfId (id:number):Observable<NdfEntryDto[]> {
     }
 
 
-createNdfEntry(ndfEntry:NdfEntryDto): Observable<NdfEntryDto>{
+createNdfEntry(ndfEntry: NdfEntryDto): Observable<NdfEntryDto>{
  return this._http
   .post<NdfEntryDto>(`${environment.baseUrl}${environment.apiLignedefrais}`, ndfEntry,  {withCredentials: true})
 }

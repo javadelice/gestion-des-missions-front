@@ -27,14 +27,14 @@ export class NoteDeFraisVisualisationComponent implements OnInit {
   error: boolean;
   //currentNdfEntryId: number;
   //ndfEntryToggle: boolean;
-  currentNdfEntry: NdfEntryDto = new NdfEntryDto(0, this.currentDate, "", 0, new NdfCumul());
+  currentNdfEntry: NdfEntryDto = new NdfEntryDto(0, this.currentDate, "", 0,0);
   ndfEntryIdToDelete: number;
   modalRef: BsModalRef;
   keys = Object.keys;
   //ndfNature: NdfNature;
   ndfNature: string[] = ["ACTIVITE", "HOTEL", "PETIT_DEJEUNER", "DEJEUNER", "DINER", "CARBURANT", "TAXI", "TRAIN", "AVION"];
   errModif: string;
-  newNdfEntry: NdfEntryDto = new NdfEntryDto(0, this.currentDate, "", 0, new NdfCumul());
+  newNdfEntry: NdfEntryDto = new NdfEntryDto(0, this.currentDate, "", 0,0);
   //validerButton:BsButton;
   creation: boolean;
   creerOk: boolean;
@@ -96,7 +96,7 @@ export class NoteDeFraisVisualisationComponent implements OnInit {
       }
       else {
         this.ndfCumulExists = true;
-        this.ndfCumul = this.noteDeFraisTab[0].ndfCumul;
+        //this.ndfCumul = this.noteDeFraisTab[0].ndfCumul;
       }
       this.phaseModifier = false;
     }, (error: HttpErrorResponse) => {
@@ -162,7 +162,7 @@ export class NoteDeFraisVisualisationComponent implements OnInit {
     this.currentNdfEntry.date = this.noteDeFraisTab[indexMatchingTab].date;
     this.currentNdfEntry.nature = this.noteDeFraisTab[indexMatchingTab].nature;
     this.currentNdfEntry.montant = this.noteDeFraisTab[indexMatchingTab].montant;
-    this.currentNdfEntry.ndfCumul = this.mission.ndfCumul;
+    //this.currentNdfEntry.ndfCumul = this.mission.ndfCumul;
     //this.ndfEntryToggle = true;
     this.modification = true;
     this.indexMatching = indexMatchingTab;
@@ -286,7 +286,7 @@ export class NoteDeFraisVisualisationComponent implements OnInit {
         if (!this.ndfCumulExists) {
           this._ndfSrv.createNdf(this.ndfCumul).subscribe(ndfCumul => {
             for (const ndf of this.noteDeFraisTab) {
-              ndf.ndfCumul = this.ndfCumul;
+              //ndf.ndfCumul = this.ndfCumul;
               this._ndfSrv.createNdfEntry(ndf).subscribe(noteDeFrais => {
               });
             }
@@ -295,7 +295,7 @@ export class NoteDeFraisVisualisationComponent implements OnInit {
           });
         } else {
           for (const ndf of this.noteDeFraisTab) {
-            ndf.ndfCumul = this.ndfCumul;
+            //ndf.ndfCumul = this.ndfCumul;
             this._ndfSrv.createNdfEntry(ndf).subscribe(noteDeFrais => {
             });
           }

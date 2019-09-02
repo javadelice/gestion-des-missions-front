@@ -26,12 +26,14 @@ import { PrimesComponent } from './primes/primes.component';
 import { PrimesGraphiqueComponent } from './primes-graphique/primes-graphique.component';
 import { ChartsModule } from 'ng2-charts';
 import { FileSaverModule } from 'ngx-filesaver';
+import { NoteDeFraisMissionComponent } from './note-de-frais-mission/note-de-frais-mission.component';
 
 const routes: Routes = [
   { path:'tech', component: TechComponent, canActivate:[StatutConnecteService]}, // /tech accessible uniquement si connecté
   { path:'menu', component: MenuComponent, canActivate:[StatutConnecteService]},
   { path: 'planning', component: PlanningMissionsComponent, canActivate: [StatutConnecteService]},
   { path:'notesdefrais', component: NoteDeFraisComponent, canActivate:[StatutConnecteService]},
+  { path:'notesdefrais/:idMission', component: NoteDeFraisMissionComponent, canActivate:[StatutConnecteService]},
   { path:'lignedefrais/creer', component:NoteDeFraisAjoutComponent, canActivate:[StatutConnecteService]},
   { path:'ndf-visu', component: NoteDeFraisVisualisationComponent, canActivate:[StatutConnecteService]},
   { path:'missions', component: MissionsComponent, canActivate:[StatutConnecteService]}, // /missions accessible ssi connecté
@@ -62,7 +64,7 @@ const routes: Routes = [
     NoteDeFraisAjoutComponent,
     PrimesComponent,
     PrimesGraphiqueComponent,
-
+    NoteDeFraisMissionComponent
   ],
   imports: [
     BrowserModule,

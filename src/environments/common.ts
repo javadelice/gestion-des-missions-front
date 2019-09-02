@@ -12,7 +12,7 @@ export const config = {
   apiCreateNoteDeFrais: 'notedefrais',
   apiLignesDeFraisFromNdfId: 'notedefrais/',
   apiLignedefrais: 'lignedefrais',
-  apiLignesDeFraisFromMissionId: 'notedefrais?mission=',
+  apiLignesDeFraisFromMissionId: 'notedefrais?idMission=',
   apiModifyLigneDeFrais: 'lignedefrais',
   apiAjouterLigneDeFrais: 'lignedefrais',
   apiDeleteLigneDeFrais: 'lignedefrais?id=',

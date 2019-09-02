@@ -23,17 +23,17 @@ export class NoteDeFraisComponent implements OnInit {
   modalRef: BsModalRef;
   ndfVisu: boolean;
   missionChosen: MissionDto;
-  exportPdf:boolean;
+  exportPdf: boolean;
 
- constructor(private _authSrv: AuthService, 
-    private missionService: MissionsService, 
-    private _ndfService: NdfService, 
+ constructor(private _authSrv: AuthService,
+    private missionService: MissionsService,
+    private _ndfService: NdfService,
     private _router: Router,
     private _titleService: Title) { }
-  
+
 ngOnInit() {
   this._titleService.setTitle("Notes de frais")
-  this.exportPdf =false;
+  this.exportPdf = false;
 
     this._authSrv.collegueConnecteObs.subscribe(collegueConnecte => {
       this.missionService.getMissions(collegueConnecte.id).subscribe((missions: MissionDto[]) => {
@@ -58,7 +58,6 @@ ngOnInit() {
 
 
   exportToPDF(mission:MissionDto): void {
-   
    this.missionChosen = mission;
    this.ndfVisu = true;
    this.exportPdf = true;
