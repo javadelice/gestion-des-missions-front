@@ -83,7 +83,7 @@ createNdfEntry(ndfEntry: NdfEntryDto): Observable<NdfEntryDto>{
 
 modifyNdfEntry(ndfEntry: NdfEntryDto): Observable<NdfEntryDto> {
   return this._http
-    .patch<NdfEntryDto>(`${environment.baseUrl}${environment.apiLignedefrais}`, ndfEntry, {withCredentials: true});
+  .patch<NdfEntryDto>(`${environment.baseUrl}${environment.apiLignedefrais}`, ndfEntry, {withCredentials: true});
 }
 
 deleteNdfEntry(ndfEntryId:number){
@@ -95,4 +95,9 @@ createNdf(ndfCumul: NdfCumul): Observable<NdfCumul> {
   return this._http.post<NdfCumul>(`${environment.baseUrl}${environment.apiCreateNoteDeFrais}`, ndfCumul, {withCredentials: true});
 }
 
+
+checkAllowance(idMission:number, idCollegue:number){
+  return this._http.get<MissionDto>(`${environment.baseUrl}${environment.apiCheckAllowance}${idMission}`+'&idCollegue='+idCollegue, {withCredentials: true});
 }
+}
+

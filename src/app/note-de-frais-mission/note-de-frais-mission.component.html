@@ -1,66 +1,56 @@
 <div class="row justify-content-center align-items-center mt-4">
-  <h1>Saisie de notes de frais</h1>
+  <h1><strong>Saisie de notes de frais</strong></h1>
 </div>
-<div class="row justify-content-between">
-  <table>
+
+<div *ngIf="isAllowed; else notAllowed">
+  <div class="row justify-content-left align-items-left mt-4">
+    <h3 class="align-left"><strong>Informations sur la mission :</strong></h3>
+  </div>
+  <table class="table table-striped  mt-3" cellspacing="0" width="100%">
+
     <tr>
-      <th></th>
-    </tr>
-    <tr>
-      <td>Date de Début : </td>
+      <td><strong>Date de Début : </strong></td>
       <td>{{mission?.startDate| date :"dd/MM/yyyy"}}</td>
       <td></td>
-      <td>Estimation Prime : </td>
+      <td><strong>Estimation Prime : </strong></td>
       <td>{{mission?.prime}}</td>
     </tr>
     <tr>
-      <td>Date de Fin : </td>
+      <td><strong>Date de Fin : </strong></td>
       <td>{{mission?.endDate| date :"dd/MM/yyyy"}}</td>
       <td> </td>
-      <td>Ville de Départ : </td>
+      <td><strong>Ville de départ : </strong></td>
       <td>{{mission?.villeDepart}}</td>
     </tr>
     <tr>
-      <td>Nature : </td>
+      <td><strong>Nature : </strong></td>
       <td>{{mission?.nature.code}}</td>
       <td> </td>
-      <td>Ville d'arrivée : </td>
+      <td><strong>Ville d'arrivée : </strong></td>
       <td>{{mission?.villeArrivee}}</td>
     </tr>
 
   </table>
-</div>
 
+  <div *ngIf="ldfTable?.length != 0; else noData">
 
-<mdb-card class="animated zoomIn">
-  <div class="row ml-5">
-    <div class="col-3">Date de Début : </div>
-    <div class="col-3">{{mission?.startDate| date :"dd/MM/yyyy"}}</div>
-    <div class="col-3">Estimation Prime : </div>
-    <div class="col-3">{{mission?.prime}}</div>
-    <div class="col-3">Date de Fin : </div>
-    <div class="col-3">{{mission?.endDate| date :"dd/MM/yyyy"}}</div>
-    <div class="col-3">Ville de Départ : </div>
-    <div class="col-3">{{mission?.villeDepart}}</div>
-    <div class="col-3">Nature : </div>
-    <div class="col-3">{{mission?.nature.code}}</div>
-    <div class="col-3">Ville d'arrivée : </div>
-    <div class="col-3">{{mission?.villeArrivee}}</div>
-  </div>
-  <div>
-    <a class="btn btn-outline-info btn-sm mr-2" (click)="generatePDF(mission?.id)" style="float:right;">Export
-      PDF</a>
-  </div>
-  <mdb-card-body>
-    <table class="table table-hover table-bordered" id='tableLignesDeFrais'>
-      <thead>
+    <!--div>
+      <a class="btn btn-outline-dark btn-sm mr-2" (click)="generatePDF(mission?.id)" style="float:right;">Export
+        PDF</a>
+  -->
+    <table id='tableLignesDeFrais' class="table table-striped table-bordered mt-3" cellspacing="0" width="100%">
+
+      <thead class="thead-dark">
         <tr>
-          <th>Date</th>
-          <th>Nature</th>
-          <th>Montant</th>
-          <th>Action</th>
+          <th class="th-sm">Date</th>
+          <th class="th-sm">Nature</th>
+          <th class="th-sm">Montant(€)</th>
+          <a class="btn btn-outline-dark btn-lg w-100" (click)="generatePDF(mission?.id)">Export
+            PDF</a>
         </tr>
+
       </thead>
+
       <tbody>
         <tr *ngFor="let ldf of ldfTable">
           <td>{{ldf.date| date : "dd/MM/yyyy"}}</td>
@@ -77,10 +67,34 @@
     </table>
     <div class="text-right">
       Ajouter un frais
-      <button class="btn btn-success ml-3" (click)="create(createModal)">+</button>
+      <button mdbBtn type="button" color="mdb-color" mdbWavesEffect (click)="create(createModal)">+</button>
     </div>
-  </mdb-card-body>
-</mdb-card>
+  </div>
+
+
+  <ng-template #noData>
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">Pas de frais pour cette mission</h4>
+    </div>
+    <div class="modal-body">
+      <div class="text-right">
+        Ajouter un frais
+        <button mdbBtn type="button" color="mdb-color" mdbWavesEffect (click)="create(createModal)">+</button>
+      </div>
+    </div>
+  </ng-template>
+</div>
+
+<ng-template #notAllowed>
+  <div class="modal-header">
+    <h4 class="modal-title text-center">Accès refusé !</h4>
+  </div>
+  <div class="modal-body">
+    <div class="text-center">
+      <strong> L'accès à cette page est restreinte aux personnes liées à la mission.</strong>
+    </div>
+  </div>
+</ng-template>
 
 <ng-template #createModal>
   <div class="modal-content text-center rounded p-3">
@@ -95,12 +109,12 @@
 
 
           <div class="row align-items-center">
-            <div class="col-5">
+            <div class="col-3">
               <div class="row justify-content-end">
                 <strong>Date</strong>
               </div>
             </div>
-            <div class="col">
+            <div class="col-9">
 
               <input class="form-control mb-1" type="date" name="dateNew" [(ngModel)]="newNdfEntry.date" required
                 #dateNew="ngModel" placeholder="dd/MM/yyyy" min="mission.startDate" max="mission.endDate"
@@ -112,7 +126,7 @@
 
 
           <div class="row align-items-center">
-            <div class="col-5">
+            <div class="col-3">
               <div class="row justify-content-end">
                 <strong>Nature</strong>
               </div>
@@ -128,7 +142,7 @@
           </div>
 
           <div class="row align-items-center">
-            <div class="col-5">
+            <div class="col-3">
               <div class="row justify-content-end">
                 <strong>Montant</strong>
               </div>
@@ -151,10 +165,7 @@
           <div class="alert alert-danger" *ngIf="isError">
             {{errorMsg}}
           </div>
-
-
         </form>
-
       </div>
     </div>
   </div>
@@ -170,16 +181,14 @@
     <div class="modal-body">
       <div class="row justify-content-center mt-3">
         <form class="was-validated" #ndfEntryCreate="ngForm">
-
-
           <div class="row align-items-center">
-            <div class="col-5">
+            <div class="col-3">
               <div class="row justify-content-end">
                 <strong>Date</strong>
               </div>
             </div>
-            <div class="col">
 
+            <div class="col-9">
               <input class="form-control mb-1" type="date" name="dateEdited" [(ngModel)]="editedNdfEntry.date" required
                 #dateEdited="ngModel" placeholder="dd/MM/yyyy" min="mission.startDate" max="mission.endDate"
                 ngvalue="editedNdfEntry.date">
@@ -190,7 +199,7 @@
 
 
           <div class="row align-items-center">
-            <div class="col-5">
+            <div class="col-3">
               <div class="row justify-content-end">
                 <strong>Nature</strong>
               </div>
@@ -206,7 +215,7 @@
           </div>
 
           <div class="row align-items-center">
-            <div class="col-5">
+            <div class="col-3">
               <div class="row justify-content-end">
                 <strong>Montant</strong>
               </div>
