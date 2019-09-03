@@ -68,14 +68,14 @@ export class NoteDeFraisComponent implements OnInit {
    this.exportPdf = true;
 
    */
-       this.assignTable(missionId);
-       await this.generatePDF(missionId);
+       await this.assignTable(missionId);
+       this.generatePDF(missionId);
 
   }
 
 assignTable(missionId: number)
 {
-  
+
   this._ndfService.getNdfEntriesFromMissionId(missionId)
   .subscribe(table => this.ldfTable = table, (error: HttpErrorResponse) => {
     this.error = true;

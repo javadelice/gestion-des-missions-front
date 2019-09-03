@@ -47,17 +47,17 @@ export class NoteDeFraisMissionComponent implements OnInit {
 
   ngOnInit() {
     /*
-    //Vérification de l'accès avec 
+    //Vérification de l'accès avec
      this.authService.collegueConnecteObs.subscribe(collegueConnecte => {
         this.route.paramMap.pipe(flatMap(paramap => {
 
           this.ndfService.checkAllowance(Number(paramap.get('idMission')), collegueConnecte.id).subscribe();
-    
-    
+
+
           this.ndfService.getNdfEntriesFromMissionId(Number(paramap.get('idMission')))
             .subscribe(table => this.ldfTable = table);
           return this.modifierMissionService.getMission(Number(paramap.get('idMission')));
-        
+
 
       }))},error => {
         this.errorMsg = error.error;
@@ -79,7 +79,7 @@ export class NoteDeFraisMissionComponent implements OnInit {
     this.isError = false;
   })
 
-} 
+}
     */
     this.route.paramMap.pipe(flatMap(paramap => {
       this.ndfService.getNdfEntriesFromMissionId(Number(paramap.get('idMission')))
@@ -109,7 +109,7 @@ export class NoteDeFraisMissionComponent implements OnInit {
     this.modalRef = this.bsModalService.show(editTemplate,  {
       backdrop: true,
       ignoreBackdropClick: true,
-      class: 'modal-sm'
+      class: 'modal-md'
     });
   }
 
@@ -129,7 +129,7 @@ export class NoteDeFraisMissionComponent implements OnInit {
     this.modalRef = this.bsModalService.show(createTemplate,  {
       backdrop: true,
       ignoreBackdropClick: true,
-      class: 'modal-sm'
+      class: 'modal-md'
     });
   }
 

@@ -1,10 +1,12 @@
 <div class="row justify-content-center align-items-center mt-4">
-    <h1><strong>Saisie de notes de frais</strong></h1> </div>
-   
-    <div *ngIf="isAllowed; else notAllowed">
-<div class="row justify-content-left align-items-left mt-4">
-    <h3 class="align-left"><strong>Informations sur la mission :</strong></h3></div>
-    <table  class="table table-striped  mt-3" cellspacing="0" width="100%">
+  <h1><strong>Saisie de notes de frais</strong></h1>
+</div>
+
+<div *ngIf="isAllowed; else notAllowed">
+  <div class="row justify-content-left align-items-left mt-4">
+    <h3 class="align-left"><strong>Informations sur la mission :</strong></h3>
+  </div>
+  <table class="table table-striped  mt-3" cellspacing="0" width="100%">
     <tr>
       <td><strong>Date de Début : </strong></td>
       <td>{{mission?.startDate| date :"dd/MM/yyyy"}}</td>
@@ -13,14 +15,14 @@
       <td>{{mission?.prime}}</td>
     </tr>
     <tr>
-        <td><strong>Date de Fin : </strong></td>
+      <td><strong>Date de Fin : </strong></td>
       <td>{{mission?.endDate| date :"dd/MM/yyyy"}}</td>
       <td> </td>
       <td><strong>Ville de départ : </strong></td>
       <td>{{mission?.villeDepart}}</td>
     </tr>
     <tr>
-        <td><strong>Nature : </strong></td>
+      <td><strong>Nature : </strong></td>
       <td>{{mission?.nature.code}}</td>
       <td> </td>
       <td><strong>Ville d'arrivée : </strong></td>
@@ -30,23 +32,24 @@
   </table>
 
   <div *ngIf="ldfTable?.length != 0; else noData">
-  
-      <div>
-      <a class="btn btn-outline-info btn-sm mr-2" (click)="generatePDF(mission?.id)" style="float:right;">Export
+
+    <!--div>
+      <a class="btn btn-outline-dark btn-sm mr-2" (click)="generatePDF(mission?.id)" style="float:right;">Export
         PDF</a>
-    </div>
-  <table id='tableLignesDeFrais' class="table table-striped table-bordered mt-3" cellspacing="0" width="100%">
-      
+  -->
+    <table id='tableLignesDeFrais' class="table table-striped table-bordered mt-3" cellspacing="0" width="100%">
+
       <thead class="thead-dark">
         <tr>
           <th class="th-sm">Date</th>
           <th class="th-sm">Nature</th>
           <th class="th-sm">Montant(€)</th>
-          <div class="row justify-content-center align-center "><strong>Actions</strong></div>
+          <a class="btn btn-outline-dark btn-lg w-100" (click)="generatePDF(mission?.id)">Export
+            PDF</a>
         </tr>
-        
+
       </thead>
-      
+
       <tbody>
         <tr *ngFor="let ldf of ldfTable">
           <td>{{ldf.date| date : "dd/MM/yyyy"}}</td>
@@ -68,28 +71,28 @@
   </div>
 
 
-<ng-template #noData>
+  <ng-template #noData>
     <div class="modal-header">
-        <h4 class="modal-title pull-left">Pas de frais pour cette mission</h4>
+      <h4 class="modal-title pull-left">Pas de frais pour cette mission</h4>
+    </div>
+    <div class="modal-body">
+      <div class="text-right">
+        Ajouter un frais
+        <button mdbBtn type="button" color="mdb-color" mdbWavesEffect (click)="create(createModal)">+</button>
       </div>
-      <div class="modal-body">
-          <div class="text-right">
-              Ajouter un frais
-              <button mdbBtn type="button" color="mdb-color" mdbWavesEffect (click)="create(createModal)">+</button>
-            </div>
-            </div>
-</ng-template>
+    </div>
+  </ng-template>
 </div>
 
 <ng-template #notAllowed>
-    <div class="modal-header">
-        <h4 class="modal-title text-center">Accès refusé !</h4>
-      </div>
-      <div class="modal-body">
-          <div class="text-center">
-              <strong> L'accès à cette page est restreinte aux personnes liées à la mission.</strong>
-            </div>
-            </div>
+  <div class="modal-header">
+    <h4 class="modal-title text-center">Accès refusé !</h4>
+  </div>
+  <div class="modal-body">
+    <div class="text-center">
+      <strong> L'accès à cette page est restreinte aux personnes liées à la mission.</strong>
+    </div>
+  </div>
 </ng-template>
 
 <ng-template #createModal>
@@ -105,12 +108,12 @@
 
 
           <div class="row align-items-center">
-            <div class="col-5">
+            <div class="col-3">
               <div class="row justify-content-end">
                 <strong>Date</strong>
               </div>
             </div>
-            <div class="col">
+            <div class="col-9">
 
               <input class="form-control mb-1" type="date" name="dateNew" [(ngModel)]="newNdfEntry.date" required
                 #dateNew="ngModel" placeholder="dd/MM/yyyy" min="mission.startDate" max="mission.endDate"
@@ -122,7 +125,7 @@
 
 
           <div class="row align-items-center">
-            <div class="col-5">
+            <div class="col-3">
               <div class="row justify-content-end">
                 <strong>Nature</strong>
               </div>
@@ -138,7 +141,7 @@
           </div>
 
           <div class="row align-items-center">
-            <div class="col-5">
+            <div class="col-3">
               <div class="row justify-content-end">
                 <strong>Montant</strong>
               </div>
@@ -183,12 +186,12 @@
 
 
           <div class="row align-items-center">
-            <div class="col-5">
+            <div class="col-3">
               <div class="row justify-content-end">
                 <strong>Date</strong>
               </div>
             </div>
-            <div class="col">
+            <div class="col-9">
 
               <input class="form-control mb-1" type="date" name="dateEdited" [(ngModel)]="editedNdfEntry.date" required
                 #dateEdited="ngModel" placeholder="dd/MM/yyyy" min="mission.startDate" max="mission.endDate"
@@ -200,7 +203,7 @@
 
 
           <div class="row align-items-center">
-            <div class="col-5">
+            <div class="col-3">
               <div class="row justify-content-end">
                 <strong>Nature</strong>
               </div>
@@ -216,7 +219,7 @@
           </div>
 
           <div class="row align-items-center">
-            <div class="col-5">
+            <div class="col-3">
               <div class="row justify-content-end">
                 <strong>Montant</strong>
               </div>

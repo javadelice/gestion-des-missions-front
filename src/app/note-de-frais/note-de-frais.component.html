@@ -34,8 +34,8 @@
             <div *ngIf="missionIsEchue(mission) && mission.statut == 'VALIDEE'">
               <a><img class="img-thumbnail" src="assets/img/add-icon.png" class="rounded float-left" alt="+"
                   width='20px' routerLink="{{mission.id}}" routerLinkActive="router-link-active"></a>
-              <a (click)="exportToPDF(mission?.id)"><img class="img-thumbnail" src="assets/img/pdf-icon.webp"
-                  class="rounded float-right" alt="DL" width='20px'></a>
+              <!--<a (click)="exportToPDF(mission?.id)"><img class="img-thumbnail" src="assets/img/pdf-icon.webp"
+                  class="rounded float-right" alt="DL" width='20px'></a>-->
             </div>
           </td>
         </tr>
