@@ -160,7 +160,7 @@
 
           <div class="d-flex justify-content-around m-1">
             <button [disabled]="ndfEntryCreate.invalid" class="btn btn-info" (click)=creerLigneDeFrais()>Créer</button>
-            <button class="btn btn-info" (click)="cancel()">Annuler</button>
+            <button class="btn btn-danger" (click)="cancel()">Annuler</button>
           </div>
           <div class="alert alert-danger" *ngIf="isError">
             {{errorMsg}}
