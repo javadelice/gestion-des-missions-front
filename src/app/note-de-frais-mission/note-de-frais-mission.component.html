@@ -1,6 +1,7 @@
-<div class="jumbotron" width=15>
-  <h2>Saisie de Notes de frais</h2>
-
+<div class="row justify-content-center align-items-center mt-4">
+  <h1>Saisie de notes de frais</h1>
+</div>
+<div class="row justify-content-between">
   <table>
     <tr>
       <th></th>
@@ -30,9 +31,22 @@
   </table>
 </div>
 
+
 <mdb-card class="animated zoomIn">
-  <mdb-card-header class="primary-color white-text text-center">
-  </mdb-card-header>
+  <div class="row ml-5">
+    <div class="col-3">Date de Début : </div>
+    <div class="col-3">{{mission?.startDate| date :"dd/MM/yyyy"}}</div>
+    <div class="col-3">Estimation Prime : </div>
+    <div class="col-3">{{mission?.prime}}</div>
+    <div class="col-3">Date de Fin : </div>
+    <div class="col-3">{{mission?.endDate| date :"dd/MM/yyyy"}}</div>
+    <div class="col-3">Ville de Départ : </div>
+    <div class="col-3">{{mission?.villeDepart}}</div>
+    <div class="col-3">Nature : </div>
+    <div class="col-3">{{mission?.nature.code}}</div>
+    <div class="col-3">Ville d'arrivée : </div>
+    <div class="col-3">{{mission?.villeArrivee}}</div>
+  </div>
   <div>
     <a class="btn btn-outline-info btn-sm mr-2" (click)="generatePDF(mission?.id)" style="float:right;">Export
       PDF</a>
@@ -47,7 +61,7 @@
           <th>Action</th>
         </tr>
       </thead>
-      <tbody >
+      <tbody>
         <tr *ngFor="let ldf of ldfTable">
           <td>{{ldf.date| date : "dd/MM/yyyy"}}</td>
           <td>{{ldf.nature}}</td>
@@ -62,7 +76,7 @@
       </tbody>
     </table>
     <div class="text-right">
-        Ajouter un frais
+      Ajouter un frais
       <button class="btn btn-success ml-3" (click)="create(createModal)">+</button>
     </div>
   </mdb-card-body>
@@ -77,186 +91,183 @@
     </div>
     <div class="modal-body">
       <div class="row justify-content-center mt-3">
-            <form class="was-validated" #ndfEntryCreate="ngForm">
+        <form class="was-validated" #ndfEntryCreate="ngForm">
 
 
-              <div class="row align-items-center">
-                <div class="col-5">
-                  <div class="row justify-content-end">
-                    <strong>Date</strong>
-                  </div>
-                </div>
-                <div class="col">
-
-                  <input class="form-control mb-1" type="date" name="dateNew" [(ngModel)]="newNdfEntry.date" required
-                    #dateNew="ngModel" placeholder="dd/MM/yyyy" min="mission.startDate" max="mission.endDate"
-                    ngvalue="newNdfEntry.date">
-                  <div class="invalid-feedback mb-1" *ngIf="(dateNew.dirty || dateNew.touched) && dateNew.invalid">
-                  </div>
-                </div>
+          <div class="row align-items-center">
+            <div class="col-5">
+              <div class="row justify-content-end">
+                <strong>Date</strong>
               </div>
+            </div>
+            <div class="col">
 
-
-              <div class="row align-items-center">
-                <div class="col-5">
-                  <div class="row justify-content-end">
-                    <strong>Nature</strong>
-                  </div>
-                </div>
-                <div class="col">
-                  <select class="custom-select mb-1" name="nature" id="nature" [(ngModel)]="newNdfEntry.nature"
-                    #nature="ngModel" required>
-                    <option *ngFor="let nature of ndfNature" [ngValue]="nature">{{nature}}</option>
-                  </select>
-                  <div class="invalid-feedback mb-1" *ngIf="(nature.dirty || nature.touched) && nature.invalid">
-                  </div>
-                </div>
+              <input class="form-control mb-1" type="date" name="dateNew" [(ngModel)]="newNdfEntry.date" required
+                #dateNew="ngModel" placeholder="dd/MM/yyyy" min="mission.startDate" max="mission.endDate"
+                ngvalue="newNdfEntry.date">
+              <div class="invalid-feedback mb-1" *ngIf="(dateNew.dirty || dateNew.touched) && dateNew.invalid">
               </div>
-
-              <div class="row align-items-center">
-                <div class="col-5">
-                  <div class="row justify-content-end">
-                    <strong>Montant</strong>
-                  </div>
-                </div>
-
-                <div class="col">
-                  <input class="form-control mb-1" name="montantNew" [(ngModel)]="newNdfEntry.montant" type="number" step="0.01"
-                    min="1" #montantNew="ngModel" id="montantNew">
-                  <div class="invalid-feedback mb-1"
-                    *ngIf="(montantNew.dirty || montantNew.touched) && montantNew.invalid">
-                    Montant Invalide (au moins 1€)
-                  </div>
-                </div>
-              </div>
-
-
-              <div class="d-flex justify-content-around m-1">
-                <button [disabled]="ndfEntryCreate.invalid" class="btn btn-info"
-                  (click)=creerLigneDeFrais()>Créer</button>
-                <button class="btn btn-info" (click)="cancel()">Annuler</button>
-              </div>
-              <div class="alert alert-danger" *ngIf="isError">
-                  {{errorMsg}}
-                </div>
-
-
-            </form>
-
+            </div>
           </div>
-        </div>
+
+
+          <div class="row align-items-center">
+            <div class="col-5">
+              <div class="row justify-content-end">
+                <strong>Nature</strong>
+              </div>
+            </div>
+            <div class="col">
+              <select class="custom-select mb-1" name="nature" id="nature" [(ngModel)]="newNdfEntry.nature"
+                #nature="ngModel" required>
+                <option *ngFor="let nature of ndfNature" [ngValue]="nature">{{nature}}</option>
+              </select>
+              <div class="invalid-feedback mb-1" *ngIf="(nature.dirty || nature.touched) && nature.invalid">
+              </div>
+            </div>
+          </div>
+
+          <div class="row align-items-center">
+            <div class="col-5">
+              <div class="row justify-content-end">
+                <strong>Montant</strong>
+              </div>
+            </div>
+
+            <div class="col">
+              <input class="form-control mb-1" name="montantNew" [(ngModel)]="newNdfEntry.montant" type="number"
+                step="0.01" min="1" #montantNew="ngModel" id="montantNew">
+              <div class="invalid-feedback mb-1" *ngIf="(montantNew.dirty || montantNew.touched) && montantNew.invalid">
+                Montant Invalide (au moins 1€)
+              </div>
+            </div>
+          </div>
+
+
+          <div class="d-flex justify-content-around m-1">
+            <button [disabled]="ndfEntryCreate.invalid" class="btn btn-info" (click)=creerLigneDeFrais()>Créer</button>
+            <button class="btn btn-info" (click)="cancel()">Annuler</button>
+          </div>
+          <div class="alert alert-danger" *ngIf="isError">
+            {{errorMsg}}
+          </div>
+
+
+        </form>
+
       </div>
+    </div>
+  </div>
 </ng-template>
 
 <ng-template #editModal>
-    <div class="modal-content text-center rounded p-3">
-      <div class="modal-header">
-        <div class="row justify-content-center mt-4 w-100">
-          <h1>Ajouter ligne de frais</h1>
-        </div>
-      </div>
-      <div class="modal-body">
-        <div class="row justify-content-center mt-3">
-              <form class="was-validated" #ndfEntryCreate="ngForm">
-
-
-                <div class="row align-items-center">
-                  <div class="col-5">
-                    <div class="row justify-content-end">
-                      <strong>Date</strong>
-                    </div>
-                  </div>
-                  <div class="col">
-
-                    <input class="form-control mb-1" type="date" name="dateEdited" [(ngModel)]="editedNdfEntry.date" required
-                      #dateEdited="ngModel" placeholder="dd/MM/yyyy" min="mission.startDate" max="mission.endDate"
-                      ngvalue="editedNdfEntry.date">
-                    <div class="invalid-feedback mb-1" *ngIf="(dateEdited.dirty || dateEdited.touched) && dateEdited.invalid">
-                    </div>
-                  </div>
-                </div>
-
-
-                <div class="row align-items-center">
-                  <div class="col-5">
-                    <div class="row justify-content-end">
-                      <strong>Nature</strong>
-                    </div>
-                  </div>
-                  <div class="col">
-                    <select class="custom-select mb-1" name="nature" id="nature" [(ngModel)]="editedNdfEntry.nature"
-                      #nature="ngModel" required>
-                      <option *ngFor="let nature of ndfNature" [ngValue]="nature">{{nature}}</option>
-                    </select>
-                    <div class="invalid-feedback mb-1" *ngIf="(nature.dirty || nature.touched) && nature.invalid">
-                    </div>
-                  </div>
-                </div>
-
-                <div class="row align-items-center">
-                  <div class="col-5">
-                    <div class="row justify-content-end">
-                      <strong>Montant</strong>
-                    </div>
-                  </div>
-
-                  <div class="col">
-                    <input class="form-control mb-1" name="montantNew" [(ngModel)]="editedNdfEntry.montant" type="number" step="0.01"
-                      min="1" #montantNew="ngModel" id="montantNew">
-                    <div class="invalid-feedback mb-1"
-                      *ngIf="(montantNew.dirty || montantNew.touched) && montantNew.invalid">
-                      Montant Invalide (au moins 1€)
-                    </div>
-                  </div>
-                </div>
-
-
-                <div class="d-flex justify-content-around m-1">
-                  <button [disabled]="ndfEntryCreate.invalid" class="btn btn-info"
-                    (click)=modifierLigneDeFrais()>Modifier</button>
-                  <button class="btn btn-info" (click)="cancel()">Annuler</button>
-                </div>
-                <div class="alert alert-danger " *ngIf="isError">
-                    {{errorMsg}}
-                  </div>
-
-
-              </form>
-
-            </div>
-          </div>
-        </div>
-  </ng-template>
-
- <!-- Template Modal Delete-->
- <ng-template #deleteModal>
+  <div class="modal-content text-center rounded p-3">
     <div class="modal-header">
-      <h4 class="modal-title pull-left">Suppression de ligne :</h4>
+      <div class="row justify-content-center mt-4 w-100">
+        <h1>Ajouter ligne de frais</h1>
+      </div>
     </div>
     <div class="modal-body">
-      <table class="ml-2">
-        <tr>
-          <td>Date : </td>
-          <td>{{deleteNdfEntry.date | date : "dd/MM/yyyy"}}</td>
-        </tr>
-        <tr>
-          <td>Nature :</td>
-          <td>{{deleteNdfEntry.nature}}</td>
-        </tr>
-        <tr>
-          <td>Montant :</td>
-          <td>{{deleteNdfEntry.montant}}</td>
-        </tr>
-      </table>
-    </div>
-    <div class="modal-footer">
-      <p></p>
-      <button type="button" class="btn btn-warning" (click)="confirmDelete()">Oui</button>
-      <button type="button" class="btn btn-success" (click)="cancel()">Non</button>
+      <div class="row justify-content-center mt-3">
+        <form class="was-validated" #ndfEntryCreate="ngForm">
 
-    </div>
 
-    <div class="alert alert-danger m-3" *ngIf="isError">
-        {{errorMsg}}
+          <div class="row align-items-center">
+            <div class="col-5">
+              <div class="row justify-content-end">
+                <strong>Date</strong>
+              </div>
+            </div>
+            <div class="col">
+
+              <input class="form-control mb-1" type="date" name="dateEdited" [(ngModel)]="editedNdfEntry.date" required
+                #dateEdited="ngModel" placeholder="dd/MM/yyyy" min="mission.startDate" max="mission.endDate"
+                ngvalue="editedNdfEntry.date">
+              <div class="invalid-feedback mb-1" *ngIf="(dateEdited.dirty || dateEdited.touched) && dateEdited.invalid">
+              </div>
+            </div>
+          </div>
+
+
+          <div class="row align-items-center">
+            <div class="col-5">
+              <div class="row justify-content-end">
+                <strong>Nature</strong>
+              </div>
+            </div>
+            <div class="col">
+              <select class="custom-select mb-1" name="nature" id="nature" [(ngModel)]="editedNdfEntry.nature"
+                #nature="ngModel" required>
+                <option *ngFor="let nature of ndfNature" [ngValue]="nature">{{nature}}</option>
+              </select>
+              <div class="invalid-feedback mb-1" *ngIf="(nature.dirty || nature.touched) && nature.invalid">
+              </div>
+            </div>
+          </div>
+
+          <div class="row align-items-center">
+            <div class="col-5">
+              <div class="row justify-content-end">
+                <strong>Montant</strong>
+              </div>
+            </div>
+
+            <div class="col">
+              <input class="form-control mb-1" name="montantNew" [(ngModel)]="editedNdfEntry.montant" type="number"
+                step="0.01" min="1" #montantNew="ngModel" id="montantNew">
+              <div class="invalid-feedback mb-1" *ngIf="(montantNew.dirty || montantNew.touched) && montantNew.invalid">
+                Montant Invalide (au moins 1€)
+              </div>
+            </div>
+          </div>
+
+
+          <div class="d-flex justify-content-around m-1">
+            <button [disabled]="ndfEntryCreate.invalid" class="btn btn-info"
+              (click)=modifierLigneDeFrais()>Modifier</button>
+            <button class="btn btn-info" (click)="cancel()">Annuler</button>
+          </div>
+          <div class="alert alert-danger " *ngIf="isError">
+            {{errorMsg}}
+          </div>
+
+
+        </form>
+
       </div>
-  </ng-template>
+    </div>
+  </div>
+</ng-template>
+
+<!-- Template Modal Delete-->
+<ng-template #deleteModal>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Suppression de ligne :</h4>
+  </div>
+  <div class="modal-body">
+    <table class="ml-2">
+      <tr>
+        <td>Date : </td>
+        <td>{{deleteNdfEntry.date | date : "dd/MM/yyyy"}}</td>
+      </tr>
+      <tr>
+        <td>Nature :</td>
+        <td>{{deleteNdfEntry.nature}}</td>
+      </tr>
+      <tr>
+        <td>Montant :</td>
+        <td>{{deleteNdfEntry.montant}}</td>
+      </tr>
+    </table>
+  </div>
+  <div class="modal-footer">
+    <p></p>
+    <button type="button" class="btn btn-warning" (click)="confirmDelete()">Oui</button>
+    <button type="button" class="btn btn-success" (click)="cancel()">Non</button>
+
+  </div>
+
+  <div class="alert alert-danger m-3" *ngIf="isError">
+    {{errorMsg}}
+  </div>
+</ng-template>

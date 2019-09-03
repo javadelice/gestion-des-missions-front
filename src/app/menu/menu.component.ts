@@ -17,9 +17,6 @@ import { Router } from '@angular/router';
     <!-- Links -->
     <ul class="navbar-nav mr-auto">
       <li class="nav-item" routerLinkActive="active">
-        <a class="nav-link waves-light" mdbWavesEffect routerLink="tech">Accueil<span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item" routerLinkActive="active">
         <a class="nav-link waves-light" mdbWavesEffect routerLink="missions">Gestion des missions</a>
       </li>
       <li class="nav-item" routerLinkActive="active">

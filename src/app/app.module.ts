@@ -29,20 +29,18 @@ import { FileSaverModule } from 'ngx-filesaver';
 import { NoteDeFraisMissionComponent } from './note-de-frais-mission/note-de-frais-mission.component';
 
 const routes: Routes = [
-  { path:'tech', component: TechComponent, canActivate:[StatutConnecteService]}, // /tech accessible uniquement si connecté
-  { path:'menu', component: MenuComponent, canActivate:[StatutConnecteService]},
+  { path: 'tech', component: TechComponent, canActivate: [StatutConnecteService]}, // /tech accessible uniquement si connecté
+  { path: 'menu', component: MenuComponent, canActivate: [StatutConnecteService]},
   { path: 'planning', component: PlanningMissionsComponent, canActivate: [StatutConnecteService]},
-  { path:'notesdefrais', component: NoteDeFraisComponent, canActivate:[StatutConnecteService]},
-  { path:'notesdefrais/:idMission', component: NoteDeFraisMissionComponent, canActivate:[StatutConnecteService]},
-  { path:'lignedefrais/creer', component:NoteDeFraisAjoutComponent, canActivate:[StatutConnecteService]},
-  { path:'ndf-visu', component: NoteDeFraisVisualisationComponent, canActivate:[StatutConnecteService]},
-  { path:'missions', component: MissionsComponent, canActivate:[StatutConnecteService]}, // /missions accessible ssi connecté
-  { path:'missions/creer', component:CreerMissionComponent, canActivate:[StatutConnecteService]},
+  { path: 'notesdefrais', component: NoteDeFraisComponent, canActivate:[StatutConnecteService]},
+  { path: 'notesdefrais/:idMission', component: NoteDeFraisMissionComponent, canActivate: [StatutConnecteService]},
+  { path: 'missions', component: MissionsComponent, canActivate:[StatutConnecteService]}, // /missions accessible ssi connecté
+  { path: 'missions/creer', component: CreerMissionComponent, canActivate: [StatutConnecteService]},
   { path: 'nature', component: NatureMissionComponent, canActivate: [StatutConnecteService]},
   { path: 'valider', component: ValiderMissionsComponent, canActivate: [StatutConnecteService]},
   { path: 'primes', component: PrimesComponent, canActivate: [StatutConnecteService]},
   { path: 'connexion', component: AuthComponent},
-  { path: '', redirectTo: '/tech', pathMatch: 'full'},
+  { path: '', redirectTo: '/missions', pathMatch: 'full'},
 
 ];
 
