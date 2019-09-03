@@ -1,53 +1,65 @@
 <div *ngIf="!ndfVisu">
-    <h2 class="row justify-content-center align-items-center mt-3">Notes de frais - Visualisation</h2>
-    <mdb-card class="animated zoomIn">
-      <mdb-card-header class="primary-color white-text text-center">
-        <h4>Liste des Missions</h4>
-      </mdb-card-header>
-      <mdb-card-body>
-        <table class="table table-hover table-bordered">
-          <thead>
-            <tr>
-              <th>Date de Début</th>
-              <th>Date de fin</th>
-              <th>Nature</th>
-              <th>Ville de départ</th>
-              <th>Ville d'arrivée</th>
-              <th>Transport</th>
-              <th>Frais</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let mission of missions">
-              <td>{{mission.startDate| date : "dd/MM/yy"}}</td>
-              <td>{{mission.endDate| date : "dd/MM/yy"}}</td>
-              <td>{{mission.nature.code}}</td>
-              <td>{{mission.villeDepart}}</td>
-              <td>{{mission.villeArrivee}}</td>
-              <td>{{mission.transport}}</td>
-              <td>
-                <div *ngIf="false || frais ; else pasDeFrais">
-                </div>
-                <ng-template #pasDeFrais>0</ng-template>
+  <div class="row justify-content-center align-items-center mt-4">
+    <h1>Notes de frais - Visualisation</h1>
 
-              </td>
+    <table id="missionsVisuNdf" class="table table-striped table-bordered mt-3" cellspacing="0" width="100%">
+      <thead class="thead-dark">
+        <tr>
+          <th>Date de Début</th>
+          <th>Date de fin</th>
+          <th>Nature</th>
+          <th>Ville de départ</th>
+          <th>Ville d'arrivée</th>
+          <th>Transport</th>
+          <th>Frais</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let mission of missions">
+          <td>{{mission.startDate| date : "dd/MM/yy"}}</td>
+          <td>{{mission.endDate| date : "dd/MM/yy"}}</td>
+          <td>{{mission.nature.code}}</td>
+          <td>{{mission.villeDepart}}</td>
+          <td>{{mission.villeArrivee}}</td>
+          <td>{{mission.transport}}</td>
+          <td>
+            <div *ngIf="false || frais ; else pasDeFrais">
+            </div>
+            <ng-template #pasDeFrais>0</ng-template>
 
-              <td>
-                <div *ngIf="missionIsEchue(mission) && mission.statut == 'VALIDEE'">
-                  <a><img class="img-thumbnail" src="assets/img/ndf-ajout.png" class="rounded float-left" alt="+"
-                      width='19px' routerLink="{{mission.id}}" routerLinkActive="router-link-active" ></a>
-                  <!---- (click)="exportToPDF(mission?.id)"><img class="img-thumbnail" src="assets/img/ndf-download.png"
-                      class="rounded float-right" alt="DL" width='23px' routerLink="{{mission.id}}" routerLinkActive="router-link-active"></!---->
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </mdb-card-body>
-    </mdb-card>
+          </td>
+
+          <td>
+            <div *ngIf="missionIsEchue(mission) && mission.statut == 'VALIDEE'">
+              <a><img class="img-thumbnail" src="assets/img/add-icon.png" class="rounded float-left" alt="+"
+                  width='20px' routerLink="{{mission.id}}" routerLinkActive="router-link-active"></a>
+              <a (click)="exportToPDF(mission?.id)"><img class="img-thumbnail" src="assets/img/pdf-icon.webp"
+                  class="rounded float-right" alt="DL" width='20px'></a>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 
-  <div *ngIf="ndfVisu">
+  <!--div *ngIf="ndfVisu">
     <app-note-de-frais-visualisation [mission]="missionChosen" [isExportPDF]="exportPdf"></app-note-de-frais-visualisation>
-  </div>
+  </div-->
+
+    <table id='tableLignesDeFrais' class="table table-striped table-bordered mt-3" cellspacing="0" width="100%">
+      <thead class="thead-dark">
+        <tr>
+          <th class="th-sm">Date</th>
+          <th class="th-sm">Nature</th>
+          <th class="th-sm">Montant</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let ldf of ldfTable">
+          <td>{{ldf.date| date : "dd/MM/yyyy"}}</td>
+          <td>{{ldf.nature}}</td>
+          <td>{{ldf.montant}}</td>
+        </tr>
+      </tbody>
+    </table>

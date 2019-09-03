@@ -7,7 +7,9 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { MissionsService } from '../missions/missions.service';
 import { NdfService } from './note-de-frais.service';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import {Title }  from '@angular/platform-browser';
+import { Title } from '@angular/platform-browser';
+import * as jsPDF from 'jspdf';
+import { NdfEntryDto } from '../note-de-frais-visualisation/note-de-frais-visualisation.domains';
 
 @Component({
   selector: 'app-note-de-frais',
@@ -25,15 +27,17 @@ export class NoteDeFraisComponent implements OnInit {
   missionChosen: MissionDto;
   exportPdf: boolean;
 
- constructor(private _authSrv: AuthService,
+  ldfTable: NdfEntryDto[];
+
+  constructor(private _authSrv: AuthService,
     private missionService: MissionsService,
     private _ndfService: NdfService,
     private _router: Router,
     private _titleService: Title) { }
 
-ngOnInit() {
-  this._titleService.setTitle("Notes de frais")
-  this.exportPdf = false;
+  ngOnInit() {
+    this._titleService.setTitle("Notes de frais")
+    this.exportPdf = false;
 
     this._authSrv.collegueConnecteObs.subscribe(collegueConnecte => {
       this.missionService.getMissions(collegueConnecte.id).subscribe((missions: MissionDto[]) => {
@@ -57,10 +61,29 @@ ngOnInit() {
   }
 
 
-  exportToPDF(mission:MissionDto): void {
+  async exportToPDF(missionId: number) {
+    /*
    this.missionChosen = mission;
    this.ndfVisu = true;
    this.exportPdf = true;
+
+   */
+       this.assignTable(missionId);
+       await this.generatePDF(missionId);
+
   }
 
+assignTable(missionId: number)
+{
+  
+  this._ndfService.getNdfEntriesFromMissionId(missionId)
+  .subscribe(table => this.ldfTable = table, (error: HttpErrorResponse) => {
+    this.error = true;
+  });
+}
+
+generatePDF(missionId:number){
+      const doc = new jsPDF();
+          doc.autoTable({html: '#tableLignesDeFrais'});
+          doc.save('mission' + missionId + '-' + 'Note-de-frais' + '.pdf');}
 }
