@@ -11,6 +11,7 @@ export const config = {
   apiNoteDeFrais: 'notedefrais',
   apiCreateNoteDeFrais: 'notedefrais',
   apiLignesDeFraisFromNdfId: 'notedefrais/',
+  apiCheckAllowance: 'mission?idMission=',
   apiLignedefrais: 'lignedefrais',
   apiLignesDeFraisFromMissionId: 'notedefrais?idMission=',
   apiModifyLigneDeFrais: 'lignedefrais',
