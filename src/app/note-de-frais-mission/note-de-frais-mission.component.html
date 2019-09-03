@@ -7,6 +7,7 @@
     <h3 class="align-left"><strong>Informations sur la mission :</strong></h3>
   </div>
   <table class="table table-striped  mt-3" cellspacing="0" width="100%">
+
     <tr>
       <td><strong>Date de Début : </strong></td>
       <td>{{mission?.startDate| date :"dd/MM/yyyy"}}</td>
@@ -164,10 +165,7 @@
           <div class="alert alert-danger" *ngIf="isError">
             {{errorMsg}}
           </div>
-
-
         </form>
-
       </div>
     </div>
   </div>
@@ -183,16 +181,14 @@
     <div class="modal-body">
       <div class="row justify-content-center mt-3">
         <form class="was-validated" #ndfEntryCreate="ngForm">
-
-
           <div class="row align-items-center">
             <div class="col-3">
               <div class="row justify-content-end">
                 <strong>Date</strong>
               </div>
             </div>
-            <div class="col-9">
 
+            <div class="col-9">
               <input class="form-control mb-1" type="date" name="dateEdited" [(ngModel)]="editedNdfEntry.date" required
                 #dateEdited="ngModel" placeholder="dd/MM/yyyy" min="mission.startDate" max="mission.endDate"
                 ngvalue="editedNdfEntry.date">
