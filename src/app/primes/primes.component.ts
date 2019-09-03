@@ -4,6 +4,7 @@ import { MissionDto } from '../models/mission-dto';
 import { AuthService } from '../auth/auth.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { FileSaverService } from 'ngx-filesaver';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-primes',
@@ -24,9 +25,10 @@ export class PrimesComponent implements OnInit {
   isError: boolean;
   erreur: string;
 
-  constructor(private primesService: PrimesService, private _authServ: AuthService, private _fileSaverService: FileSaverService) { }
+  constructor(private primesService: PrimesService, private _authServ: AuthService, private _fileSaverService: FileSaverService, private _titleService: Title) { }
 
   ngOnInit() {
+    this._titleService.setTitle('Primes');
     this.isError = false;
     this.anneesPrimes = [];
     this._authServ.collegueConnecteObs.subscribe(collegueConnecte => {

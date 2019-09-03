@@ -4,6 +4,7 @@ import { NatureMissionService } from './nature-mission.service';
 import { AuthService } from '../auth/auth.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-nature-mission',
@@ -24,9 +25,10 @@ export class NatureMissionComponent implements OnInit {
   natureAModifier: NatureDto;
   natureACreer: NatureDto;
 
-  constructor(private natureService: NatureMissionService, private _authSrv: AuthService, private modalService: BsModalService) { }
+  constructor(private natureService: NatureMissionService, private _authSrv: AuthService, private modalService: BsModalService, private _titleService: Title) { }
 
   ngOnInit() {
+    this._titleService.setTitle('Nature des missions');
     this._authSrv.collegueConnecteObs.subscribe(collegueConnecte => {
       if (collegueConnecte.roles.includes('ROLE_ADMINISTRATEUR')) {
         this.isAdmin = true;

@@ -4,6 +4,7 @@ import { MissionDto } from '../models/mission-dto';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AuthService } from '../auth/auth.service';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-missions',
@@ -20,9 +21,11 @@ export class MissionsComponent implements OnInit {
   erreur: string;
   modalRef: BsModalRef;
 
-  constructor(private missionService: MissionsService, private _authSrv: AuthService, private modalService: BsModalService) { }
+  constructor(private missionService: MissionsService, private _authSrv: AuthService, private modalService: BsModalService,
+    private _titleService: Title) { }
 
   ngOnInit() {
+    this._titleService.setTitle('Gestion des missions');
     this.isError = false;
     this.phaseModifier = false;
     this._authSrv.collegueConnecteObs.subscribe(collegueConnecte => {

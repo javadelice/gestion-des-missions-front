@@ -36,7 +36,7 @@ export class NoteDeFraisComponent implements OnInit {
     private _titleService: Title) { }
 
   ngOnInit() {
-    this._titleService.setTitle("Notes de frais")
+    this._titleService.setTitle('Notes de frais');
     this.exportPdf = false;
 
     this._authSrv.collegueConnecteObs.subscribe(collegueConnecte => {
