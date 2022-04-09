@@ -37,7 +37,7 @@
     "html2canvas": "^1.0.0-rc.3",
     "jspdf": "^1.5.3",
     "jspdf-autotable": "^3.2.4",
-    "moment": "^2.24.0",
+    "moment": "^2.29.2",
     "ng2-charts": "^2.3.0",
     "ngx-bootstrap": "^5.1.1",
     "ngx-filesaver": "^8.0.0",
